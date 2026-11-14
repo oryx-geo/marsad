@@ -26,7 +26,7 @@ const radarUrl = (site, track, date, pol) => `${BASE}data/${site}/${track}/${dat
 // goes out, and the team signs it. The pieces are cut from the team's own logo file.
 function Intro({ t, onDone }) {
   useEffect(() => {
-    const id = setTimeout(onDone, 5600)
+    const id = setTimeout(onDone, 6200)
     return () => clearTimeout(id)
   }, [onDone])
   const part = (name) => `${BASE}logos/parts/${name}.png`
@@ -34,21 +34,29 @@ function Intro({ t, onDone }) {
     <div className="intro" onClick={onDone} role="presentation">
       <div className="intro-box" dir="ltr">
         <div className="intro-logo" role="img" aria-label="MARSAD">
-          <span className="intro-ring r1" aria-hidden="true" />
-          <span className="intro-ring r2" aria-hidden="true" />
-          <span className="intro-ring r3" aria-hidden="true" />
           <img className="ip navy" src={part('navy')} alt="" />
           <img className="ip brown" src={part('brown')} alt="" />
           <img className="ip green" src={part('green')} alt="" />
           <img className="ip leaves" src={part('leaves')} alt="" />
           <img className="ip letters" src={part('letters')} alt="" />
         </div>
+        {/* the radar echo: three beats under the M that settle into the shape of the land */}
+        <svg className="intro-echo" viewBox="0 0 1204 110" aria-hidden="true">
+          <path pathLength="1" d="M10 78 H52 L70 22 L92 96 L112 78 H140 L158 10 L182 100 L204 78 H226 L242 34 L262 92 L280 78
+            C340 78 372 52 430 52 S520 84 590 80 S700 40 770 44 S880 86 950 78 S1080 58 1194 66" />
+        </svg>
         <p className="intro-tag">{t.tagline}</p>
         <div className="intro-by">
           <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
           <span>ORYX GEO</span>
         </div>
       </div>
+      {/* the land itself rises at the bottom of the screen */}
+      <svg className="intro-land" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+        <path className="l1" d="M0 190 C180 120 330 150 520 175 S860 110 1080 150 S1340 190 1440 140 V320 H0 Z" />
+        <path className="l2" d="M0 240 C200 190 380 250 600 225 S940 170 1160 215 S1380 250 1440 220 V320 H0 Z" />
+        <path className="l3" d="M0 285 C220 250 420 300 660 280 S1000 245 1220 275 S1400 295 1440 280 V320 H0 Z" />
+      </svg>
       <button type="button" className="intro-skip" onClick={onDone}>{t.skip}</button>
     </div>
   )

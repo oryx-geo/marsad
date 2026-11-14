@@ -123,7 +123,7 @@ select { background: var(--dot); border: 1px solid var(--line); border-radius: 1
 
 /* opening */
 .intro { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: hidden;
-  background: radial-gradient(circle at 50% 42%, #FFFAF1 0%, #F2E2CA 55%, #E6CFA9 100%); animation: introOut .6s ease 5s forwards; }
+  background: radial-gradient(circle at 50% 42%, #FFFAF1 0%, #F2E2CA 55%, #E6CFA9 100%); animation: introOut .6s ease 5.6s forwards; }
 .intro-box { width: min(640px, 86vw); display: grid; justify-items: center; gap: 18px; }
 .intro-logo { position: relative; width: 100%; aspect-ratio: 1204 / 432; }
 .ip { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -134,19 +134,25 @@ select { background: var(--dot); border: 1px solid var(--line); border-radius: 1
 .ip.green { transform-origin: 16% 98%; animation-delay: .85s, 1.79s; }
 .ip.leaves { opacity: 0; transform-origin: 14.2% 28%; animation: sprout .8s cubic-bezier(.2, 1.6, .4, 1) 1.25s forwards; }
 .ip.letters { clip-path: inset(0 100% 0 18%); animation: slideOut 1.1s cubic-bezier(.65, 0, .2, 1) 2s forwards; }
-.intro-ring { position: absolute; left: 12%; top: 58%; width: 12%; aspect-ratio: 1; margin: -6% 0 0 -6%; border-radius: 50%; border: 3px solid #924616; opacity: 0; animation: ping 1.6s ease-out forwards; }
-.intro-ring.r1 { animation-delay: 2.9s; }
-.intro-ring.r2 { animation-delay: 3.15s; border-color: #0F025C; }
-.intro-ring.r3 { animation-delay: 3.4s; border-color: #37542A; }
-.intro-tag { color: #0F025C; font-weight: 800; font-size: clamp(1.05rem, 2.6vw, 1.5rem); opacity: 0; animation: rise .7s ease 3.1s forwards; text-align: center; }
-.intro-by { display: flex; align-items: center; gap: 12px; color: #5E4D3B; font-weight: 800; letter-spacing: .08em; opacity: 0; animation: rise .7s ease 3.7s forwards; }
+.intro-echo { width: 100%; height: auto; margin-top: -6px; overflow: visible; }
+.intro-echo path { fill: none; stroke: #924616; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.7s cubic-bezier(.5, 0, .2, 1) 2.7s forwards; }
+.intro-land { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34vh; pointer-events: none; }
+.intro-land path { transform: translateY(100%); animation: landUp 1.4s cubic-bezier(.2, .8, .2, 1) forwards; }
+.intro-land .l1 { fill: #E7D2AC; animation-delay: 2.6s; }
+.intro-land .l2 { fill: #B7C3A1; animation-delay: 2.85s; }
+.intro-land .l3 { fill: #C4946A; animation-delay: 3.1s; }
+.intro-tag { color: #5E4D3B; font-weight: 600; font-size: clamp(.8rem, 1.9vw, 1.05rem); opacity: 0; animation: rise .8s ease 3.6s forwards; text-align: center; position: relative; z-index: 1; }
+html[lang="en"] .intro-tag { text-transform: uppercase; letter-spacing: .32em; margin-inline-end: -.32em; }
+html[lang="ar"] .intro-tag { font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 700; }
+.intro-by { display: flex; align-items: center; gap: 12px; color: #241A10; font-weight: 800; letter-spacing: .08em; opacity: 0; animation: rise .7s ease 4.1s forwards; position: relative; z-index: 1; }
 .intro-by img { width: 96px; height: auto; }
-.intro-skip { position: absolute; bottom: 24px; inset-inline-end: 24px; background: transparent; border: 1px solid #924616; color: #924616; border-radius: 999px; padding: 6px 16px; min-height: 40px; }
+.intro-skip { position: absolute; z-index: 2; bottom: 24px; inset-inline-end: 24px; background: transparent; border: 1px solid #924616; color: #924616; border-radius: 999px; padding: 6px 16px; min-height: 40px; }
 @keyframes beat { 0% { opacity: 0; transform: translateY(-70%) scaleY(.3); } 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
 @keyframes bounce { 50% { transform: scaleY(1.12); } }
 @keyframes sprout { 0% { opacity: 0; transform: scale(0) rotate(-25deg); } 100% { opacity: 1; transform: none; } }
 @keyframes slideOut { 0% { clip-path: inset(0 100% 0 18%); transform: translateX(-4%); } 100% { clip-path: inset(0 0 0 0); transform: none; } }
-@keyframes ping { 0% { opacity: .7; transform: scale(.4); } 100% { opacity: 0; transform: scale(9); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes landUp { to { transform: none; } }
 @keyframes introOut { to { opacity: 0; visibility: hidden; } }
 
 /* phones and narrow windows: one scrolling column */
