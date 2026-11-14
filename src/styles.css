@@ -363,3 +363,8 @@ html[data-design="c"] body { background: #F2E2CA; }
 .rep-aud h3 { margin: 0; font-size: 10.5pt; color: #924616; }
 .rep-aud p { margin: 0; }
 [dir="rtl"] .site-head h1, [dir="rtl"] .report h1 { line-height: 1.5; }
+
+.snd { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; min-height: 36px; color: var(--text); }
+.snd[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #2A1404; font-weight: 800; }
+.story .snd { background: #fff; }
+.story .snd[aria-pressed="true"] { background: #924616; border-color: #924616; color: #fff; }

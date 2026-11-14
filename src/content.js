@@ -31,13 +31,16 @@ export const UI = {
     futureTitle: 'The future of NISAR',
     future: 'NISAR has been observing for only about a year. Every 12 days adds one more beat to each place\'s rhythm. With more years, the same pictures will separate a normal season from an unusual one: a flood above the usual pulse, a field left dry, a forest edge that moved.',
     creditsTitle: 'Data and credits',
-    credits: 'Radar: NISAR L2 GCOV (NASA and ISRO), distributed by the Alaska Satellite Facility. Rainfall: NASA POWER. Optical check: NASA Harmonized Landsat Sentinel-2 (contains modified Copernicus Sentinel data, ESA). Base map: © OpenStreetMap contributors.',
+    credits: 'Radar: NISAR L2 GCOV (NASA and ISRO), distributed by the Alaska Satellite Facility. Rainfall: NASA POWER. Optical pictures: NASA Harmonized Landsat Sentinel-2. Water map: NASA OPERA DSWx-HLS. C-band pictures: NASA OPERA RTC-S1. These contain modified Copernicus Sentinel data (ESA). Base map: © OpenStreetMap contributors. The ORYX GEO team logo is an AI-generated image.',
     disclaimer: 'NASA does not endorse this project. Agency names are used only to credit the data.',
     team: 'Made by team ORYX GEO for the 2026 NASA Space Apps Challenge, "Dancing with the SARs".',
     source: 'Source code and full references',
     grey: 'Brighter = stronger radar echo',
     view: 'Picture',
-    viewRadar: 'Radar', viewReal: 'Real colour', viewBoth: 'Real ↔ radar',
+    viewRadar: 'Radar', viewReal: 'Real colour', viewBoth: 'Real ↔ radar', viewC: 'C-band ↔ L-band',
+    cTag: 'Sentinel-1 C-band', lTag: 'NISAR L-band', noC: 'no Sentinel-1 picture near this date',
+    cNote: 'Two radars, same place. Sentinel-1 uses a short wave (5.6 cm, C-band) that bounces off leaves, grass and small roughness. NISAR uses a long wave (24 cm, L-band) that passes through them and reaches trunks and ground. The Sentinel-1 picture is from NASA OPERA RTC-S1, taken within 8 days. Compare the patterns, not the brightness: the two pictures are not on the same scale.',
+    sound: 'Sound', soundHint: 'Hear the rhythm: each date plays a note, higher when the measured value is higher.',
     realTag: 'Real colour', radarTag: 'Radar',
     noReal: 'no clear picture near this date',
     realNote: 'Real-colour pictures are from NASA HLS (Landsat and Sentinel-2), taken within 8 days of the radar pass. Clouds, haze and polar night hide the ground from a camera. The radar is not affected.',
@@ -122,13 +125,16 @@ export const UI = {
     futureTitle: 'مستقبل NISAR',
     future: 'NISAR يرصد منذ نحو سنة فقط. كل 12 يوماً تضاف نبضة جديدة إلى إيقاع كل مكان. ومع السنوات ستفرّق الصور نفسها بين الموسم العادي وغير العادي: فيضان فوق النبض المعتاد، حقل بقي جافاً، حدّ غابة تحرّك.',
     creditsTitle: 'البيانات والمصادر',
-    credits: 'الرادار: NISAR L2 GCOV (ناسا و ISRO)، توزيع Alaska Satellite Facility. المطر: NASA POWER. التحقق البصري: NASA Harmonized Landsat Sentinel-2 (يحتوي بيانات Copernicus Sentinel معدّلة، ESA). الخريطة: © مساهمو OpenStreetMap.',
+    credits: 'الرادار: NISAR L2 GCOV (ناسا و ISRO)، توزيع Alaska Satellite Facility. المطر: NASA POWER. الصور الملوّنة: NASA Harmonized Landsat Sentinel-2. خريطة الماء: NASA OPERA DSWx-HLS. صور C-band: ‏NASA OPERA RTC-S1. وهذه تحتوي بيانات Copernicus Sentinel معدّلة (ESA). الخريطة: © مساهمو OpenStreetMap. شعار فريق ORYX GEO صورة مولّدة بالذكاء الاصطناعي.',
     disclaimer: 'ناسا لا تدعم هذا المشروع ولا تتبنّاه. أسماء الوكالات مذكورة لنسبة البيانات فقط.',
     team: 'من إعداد فريق ORYX GEO لتحدي NASA Space Apps 2026، تحدي "Dancing with the SARs".',
     source: 'الكود المصدري وكل المراجع',
     grey: 'الألمع = صدى رادار أقوى',
     view: 'الصورة',
-    viewRadar: 'رادار', viewReal: 'ألوان حقيقية', viewBoth: 'حقيقية ↔ رادار',
+    viewRadar: 'رادار', viewReal: 'ألوان حقيقية', viewBoth: 'حقيقية ↔ رادار', viewC: 'C-band ↔ L-band',
+    cTag: 'Sentinel-1 C-band', lTag: 'NISAR L-band', noC: 'لا توجد صورة Sentinel-1 قرب هذا التاريخ',
+    cNote: 'راداران والمكان واحد. Sentinel-1 يستخدم موجة قصيرة (5.6 سم، C-band) ترتد عن الأوراق والعشب والخشونة الصغيرة. NISAR يستخدم موجة طويلة (24 سم، L-band) تمرّ من خلالها وتصل إلى الجذوع والأرض. صورة Sentinel-1 من NASA OPERA RTC-S1 وملتقطة خلال 8 أيام. قارن الأشكال لا اللمعان، فالصورتان ليستا على المقياس نفسه.',
+    sound: 'صوت', soundHint: 'اسمع الإيقاع: كل تاريخ يعزف نغمة، أعلى كلما كانت القيمة المقيسة أعلى.',
     realTag: 'ألوان حقيقية', radarTag: 'رادار',
     noReal: 'لا توجد صورة واضحة قرب هذا التاريخ',
     realNote: 'الصور الملوّنة من NASA HLS (لاندسات وسنتينل-2)، ملتقطة خلال 8 أيام من مرور الرادار. الغيوم والضباب والليل القطبي تحجب الأرض عن الكاميرا، والرادار لا يتأثر بها.',
@@ -211,40 +217,47 @@ export const SITES = [
     to: '2026-08-16',
     chart: {
       unit: 'km²',
-      series: [{ key: 'dark_km2', color: COLORS.navy, label: { en: 'Dark, water-like surface (km²)', ar: 'سطح داكن يشبه الماء (كم²)' } }],
+      series: [
+        { key: 'dark_km2', color: COLORS.navy, label: { en: 'Dark, smooth surface seen by NISAR (km²)', ar: 'سطح داكن أملس كما يراه NISAR (كم²)' } },
+        { key: 'optical_water_km2', color: COLORS.green, dash: '5 4', label: { en: 'Surface water in NASA\'s optical map, OPERA DSWx (km²)', ar: 'الماء السطحي في خريطة ناسا البصرية OPERA DSWx (كم²)' } },
+      ],
       bars: { key: 'rain_mm', color: COLORS.sage, label: { en: 'Rain in the 12 days before (mm)', ar: 'مطر الـ12 يوماً السابقة (ملم)' } },
     },
-    facts: (rows) => {
+    facts: (rows, all, data) => {
       const y26 = rows.filter((r) => r.date >= '2026-06-01')
       const start = y26[0]
+      const summer = y26.filter((r) => r.optical_water_km2 != null && r.date < '2026-10-01')
+      const opt = summer.reduce((a, b) => (b.optical_water_km2 > a.optical_water_km2 ? b : a))
+      const optStart = summer[0]
+      const chk = data.water_check
       const peak = y26.reduce((a, b) => (b.dark_km2 > a.dark_km2 ? b : a))
       const low = y26.filter((r) => r.date > peak.date).reduce((a, b) => (b.dark_km2 < a.dark_km2 ? b : a))
-      return { start, peak, low, rise: peak.dark_km2 - start.dark_km2 }
+      return { start, peak, low, rise: peak.dark_km2 - start.dark_km2, opt, optStart, chk }
     },
     text: {
       en: {
         name: 'Sindh', place: 'Indus plain, Pakistan', kicker: 'The pulse of water',
-        lead: (n, f) => `Each summer, water spreads over the fields beside the Indus river, then drains away. NISAR saw the dark, water-like area grow from ${f(n.start.dark_km2)} km² (${f.d(n.start.date)}) to ${f(n.peak.dark_km2)} km² (${f.d(n.peak.date)}), then shrink to ${f(n.low.dark_km2)} km² (${f.d(n.low.date)}).`,
-        why: 'Calm water is a mirror for radar: the pulse bounces away and almost nothing returns, so flooded fields turn dark. When the crop grows through the water, stems and water together send a strong echo back and the same fields turn bright. That is why the dark area falls again in September even before the land is dry.',
+        lead: (n, f) => `Each summer, water spreads over the fields beside the Indus river, then drains away. NISAR saw dark, smooth surfaces (open water and other very smooth ground) grow from ${f(n.start.dark_km2)} km² (${f.d(n.start.date)}) to ${f(n.peak.dark_km2)} km² (${f.d(n.peak.date)}), then shrink to ${f(n.low.dark_km2)} km² (${f.d(n.low.date)}).`,
+        why: (n, f) => `Calm water is a mirror for radar: the pulse bounces away and almost nothing returns, so flooded fields turn dark. When the crop grows through the water, stems and water together send a strong echo back and the same fields turn bright. That is why the dark area falls again in September even before the land is dry. An independent NASA water map made from optical satellites shows the same summer pulse: ${f(n.optStart.optical_water_km2)} km² in ${f.d(n.optStart.optical_date)}, ${f(n.opt.optical_water_km2)} km² in ${f.d(n.opt.optical_date)}.`,
         whyNot: 'Towns, roads and the dry land east of the river keep the same brightness all year. Their roughness and shape do not change with the season, so the radar sees no beat there.',
-        care: 'This is the normal seasonal pulse of irrigation and river level, not a flood disaster. "Dark" means HH below −16 dB on cells of about 120 m; very smooth dry ground can also look dark. The area is a known rice belt, but we did not identify crops field by field.',
+        care: (n, f) => `This is the normal seasonal pulse of irrigation and river level, not a flood disaster. "Dark" means HH below −16 dB on cells of about 120 m. We checked it against NASA's optical water map (OPERA DSWx-HLS) on ${f(n.chk.dates_compared)} dates. Where that map shows open water, the radar is dark in ${f(n.chk.open_water_that_is_radar_dark_pct[0])} to ${f(n.chk.open_water_that_is_radar_dark_pct[1])}% of cells, so the rule holds. But only ${f(n.chk.radar_dark_confirmed_as_water_pct[0])} to ${f(n.chk.radar_dark_confirmed_as_water_pct[1])}% of the dark area is confirmed as water: the rest is very smooth bare ground, or water the optical map missed. Read these km² as "smooth, water-like surface", not as a measured flood extent. In winter the two maps disagree, as the chart shows.`,
         audience: {
-          public: () => 'Slide from June to August: the river plain fills with dark patches. That is water arriving on the fields. Keep sliding to October and watch it leave.',
-          decision: (n, f) => `About ${f(n.rise)} km² more water-like surface appeared between ${f.d(n.start.date)} and ${f.d(n.peak.date)}. The same measurement repeats every 12 days, in any weather, with no field visit. Knowing the normal pulse is what makes an abnormal one visible early.`,
+          public: () => 'Slide from June to August: the river plain fills with dark patches. That is mostly water arriving on the fields. Keep sliding to October and watch it leave.',
+          decision: (n, f) => `About ${f(n.rise)} km² more dark, water-like surface appeared between ${f.d(n.start.date)} and ${f.d(n.peak.date)}. The same measurement repeats every 12 days, in any weather, with no field visit. Knowing the normal pulse is what makes an abnormal one visible early.`,
           resource: (n, f) => `Water on the fields peaked around ${f.d(n.peak.date)} and was below the June level by ${f.d(n.low.date)}. Compare the curve with the rain bars: the surface water follows irrigation and river level more than local rain.`,
           educator: () => 'A clear classroom example of "smooth water is dark, wet plants are bright". Ask students to predict what a field looks like before planting, when flooded, and when the crop is tall, then check with the slider.',
-          scientist: (n, f) => `L-band GCOV gamma-0, HH and HV, track 041 ascending, 16 dates from BETA, provisional and V1 products. Threshold HH < −16 dB after 3×3 smoothing of 40 m cells. Peak ${f(n.peak.dark_pct)}% of the window. Products from different processing versions are mixed, so small offsets are possible.`,
+          scientist: (n, f) => `L-band GCOV gamma-0, HH and HV, track 041 ascending, 16 dates from BETA, provisional and V1 products. Threshold HH < −16 dB after 3×3 smoothing of 40 m cells. Peak ${f(n.peak.dark_pct)}% of the window. Against OPERA DSWx-HLS (two-cell tolerance, ${f(n.chk.dates_compared)} dates): ${f(n.chk.open_water_that_is_radar_dark_pct[0])}–${f(n.chk.open_water_that_is_radar_dark_pct[1])}% of optical open water is radar-dark; ${f(n.chk.radar_dark_confirmed_as_water_pct[0])}–${f(n.chk.radar_dark_confirmed_as_water_pct[1])}% of radar-dark is optical water. Mixed processing versions, so small offsets are possible.`,
         },
       },
       ar: {
         name: 'السند', place: 'سهل نهر السند، باكستان', kicker: 'نبض الماء',
-        lead: (n, f) => `في كل صيف ينتشر الماء على الحقول بجانب نهر السند ثم ينحسر. رأى NISAR المساحة الداكنة التي تشبه الماء تكبر من ${f(n.start.dark_km2)} كم² (${f.d(n.start.date)}) إلى ${f(n.peak.dark_km2)} كم² (${f.d(n.peak.date)})، ثم تصغر إلى ${f(n.low.dark_km2)} كم² (${f.d(n.low.date)}).`,
-        why: 'الماء الهادئ مرآة للرادار: النبضة ترتد بعيداً ولا يرجع منها شيء تقريباً، فتظهر الحقول المغمورة داكنة. وحين ينمو المحصول فوق الماء، تعكس السيقان والماء معاً صدى قوياً فتصير الحقول نفسها لامعة. لذلك تنقص المساحة الداكنة في سبتمبر حتى قبل أن تجف الأرض.',
+        lead: (n, f) => `في كل صيف ينتشر الماء على الحقول بجانب نهر السند ثم ينحسر. رأى NISAR الأسطح الداكنة الملساء (الماء المفتوح وأرضاً ملساء جداً) تكبر من ${f(n.start.dark_km2)} كم² (${f.d(n.start.date)}) إلى ${f(n.peak.dark_km2)} كم² (${f.d(n.peak.date)})، ثم تصغر إلى ${f(n.low.dark_km2)} كم² (${f.d(n.low.date)}).`,
+        why: (n, f) => `الماء الهادئ مرآة للرادار: النبضة ترتد بعيداً ولا يرجع منها شيء تقريباً، فتظهر الحقول المغمورة داكنة. وحين ينمو المحصول فوق الماء، تعكس السيقان والماء معاً صدى قوياً فتصير الحقول نفسها لامعة. لذلك تنقص المساحة الداكنة في سبتمبر حتى قبل أن تجف الأرض. وخريطة ماء مستقلة من ناسا مبنية على الأقمار البصرية تُظهر النبض الصيفي نفسه: ${f(n.optStart.optical_water_km2)} كم² في ${f.d(n.optStart.optical_date)}، و${f(n.opt.optical_water_km2)} كم² في ${f.d(n.opt.optical_date)}.`,
         whyNot: 'المدن والطرق والأرض الجافة شرق النهر تحتفظ بلمعانها طول السنة. خشونتها وشكلها لا يتغيّران مع الموسم، فلا يرى الرادار فيها نبضاً.',
-        care: 'هذا هو النبض الموسمي العادي للري ومستوى النهر، وليس كارثة فيضان. «داكن» تعني أن HH أقل من ‎−16 ديسيبل على خلايا بنحو 120 متراً، والأرض الجافة الملساء جداً قد تبدو داكنة أيضاً. المنطقة معروفة بزراعة الأرز، لكننا لم نحدّد المحاصيل حقلاً حقلاً.',
+        care: (n, f) => `هذا هو النبض الموسمي العادي للري ومستوى النهر، وليس كارثة فيضان. «داكن» تعني أن HH أقل من ‎−16 ديسيبل على خلايا بنحو 120 متراً. تحققنا منه بخريطة الماء البصرية من ناسا (OPERA DSWx-HLS) في ${f(n.chk.dates_compared)} تاريخاً. حيث تُظهر تلك الخريطة ماءً مفتوحاً يكون الرادار داكناً في ${f(n.chk.open_water_that_is_radar_dark_pct[0])} إلى ${f(n.chk.open_water_that_is_radar_dark_pct[1])}% من الخلايا، فالقاعدة صحيحة. لكن ${f(n.chk.radar_dark_confirmed_as_water_pct[0])} إلى ${f(n.chk.radar_dark_confirmed_as_water_pct[1])}% فقط من المساحة الداكنة مؤكَّد أنه ماء، والباقي أرض عارية ملساء جداً أو ماء لم تلتقطه الخريطة البصرية. فاقرأ هذه المساحات على أنها «سطح أملس يشبه الماء» لا مساحة فيضان مقيسة. وفي الشتاء تختلف الخريطتان كما يظهر في الرسم.`,
         audience: {
-          public: () => 'اسحب من يونيو إلى أغسطس: سهل النهر يمتلئ ببقع داكنة. هذا هو الماء يصل إلى الحقول. أكمل إلى أكتوبر وشاهده ينحسر.',
-          decision: (n, f) => `ظهر نحو ${f(n.rise)} كم² إضافية من السطح الشبيه بالماء بين ${f.d(n.start.date)} و${f.d(n.peak.date)}. القياس نفسه يتكرر كل 12 يوماً، في أي طقس، وبلا زيارة ميدانية. ومعرفة النبض العادي هي التي تُظهر النبض غير العادي مبكراً.`,
+          public: () => 'اسحب من يونيو إلى أغسطس: سهل النهر يمتلئ ببقع داكنة. هذا في أغلبه الماء يصل إلى الحقول. أكمل إلى أكتوبر وشاهده ينحسر.',
+          decision: (n, f) => `ظهر نحو ${f(n.rise)} كم² إضافية من السطح الداكن الشبيه بالماء بين ${f.d(n.start.date)} و${f.d(n.peak.date)}. القياس نفسه يتكرر كل 12 يوماً، في أي طقس، وبلا زيارة ميدانية. ومعرفة النبض العادي هي التي تُظهر النبض غير العادي مبكراً.`,
           resource: (n, f) => `بلغ الماء على الحقول ذروته حول ${f.d(n.peak.date)} ونزل تحت مستوى يونيو في ${f.d(n.low.date)}. قارن المنحنى بأعمدة المطر: الماء السطحي يتبع الري ومستوى النهر أكثر مما يتبع المطر المحلي.`,
           educator: () => 'مثال واضح للصف على قاعدة «الماء الهادئ داكن والنبات الرطب لامع». اطلب من الطلاب أن يتوقعوا شكل الحقل قبل الزراعة، ثم وهو مغمور، ثم والمحصول طويل، وتحققوا بالشريط.',
           scientist: (n, f) => `بيانات L-band GCOV (gamma-0)، قناتا HH و HV، المسار 041 الصاعد، 16 تاريخاً من نسخ BETA والمؤقتة و V1. العتبة HH أقل من ‎−16 ديسيبل بعد تنعيم 3×3 لخلايا 40 متراً. الذروة ${f(n.peak.dark_pct)}% من النافذة. النسخ مختلفة المعالجة، فقد توجد فروق صغيرة بينها.`,
@@ -275,15 +288,16 @@ export const SITES = [
       const a = ev.find((r) => r.date === '2026-09-04'), b = ev.find((r) => r.date === '2026-09-16')
       const dv = dawn.map((r) => r.west_hh_db)
       const jump = b.west_hh_db - a.west_hh_db
-      return { a, b, jump, times: Math.pow(10, jump / 10), dawnSpread: Math.max(...dv) - Math.min(...dv),
+      const dawnLow = dawn.reduce((p, c) => (c.sun_elev_deg < p.sun_elev_deg ? c : p))
+      return { a, b, jump, dawnLow, times: Math.pow(10, jump / 10), dawnSpread: Math.max(...dv) - Math.min(...dv),
         eastMove: Math.abs(b.east_hh_db - a.east_hh_db) }
     },
     text: {
       en: {
         name: 'Manah', place: 'Ad Dakhiliyah, Oman', kicker: 'The panels that danced',
         lead: (n, f) => `Between ${f.d(n.a.date)} and ${f.d(n.b.date)}, one of Oman's largest solar fields became ${f(n.times, 1)} times brighter in NISAR's evening pass (${f(n.a.west_hh_db, 1)} to ${f(n.b.west_hh_db, 1)} dB). Nothing new was built.`,
-        why: 'Radar is very sensitive to the angle of flat metal and glass. Manah 1 uses panels that turn to follow the sun. The most likely cause is that the panels of the west field stood at a different angle at pass time from mid-September on. We have not confirmed this with the plant operator.',
-        whyNot: (n, f) => `Switch to the dawn pass: the same field stays flat (it moves by only ${f(n.dawnSpread, 1)} dB in five months). The east field and the desert next to it also stay flat in both passes. And optical images from June and November show the same field. The ground did not change.`,
+        why: (n, f) => `Radar is very sensitive to the angle of flat metal and glass, and the panels here turn to follow the sun. As autumn came, the evening pass (always 18:48) fell later and later after sunset: the sun was ${f(Math.abs(n.a.sun_elev_deg), 1)}° below the horizon on ${f.d(n.a.date)} and ${f(Math.abs(n.b.sun_elev_deg), 1)}° below on ${f.d(n.b.date)}, the end of twilight. The most likely cause is that by then the west field had already moved its panels to their night position, tilted so that they face the radar. We have not confirmed this with the plant operator.`,
+        whyNot: (n, f) => `Switch to the dawn pass: the same field stays flat (it moves by only ${f(n.dawnSpread, 1)} dB in five months). The east field and the desert next to it also stay flat in both passes. And optical images from June and November show the same field. The ground did not change. At dawn the radar looks from the opposite side, so panels tilted the other way stay dim even when the sun is ${f(Math.abs(n.dawnLow.sun_elev_deg), 1)}° below the horizon.`,
         care: 'At first we read this bright rectangle as a newly built solar field. It was not. Radar shows that something changed, not what changed: brightness depends on roughness, moisture and angle. A radar change map should be checked against a second source before drawing conclusions.',
         audience: {
           public: () => 'Drag the handle across the big rectangle: on the left it is grey, on the right it glows. Now choose "Dawn pass" and try again. Same place, same dates, no change.',
@@ -296,8 +310,8 @@ export const SITES = [
       ar: {
         name: 'منح', place: 'محافظة الداخلية، عُمان', kicker: 'الألواح التي رقصت',
         lead: (n, f) => `بين ${f.d(n.a.date)} و${f.d(n.b.date)} صار أحد أكبر الحقول الشمسية في عُمان ألمع بـ ${f(n.times, 1)} مرات في مرور NISAR المسائي (من ${f(n.a.west_hh_db, 1)} إلى ${f(n.b.west_hh_db, 1)} ديسيبل). ولم يُبنَ شيء جديد.`,
-        why: 'الرادار حسّاس جداً لزاوية الأسطح المعدنية والزجاجية المستوية. ألواح محطة منح 1 تدور لتتبع الشمس. السبب الأرجح أن ألواح الحقل الغربي صارت تقف بزاوية مختلفة وقت المرور منذ منتصف سبتمبر. ولم نتأكد من ذلك من مشغّل المحطة.',
-        whyNot: (n, f) => `بدّل إلى مرور الفجر: الحقل نفسه يبقى ثابتاً (يتحرك ${f(n.dawnSpread, 1)} ديسيبل فقط في خمسة أشهر). والحقل الشرقي والصحراء بجانبه ثابتان في المرورين. والصور البصرية في يونيو ونوفمبر تُظهر الحقل نفسه. الأرض لم تتغيّر.`,
+        why: (n, f) => `الرادار حسّاس جداً لزاوية الأسطح المعدنية والزجاجية المستوية، والألواح هنا تدور لتتبع الشمس. مع دخول الخريف صار المرور المسائي (دائماً 6:48) يقع بعد الغروب بوقت أطول: كانت الشمس ${f(Math.abs(n.a.sun_elev_deg), 1)}° تحت الأفق يوم ${f.d(n.a.date)}، و${f(Math.abs(n.b.sun_elev_deg), 1)}° تحته يوم ${f.d(n.b.date)}، أي نهاية الشفق. السبب الأرجح أن الحقل الغربي كان قد حرّك ألواحه إلى وضعية الليل، مائلةً بحيث تواجه الرادار. ولم نتأكد من ذلك من مشغّل المحطة.`,
+        whyNot: (n, f) => `بدّل إلى مرور الفجر: الحقل نفسه يبقى ثابتاً (يتحرك ${f(n.dawnSpread, 1)} ديسيبل فقط في خمسة أشهر). والحقل الشرقي والصحراء بجانبه ثابتان في المرورين. والصور البصرية في يونيو ونوفمبر تُظهر الحقل نفسه. الأرض لم تتغيّر. وفي الفجر ينظر الرادار من الجهة المعاكسة، فالألواح المائلة للجهة الأخرى تبقى خافتة حتى والشمس ${f(Math.abs(n.dawnLow.sun_elev_deg), 1)}° تحت الأفق.`,
         care: 'في البداية قرأنا هذا المستطيل اللامع على أنه حقل شمسي جديد، ولم يكن كذلك. الرادار يقول إن شيئاً تغيّر، ولا يقول ما هو: اللمعان يعتمد على الخشونة والرطوبة والزاوية. لذلك يجب التحقق من خريطة التغيّر الرادارية بمصدر ثانٍ قبل الحكم.',
         audience: {
           public: () => 'اسحب المقبض فوق المستطيل الكبير: على اليسار رمادي وعلى اليمين يتوهّج. الآن اختر «مرور الفجر» وجرّب ثانية. المكان نفسه والتواريخ نفسها، ولا تغيّر.',
@@ -382,7 +396,7 @@ export const SITES = [
           decision: () => 'Radar is not one tool. Long-wave L-band is the right choice for forests, water and ground; for grass and pasture a shorter wave or an optical sensor is needed.',
           resource: () => 'To follow pasture during the khareef, pair NISAR with optical greenness. NISAR adds what optical cannot give in the fog: soil moisture trends and where the trees are.',
           educator: () => 'A perfect "why don\'t we see it?" case. Compare 24 cm with the height and thickness of a blade of grass, then with a tree trunk.',
-          scientist: (n, f) => `Track 157 ascending, mean γ⁰ over 17.09–17.25°N. Range ${f(n.hhSpread, 1)} dB (HH) and ${f(n.hvSpread, 1)} dB (HV) over nine acquisitions. A C-band comparison would test the wavelength explanation; it is not included yet.`,
+          scientist: (n, f) => `Track 157 ascending, mean γ⁰ over 17.09–17.25°N. Range ${f(n.hhSpread, 1)} dB (HH) and ${f(n.hvSpread, 1)} dB (HV) over nine acquisitions. Use the "C-band ↔ L-band" view to compare with Sentinel-1 pictures of the same weeks; we show pictures only, not calibrated C-band numbers.`,
         },
       },
       ar: {
@@ -396,7 +410,7 @@ export const SITES = [
           decision: () => 'الرادار ليس أداة واحدة. موجة L الطويلة مناسبة للغابات والماء والأرض، أما العشب والمراعي فتحتاج موجة أقصر أو مستشعراً بصرياً.',
           resource: () => 'لمتابعة المراعي في الخريف، استخدم NISAR مع مؤشر الخضرة البصري. NISAR يضيف ما لا تعطيه الصور البصرية في الضباب: اتجاه رطوبة التربة ومواقع الأشجار.',
           educator: () => 'حالة ممتازة لسؤال «لماذا لا نراه؟». قارن 24 سنتيمتراً بطول ورقة العشب وسُمكها، ثم بجذع شجرة.',
-          scientist: (n, f) => `المسار 157 الصاعد، متوسط γ⁰ بين 17.09 و17.25 شمالاً. المدى ${f(n.hhSpread, 1)} ديسيبل (HH) و${f(n.hvSpread, 1)} ديسيبل (HV) على تسع صور. مقارنة مع C-band تختبر تفسير طول الموجة، وهي غير مضافة بعد.`,
+          scientist: (n, f) => `المسار 157 الصاعد، متوسط γ⁰ بين 17.09 و17.25 شمالاً. المدى ${f(n.hhSpread, 1)} ديسيبل (HH) و${f(n.hvSpread, 1)} ديسيبل (HV) على تسع صور. استخدم عرض «C-band ↔ L-band» للمقارنة مع صور Sentinel-1 للأسابيع نفسها. نعرض الصور فقط، لا أرقام C-band معايَرة.`,
         },
       },
     },

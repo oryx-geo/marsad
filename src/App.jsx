@@ -100,6 +100,8 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
   const [point, setPoint] = useState(null)
   const [series, setSeries] = useState(null)
   const [rep, setRep] = useState(false)
+  const [sound, setSound] = useState(false)
+  const audio = useRef(null)
 
   useEffect(() => {
     let alive = true
@@ -151,21 +153,56 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [point, track, usePol, data])
 
+  // "hear the rhythm": every date plays a short note, higher when the charted value is higher
+  useEffect(() => {
+    if (!sound || !tr || !audio.current) return
+    const key = site.chart.series[0].key
+    const vals = tr.series.map((r) => r[key]).filter((v) => v != null)
+    const row = tr.series.find((r) => r.date === b)
+    if (!row || row[key] == null) return
+    const lo = site.chart.yDomain ? site.chart.yDomain[0] : Math.min(...vals)
+    const hi = site.chart.yDomain ? site.chart.yDomain[1] : Math.max(...vals)
+    const x = Math.max(0, Math.min(1, (row[key] - lo) / (hi - lo || 1)))
+    const ctx = audio.current
+    const now = ctx.currentTime
+    const osc = ctx.createOscillator(), gain = ctx.createGain()
+    osc.type = 'triangle'
+    osc.frequency.value = 196 * Math.pow(2, x * 2)        // two octaves, from G3 up
+    gain.gain.setValueAtTime(0.0001, now)
+    gain.gain.exponentialRampToValueAtTime(0.25, now + 0.03)
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55)
+    osc.connect(gain).connect(ctx.destination)
+    osc.start(now); osc.stop(now + 0.6)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [b, sound, track])
+  const toggleSound = () => {
+    if (!audio.current) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) audio.current = new AC() }
+    audio.current?.resume?.()
+    setSound((v) => !v)
+  }
+
   if (!data || !a || !b || !dates.includes(a) || !dates.includes(b)) return <p className="loading">{t.loading}</p>
 
   const txt = site.text[lang]
-  const n = site.facts(tr.series, data.tracks)
+  const n = site.facts(tr.series, data.tracks, data)
   const say = (v) => (typeof v === 'function' ? v(n, f) : v)
   const opt = (d) => data.optical?.by_nisar_date?.[d]
   const optUrl = (d) => (opt(d) ? `${BASE}data/${site.id}/optical/${opt(d).date}_${opt(d).sensor}.jpg` : BLANK)
   const optLabel = (d) => (opt(d) ? `${t.realTag} · ${f.d(opt(d).date)}` : `${t.realTag} · ${t.noReal}`)
   const rad = (d) => radarUrl(site.id, track, d, usePol)
   const radLabel = (d) => `${t.radarTag} ${usePol.toUpperCase()} · ${f.d(d)}`
+  const cb = (d) => data.cband?.by_nisar_date?.[d]
+  const hasC = Object.values(data.cband?.by_nisar_date || {}).some(Boolean)
+  const cPol = usePol === 'hh' ? 'vv' : 'vh'
+  const cUrl = (d) => (cb(d) ? `${BASE}data/${site.id}/cband/${cb(d).date}_${cPol}.jpg` : BLANK)
+  const cLabel = (d) => (cb(d) ? `${t.cTag} ${cPol.toUpperCase()} · ${f.d(cb(d).date)}` : `${t.cTag} · ${t.noC}`)
 
   let urlA, urlB, labelA, labelB
   if (view === 'radar') { urlA = rad(a); urlB = rad(b); labelA = `${t.before} · ${f.d(a)}`; labelB = `${t.after} · ${f.d(b)}` }
   else if (view === 'real') { urlA = optUrl(a); urlB = optUrl(b); labelA = optLabel(a); labelB = optLabel(b) }
+  else if (view === 'cband') { urlA = cUrl(b); urlB = rad(b); labelA = cLabel(b); labelB = `${t.lTag} ${usePol.toUpperCase()} · ${f.d(b)}` }
   else { urlA = optUrl(b); urlB = rad(b); labelA = optLabel(b); labelB = radLabel(b) }
+  const single = view === 'both' || view === 'cband'   // both sides show the same date
 
   let verdict = null
   if (Array.isArray(series)) {
@@ -226,7 +263,7 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
         <section className="block">
           <h2>{t.chartTitle}</h2>
           <Chart rows={tr.series} series={site.chart.series} bars={site.chart.bars} unit={site.chart.unit}
-            yDomain={site.chart.yDomain} current={b} compare={view === 'both' ? null : a} locale={f.locale}
+            yDomain={site.chart.yDomain} current={b} compare={single ? null : a} locale={f.locale}
             onPick={(d) => { setPlaying(false); setB(d) }} />
           <ul className="key">
             {site.chart.series.map((s) => (
@@ -246,7 +283,7 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
             <>
               <p className="coords" dir="ltr">{point[1].toFixed(4)}°, {point[0].toFixed(4)}° · NISAR {usePol.toUpperCase()}</p>
               <Chart rows={series} series={[{ key: 'db', color: 'var(--c-probe)', label: '' }]} unit="dB" current={b}
-                compare={view === 'both' ? null : a} locale={f.locale} onPick={(d) => { setPlaying(false); setB(d) }} small />
+                compare={single ? null : a} locale={f.locale} onPick={(d) => { setPlaying(false); setB(d) }} small />
               {verdict && <p className="verdict">{verdict}</p>}
               <p className="hint">{t.probeNote}</p>
             </>
@@ -264,7 +301,7 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
             <input id={`time-${site.id}`} type="range" min={0} max={dates.length - 1} value={dates.indexOf(b)} dir="ltr"
               onChange={(e) => { setPlaying(false); setB(dates[+e.target.value]) }} />
           </div>
-          {view !== 'both' && (
+          {!single && (
             <div className="cmp">
               <label htmlFor={`cmp-${site.id}`}>{t.compareWith}</label>
               <select id={`cmp-${site.id}`} value={a} onChange={(e) => setA(e.target.value)}>
@@ -275,7 +312,7 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
         </div>
         <div className="dock-row">
           <div className="seg" role="group" aria-label={t.view}>
-            {[['radar', t.viewRadar], ['real', t.viewReal], ['both', t.viewBoth]].map(([k, label]) => (
+            {[['radar', t.viewRadar], ['real', t.viewReal], ['both', t.viewBoth], ...(hasC ? [['cband', t.viewC]] : [])].map(([k, label]) => (
               <button key={k} type="button" aria-pressed={view === k} onClick={() => setView(k)}>{label}</button>
             ))}
           </div>
@@ -291,10 +328,11 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
               ))}
             </div>
           )}
+          <button type="button" className="snd" aria-pressed={sound} onClick={toggleSound} title={t.soundHint}>{sound ? '🔊' : '🔈'} {t.sound}</button>
           <button type="button" className="rep-open" onClick={() => setRep(true)}>📄 {t.report}</button>
         </div>
         <p className="dock-note">
-          {view === 'radar' ? (pols.length === 1 ? t.hhOnly : channelText(lang, usePol)) : t.realNote}
+          {sound ? t.soundHint + ' ' : ''}{view === 'radar' ? (pols.length === 1 ? t.hhOnly : channelText(lang, usePol)) : view === 'cband' ? t.cNote : t.realNote}
         </p>
       </div>
       {model && <Report model={model} t={t} lang={lang} f={f} onClose={() => setRep(false)} />}

@@ -13,6 +13,9 @@ change over time, and explains in plain words why it changed, or why it did not.
 
 - Compare two NISAR dates with a before/after handle on an interactive map.
 - See the same place in real colour (NASA HLS) next to the radar picture.
+- Compare NISAR's long L-band wave with Sentinel-1's short C-band wave for the same weeks.
+- Hear the rhythm: turn on the sound and each date plays a note.
+- Open the full report for any place (all five audiences) and save it as a PDF.
 - Click any point to read its radar brightness over time.
 - "Anywhere": click any place on Earth and MARSAD asks NASA's public catalogue, live, what NISAR
   has recorded there (how many passes, which dates, which radar channels).
@@ -48,6 +51,9 @@ processing/fetch.py     finds NISAR granules in NASA CMR and reads only the need
 processing/build.py     averages, re-projects, writes the images and all numbers
 processing/rain.py      adds NASA POWER rainfall to the Sindh series
 processing/optical.py   saves the nearest NASA HLS true-colour picture for every NISAR date
+processing/cband.py     saves the nearest Sentinel-1 C-band picture (NASA OPERA RTC-S1) for every NISAR date
+processing/water_check.py  checks the Sindh "dark surface" measure against NASA OPERA DSWx-HLS
+processing/sun.py       adds the sun elevation at each NISAR pass over Manah
 src/                    the web app (React, MapLibre GL JS, hand-written SVG chart)
 ```
 
@@ -90,6 +96,18 @@ python processing/rain.py
 python processing/optical.py
 ```
 
+```bash
+python processing/cband.py
+```
+
+```bash
+python processing/water_check.py
+```
+
+```bash
+python processing/sun.py
+```
+
 ## Live analysis (optional, experimental)
 
 "Anywhere" can also compare the first and the latest NISAR picture of a 10 km square around any
@@ -110,7 +128,8 @@ On Windows, double-click `server/start-server.bat` (it needs the environment var
 Idea, study area, design, data choices and verification by the team. Code written with the help of
 an AI coding assistant, reviewed and tested by the team.
 
-The ORYX GEO team logo is an AI-generated image and carries a visible "AI-generated" mark.
+The ORYX GEO team logo is an AI-generated image. Large versions carry the caption "AI-generated
+image"; small versions carry an "AI" tag.
 The MARSAD logos were designed by the team in Canva.
 
 ## References
@@ -124,6 +143,10 @@ Data
 - NASA POWER daily precipitation (PRECTOTCORR). https://power.larc.nasa.gov/
 - NASA Harmonized Landsat Sentinel-2 (HLS) true-colour imagery through NASA GIBS, shown next to the
   radar pictures.
+- NASA OPERA Dynamic Surface Water Extent from HLS (DSWx-HLS) through NASA GIBS, used to check the
+  Sindh water measure.
+- NASA OPERA Radiometric Terrain Corrected Sentinel-1 (RTC-S1) through NASA GIBS, shown as the
+  C-band comparison. Sentinel-1 is a Copernicus mission (ESA).
   Contains modified Copernicus Sentinel data (ESA). https://gibs.earthdata.nasa.gov/
 - Base map tiles: © OpenStreetMap contributors. https://www.openstreetmap.org/copyright
 
@@ -133,6 +156,22 @@ Background on the Manah solar plants
   https://prnewswire.com/news-releases/arctech-scores-new-spring-win---awarded-500mw-manah-i-pv-plant-in-oman-302103257.html
 - Oman Observer, "Oman's largest solar power plants Manah 1, Manah 2 inaugurated" (2025).
   https://www.omanobserver.om/ampArticle/1165105
+- NS Energy, "Manah-1 solar photovoltaic independent power plant, Oman" (site of about 775 ha, bifacial
+  modules on single-axis trackers, cleaning robots).
+  https://www.nsenergybusiness.com/projects/manah-1-solar-pv-independent-power-plant-oman/
+- Power Technology, "Manah I Solar Power Plant, Oman".
+  https://www.power-technology.com/projects/manah-i-solar-power-plant-oman/
+- EDF Renewables, inauguration of Manah I (press release, 2025).
+  https://mea-edf-re.com/edf-renewables-and-korea-western-power-companyinaugurate-sultanate-of-omans-largest-solar-power-plant
+- PV Magazine, "Sembcorp Utilities activates 588 MW of solar in Oman" (2024).
+  https://www.pv-magazine.com/2024/12/31/sembcorp-utilities-activates-588-mw-of-solar-in-oman/
+- Cal Poly, "Photovoltaic Array Soiling Reduction through Optimization of Stowing Angle" (night stow
+  positions of single-axis trackers).
+  https://surp.calpoly.edu/2020/photovoltaic-array-soiling-reduction-through-optimization-of-stowing-angle
+
+What these sources establish: both plants were inaugurated in January 2025 and Manah 1 uses
+single-axis trackers with cleaning robots. None of them says which field is which, or how the panels
+stand at night. So the site presents the cause of the Manah signal as likely, not confirmed.
 
 Software
 

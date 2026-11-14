@@ -64,7 +64,10 @@
      "hv_db": -18.28,
      "changed_hh_pct": 1.4,
      "changed_hv_pct": 0.89,
-     "rain_mm": 0.0
+     "rain_mm": 0.0,
+     "optical_water_km2": 673.6,
+     "optical_open_km2": 105.4,
+     "optical_date": "2025-12-08"
     },
     {
      "date": "2025-12-19",
@@ -84,7 +87,10 @@
      "hv_db": -17.76,
      "changed_hh_pct": 7.05,
      "changed_hv_pct": 5.42,
-     "rain_mm": 15.4
+     "rain_mm": 15.4,
+     "optical_water_km2": 596.8,
+     "optical_open_km2": 110.9,
+     "optical_date": "2026-01-03"
     },
     {
      "date": "2026-01-12",
@@ -104,7 +110,10 @@
      "hv_db": -18.13,
      "changed_hh_pct": 12.3,
      "changed_hv_pct": 9.12,
-     "rain_mm": 0.1
+     "rain_mm": 0.1,
+     "optical_water_km2": 57.2,
+     "optical_open_km2": 43.2,
+     "optical_date": "2026-06-12"
     },
     {
      "date": "2026-06-29",
@@ -114,7 +123,10 @@
      "hv_db": -17.92,
      "changed_hh_pct": 13.21,
      "changed_hv_pct": 11.17,
-     "rain_mm": 1.1
+     "rain_mm": 1.1,
+     "optical_water_km2": 42.8,
+     "optical_open_km2": 3.6,
+     "optical_date": "2026-07-01"
     },
     {
      "date": "2026-07-11",
@@ -124,7 +136,10 @@
      "hv_db": -18.07,
      "changed_hh_pct": 16.62,
      "changed_hv_pct": 14.5,
-     "rain_mm": 0.2
+     "rain_mm": 0.2,
+     "optical_water_km2": 72.5,
+     "optical_open_km2": 3.4,
+     "optical_date": "2026-07-11"
     },
     {
      "date": "2026-07-23",
@@ -144,7 +159,10 @@
      "hv_db": -17.6,
      "changed_hh_pct": 23.45,
      "changed_hv_pct": 23.84,
-     "rain_mm": 0.9
+     "rain_mm": 0.9,
+     "optical_water_km2": 281.4,
+     "optical_open_km2": 19.9,
+     "optical_date": "2026-08-20"
     },
     {
      "date": "2026-08-28",
@@ -154,7 +172,10 @@
      "hv_db": -17.49,
      "changed_hh_pct": 22.2,
      "changed_hv_pct": 23.05,
-     "rain_mm": 0.0
+     "rain_mm": 0.0,
+     "optical_water_km2": 267.0,
+     "optical_open_km2": 59.6,
+     "optical_date": "2026-08-30"
     },
     {
      "date": "2026-09-09",
@@ -164,7 +185,10 @@
      "hv_db": -17.43,
      "changed_hh_pct": 23.41,
      "changed_hv_pct": 20.73,
-     "rain_mm": 0.0
+     "rain_mm": 0.0,
+     "optical_water_km2": 192.9,
+     "optical_open_km2": 44.1,
+     "optical_date": "2026-09-09"
     },
     {
      "date": "2026-09-21",
@@ -174,7 +198,10 @@
      "hv_db": -17.16,
      "changed_hh_pct": 29.15,
      "changed_hv_pct": 19.82,
-     "rain_mm": 0.1
+     "rain_mm": 0.1,
+     "optical_water_km2": 114.4,
+     "optical_open_km2": 10.2,
+     "optical_date": "2026-09-19"
     },
     {
      "date": "2026-10-03",
@@ -184,7 +211,10 @@
      "hv_db": -16.87,
      "changed_hh_pct": 31.01,
      "changed_hv_pct": 21.43,
-     "rain_mm": 0.0
+     "rain_mm": 0.0,
+     "optical_water_km2": 274.4,
+     "optical_open_km2": 113.0,
+     "optical_date": "2026-10-02"
     },
     {
      "date": "2026-10-15",
@@ -194,7 +224,10 @@
      "hv_db": -16.55,
      "changed_hh_pct": 27.97,
      "changed_hv_pct": 24.14,
-     "rain_mm": 1.2
+     "rain_mm": 1.2,
+     "optical_water_km2": 143.6,
+     "optical_open_km2": 38.4,
+     "optical_date": "2026-10-14"
     },
     {
      "date": "2026-10-27",
@@ -204,7 +237,10 @@
      "hv_db": -16.83,
      "changed_hh_pct": 17.02,
      "changed_hv_pct": 17.3,
-     "rain_mm": 0.0
+     "rain_mm": 0.0,
+     "optical_water_km2": 287.7,
+     "optical_open_km2": 115.0,
+     "optical_date": "2026-10-26"
     }
    ]
   }
@@ -315,5 +351,18 @@
     "gap": 1
    }
   }
+ },
+ "water_check": {
+  "source": "NASA OPERA DSWx-HLS via NASA GIBS",
+  "dates_compared": 12,
+  "tolerance_cells": 2,
+  "open_water_that_is_radar_dark_pct": [
+   55,
+   99
+  ],
+  "radar_dark_confirmed_as_water_pct": [
+   6,
+   80
+  ]
  }
 }
