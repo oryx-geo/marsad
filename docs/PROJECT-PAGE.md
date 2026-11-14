@@ -72,9 +72,12 @@ MARSAD is an open, interactive web app built on NISAR L-band radar (NASA and ISR
 4. **Salalah, Oman (the green the radar cannot see).** The khareef monsoon turns the mountains
    green, yet L-band brightness moves by less than 1.5 dB: the 24 cm wave passes through grass.
 5. **Rondônia, Brazil (where the forest ends).** HV separates forest from pasture through cloud.
-   We do not claim new deforestation: the signal we saw followed the dry season.
-6. **Jakobshavn, Greenland (ice that never stands still).** Summer melt darkens the ice and
-   refreezing brightens it. Only HH exists there; we did not measure ice speed.
+   About half of the window reads as forest (47 to 62% depending on the date). That swing is
+   weather, not forest: wet pasture brightens. We do not claim new deforestation.
+6. **Jakobshavn, Greenland (ice that never stands still).** By tracking the crevasse pattern
+   between passes 12 days apart, we measured the ice moving 15 to 30 metres per day in the fast
+   lane, towards the sea, while 73% of the tracked patches (rock and slow ice) did not move.
+   Only HH exists there, and the very fastest ice could not be matched.
 
 **How it addresses the challenge**
 
@@ -82,6 +85,9 @@ The challenge asks for a tool that tracks and visualises surface change with SAR
 steps, explains the physical drivers of what we see or do not see, and speaks to the public,
 decision-makers, resource managers, educators and scientists. MARSAD does each of these with NISAR
 as its core data, and it treats "what we do not see" as seriously as what we do.
+
+We also checked ourselves: the Sindh series mixes product versions, so we followed buildings that
+never change. Their brightness differs by 0.07 dB between the 2025 and 2026 products.
 
 **How we built it**
 
@@ -94,7 +100,7 @@ small FastAPI program reached through a tunnel.
 **What is next**
 
 More years of NISAR will separate a normal season from an unusual one. Next steps: interferometry
-for ground motion, calibrated C-band numbers, and alerts when a place leaves its usual rhythm.
+for ground motion, calibrated C-band numbers, tracking of the fastest ice, and alerts when a place leaves its usual rhythm.
 
 ## NASA data
 

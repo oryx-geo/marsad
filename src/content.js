@@ -232,7 +232,7 @@ export const SITES = [
       const chk = data.water_check
       const peak = y26.reduce((a, b) => (b.dark_km2 > a.dark_km2 ? b : a))
       const low = y26.filter((r) => r.date > peak.date).reduce((a, b) => (b.dark_km2 < a.dark_km2 ? b : a))
-      return { start, peak, low, rise: peak.dark_km2 - start.dark_km2, opt, optStart, chk }
+      return { start, peak, low, rise: peak.dark_km2 - start.dark_km2, opt, optStart, chk, ver: data.version_check }
     },
     text: {
       en: {
@@ -246,7 +246,7 @@ export const SITES = [
           decision: (n, f) => `About ${f(n.rise)} km² more dark, water-like surface appeared between ${f.d(n.start.date)} and ${f.d(n.peak.date)}. The same measurement repeats every 12 days, in any weather, with no field visit. Knowing the normal pulse is what makes an abnormal one visible early.`,
           resource: (n, f) => `Water on the fields peaked around ${f.d(n.peak.date)} and was below the June level by ${f.d(n.low.date)}. Compare the curve with the rain bars: the surface water follows irrigation and river level more than local rain.`,
           educator: () => 'A clear classroom example of "smooth water is dark, wet plants are bright". Ask students to predict what a field looks like before planting, when flooded, and when the crop is tall, then check with the slider.',
-          scientist: (n, f) => `L-band GCOV gamma-0, HH and HV, track 041 ascending, 16 dates from BETA, provisional and V1 products. Threshold HH < −16 dB after 3×3 smoothing of 40 m cells. Peak ${f(n.peak.dark_pct)}% of the window. Against OPERA DSWx-HLS (two-cell tolerance, ${f(n.chk.dates_compared)} dates): ${f(n.chk.open_water_that_is_radar_dark_pct[0])}–${f(n.chk.open_water_that_is_radar_dark_pct[1])}% of optical open water is radar-dark; ${f(n.chk.radar_dark_confirmed_as_water_pct[0])}–${f(n.chk.radar_dark_confirmed_as_water_pct[1])}% of radar-dark is optical water. Mixed processing versions, so small offsets are possible.`,
+          scientist: (n, f) => `L-band GCOV gamma-0, HH and HV, track 041 ascending, 16 dates from BETA, provisional and V1 products. Threshold HH < −16 dB after 3×3 smoothing of 40 m cells. Peak ${f(n.peak.dark_pct)}% of the window. Against OPERA DSWx-HLS (two-cell tolerance, ${f(n.chk.dates_compared)} dates): ${f(n.chk.open_water_that_is_radar_dark_pct[0])}–${f(n.chk.open_water_that_is_radar_dark_pct[1])}% of optical open water is radar-dark; ${f(n.chk.radar_dark_confirmed_as_water_pct[0])}–${f(n.chk.radar_dark_confirmed_as_water_pct[1])}% of radar-dark is optical water. Processing versions are mixed, so we checked them on ${f(n.ver.stable_cells)} cells of buildings that are bright on every date: their median moves by ${f(n.ver.spread_db, 1)} dB over the whole series, and the 2025 and 2026 products differ by ${f(Math.abs(n.ver.early_vs_late_db), 2)} dB on average.`,
         },
       },
       ar: {
@@ -468,37 +468,37 @@ export const SITES = [
     from: '2026-06-25',
     to: '2026-10-23',
     chart: {
-      unit: 'dB', yDomain: [-19, -4],
-      series: [{ key: 'hh_db', color: COLORS.navy, label: { en: 'Whole window, HH', ar: 'النافذة كلها، HH' } }],
+      unit: 'm/day', yDomain: [0, 40],
+      series: [{ key: 'ice_speed_mday', color: COLORS.navy, label: { en: 'Ice speed in the fast lane, over the next 12 days (m per day)', ar: 'سرعة الجليد في المسار السريع خلال الـ12 يوماً التالية (متر في اليوم)' } }],
     },
-    facts: (rows) => ({ first: rows[0], last: rows[rows.length - 1] }),
+    facts: (rows, all, data) => ({ first: rows[0], last: rows[rows.length - 1], v: data.ice_speed }),
     text: {
       en: {
         name: 'Greenland', place: 'Jakobshavn glacier (Sermeq Kujalleq)', kicker: 'Ice that never stands still',
-        lead: () => 'One of the fastest glaciers on Earth pushes ice into this fjord. Compare June with October: the floating ice in the fjord and the ice stream brighten, and the icebergs are in different places.',
+        lead: (n, f) => `One of the fastest glaciers on Earth pushes ice into this fjord. By following the crevasse pattern from one NISAR pass to the next, we measured the ice moving ${f(n.v.lane_range_mday[0], 1)} to ${f(n.v.lane_range_mday[1], 1)} metres per day towards the sea, while the rock beside it did not move at all.`,
         why: 'In summer the surface melts. Wet snow and meltwater absorb and scatter the radar away, so the ice looks darker. When it refreezes, the pulse enters the dry snow and ice, bounces inside, and returns strongly.',
         whyNot: 'The bare rock on both sides of the fjord keeps the same brightness: rock does not melt.',
-        care: 'NISAR recorded only HH here. We compare pictures; we did not measure the speed of the ice, which needs a different method.',
+        care: (n, f) => `NISAR recorded only HH here. The speed comes from feature tracking: we slide small patches (1.9 km) of one picture over the next one, 12 days later, and keep only clear matches. ${f(n.v.still_pct)}% of the tracked patches did not move (rock and slow ice), which is the check that the method works. One step is 20 m, so speeds are known to about 2 m per day. The very fastest ice in the middle changes too much in 12 days to be matched, so the true peak speed is higher than our numbers.`,
         audience: {
-          public: () => 'Drag between June and October and follow one iceberg. It will not be where you left it.',
+          public: (n, f) => `Drag between June and October and follow one iceberg. It will not be where you left it. The glacier behind it moves about ${f(n.v.lane_median_mday)} metres every day.`,
           decision: () => 'Regular radar views of glacier fronts, in polar night and cloud, feed the sea-level estimates that coastal planning depends on.',
           resource: () => 'Melt timing shows up as a seasonal darkening and brightening of the ice surface.',
           educator: () => 'Ask why ice is darker in summer on radar while it looks white to our eyes all year.',
-          scientist: () => 'Track 170 descending, HH only, 17 acquisitions with a gap from January to June. No offset tracking or interferometry was done.',
+          scientist: (n, f) => `Track 170 descending, HH only, 17 acquisitions. Offset tracking by FFT cross-correlation of log-amplitude on 96×96-pixel patches (20 m), ${f(n.v.pairs)} pairs of 12 days, peak-ratio filter. Fast lane: ${f(n.v.lane_patches)} patches, median ${f(n.v.lane_median_mday, 1)} m/day, mean eastward component ${f(n.v.lane_eastward_mday, 1)} m/day. Not corrected for geolocation error or tides; no interferometry.`,
         },
       },
       ar: {
         name: 'غرينلاند', place: 'نهر ياكوبسهافن الجليدي', kicker: 'جليد لا يقف',
-        lead: () => 'أحد أسرع الأنهار الجليدية على الأرض يدفع الجليد إلى هذا المضيق. قارن يونيو بأكتوبر: الجليد العائم في المضيق ومجرى الجليد يصيران ألمع، والجبال الجليدية في أماكن مختلفة.',
+        lead: (n, f) => `أحد أسرع الأنهار الجليدية على الأرض يدفع الجليد إلى هذا المضيق. بتتبّع شكل الشقوق من مرور NISAR إلى الذي بعده، قسنا الجليد يتحرك ${f(n.v.lane_range_mday[0], 1)} إلى ${f(n.v.lane_range_mday[1], 1)} متراً في اليوم نحو البحر، والصخر بجانبه لم يتحرك أبداً.`,
         why: 'في الصيف يذوب السطح. الثلج المبتل وماء الذوبان يمتصان الرادار ويبعثرانه بعيداً، فيبدو الجليد أدكن. وحين يتجمد من جديد تدخل النبضة في الثلج الجاف والجليد وترتد داخله وترجع قوية.',
         whyNot: 'الصخر العاري على جانبي المضيق يحتفظ بلمعانه: الصخر لا يذوب.',
-        care: 'سجّل NISAR هنا قناة HH فقط. نحن نقارن الصور، ولم نقس سرعة الجليد، فهذا يحتاج طريقة أخرى.',
+        care: (n, f) => `سجّل NISAR هنا قناة HH فقط. السرعة تأتي من تتبّع الملامح: نحرّك رقعاً صغيرة (1.9 كم) من صورة فوق الصورة التالية بعد 12 يوماً، ونُبقي التطابق الواضح فقط. ${f(n.v.still_pct)}% من الرقع المتتبَّعة لم تتحرك (صخر وجليد بطيء)، وهذا هو التحقق من أن الطريقة تعمل. الخطوة الواحدة 20 متراً، فالسرعة معروفة بدقة نحو مترين في اليوم. وأسرع جليد في الوسط يتغيّر كثيراً في 12 يوماً فلا يمكن مطابقته، فالسرعة القصوى الحقيقية أعلى من أرقامنا.`,
         audience: {
-          public: () => 'اسحب بين يونيو وأكتوبر وتابع جبلاً جليدياً واحداً. لن تجده حيث تركته.',
+          public: (n, f) => `اسحب بين يونيو وأكتوبر وتابع جبلاً جليدياً واحداً. لن تجده حيث تركته. والنهر الجليدي خلفه يتحرك نحو ${f(n.v.lane_median_mday)} متراً كل يوم.`,
           decision: () => 'رصد الرادار المنتظم لجبهات الأنهار الجليدية، في الليل القطبي وتحت الغيم، يغذّي تقديرات ارتفاع البحر التي يعتمد عليها تخطيط السواحل.',
           resource: () => 'توقيت الذوبان يظهر كدكنة ولمعان موسميين على سطح الجليد.',
           educator: () => 'اسأل لماذا يبدو الجليد أدكن في الصيف على الرادار وهو أبيض أمام أعيننا طول السنة.',
-          scientist: () => 'المسار 170 الهابط، قناة HH فقط، 17 صورة مع فجوة من يناير إلى يونيو. لم نُجرِ تتبّع إزاحة ولا قياس تداخل.',
+          scientist: (n, f) => `المسار 170 الهابط، قناة HH فقط، 17 صورة. تتبّع إزاحة بالارتباط المتقاطع (FFT) على رقع 96×96 بكسل (20 م)، ${f(n.v.pairs)} زوجاً بفاصل 12 يوماً. المسار السريع: ${f(n.v.lane_patches)} رقعة، الوسيط ${f(n.v.lane_median_mday, 1)} م/يوم. بلا تصحيح لخطأ الموقع أو المدّ، وبلا قياس تداخل.`,
         },
       },
     },

@@ -49,32 +49,38 @@
     {
      "date": "2025-10-28",
      "hh_db": -7.85,
-     "changed_hh_pct": 0.0
+     "changed_hh_pct": 0.0,
+     "ice_speed_mday": 19.4
     },
     {
      "date": "2025-11-09",
      "hh_db": -7.76,
-     "changed_hh_pct": 3.08
+     "changed_hh_pct": 3.08,
+     "ice_speed_mday": 18.3
     },
     {
      "date": "2025-11-21",
      "hh_db": -7.27,
-     "changed_hh_pct": 3.41
+     "changed_hh_pct": 3.41,
+     "ice_speed_mday": 17.4
     },
     {
      "date": "2025-12-03",
      "hh_db": -7.45,
-     "changed_hh_pct": 7.05
+     "changed_hh_pct": 7.05,
+     "ice_speed_mday": 15.5
     },
     {
      "date": "2025-12-15",
      "hh_db": -7.59,
-     "changed_hh_pct": 4.23
+     "changed_hh_pct": 4.23,
+     "ice_speed_mday": 18.0
     },
     {
      "date": "2025-12-27",
      "hh_db": -7.51,
-     "changed_hh_pct": 4.63
+     "changed_hh_pct": 4.63,
+     "ice_speed_mday": 18.0
     },
     {
      "date": "2026-01-08",
@@ -84,12 +90,14 @@
     {
      "date": "2026-06-25",
      "hh_db": -10.54,
-     "changed_hh_pct": 27.12
+     "changed_hh_pct": 27.12,
+     "ice_speed_mday": 16.2
     },
     {
      "date": "2026-07-07",
      "hh_db": -10.33,
-     "changed_hh_pct": 26.81
+     "changed_hh_pct": 26.81,
+     "ice_speed_mday": 16.7
     },
     {
      "date": "2026-07-19",
@@ -99,32 +107,38 @@
     {
      "date": "2026-08-12",
      "hh_db": -9.68,
-     "changed_hh_pct": 23.33
+     "changed_hh_pct": 23.33,
+     "ice_speed_mday": 20.1
     },
     {
      "date": "2026-08-24",
      "hh_db": -9.77,
-     "changed_hh_pct": 22.94
+     "changed_hh_pct": 22.94,
+     "ice_speed_mday": 23.2
     },
     {
      "date": "2026-09-05",
      "hh_db": -9.39,
-     "changed_hh_pct": 17.3
+     "changed_hh_pct": 17.3,
+     "ice_speed_mday": 30.0
     },
     {
      "date": "2026-09-17",
      "hh_db": -9.17,
-     "changed_hh_pct": 12.43
+     "changed_hh_pct": 12.43,
+     "ice_speed_mday": 24.3
     },
     {
      "date": "2026-09-29",
      "hh_db": -8.44,
-     "changed_hh_pct": 4.74
+     "changed_hh_pct": 4.74,
+     "ice_speed_mday": 24.3
     },
     {
      "date": "2026-10-11",
      "hh_db": -8.29,
-     "changed_hh_pct": 4.92
+     "changed_hh_pct": 4.92,
+     "ice_speed_mday": 27.4
     },
     {
      "date": "2026-10-23",
@@ -222,5 +236,21 @@
    "2026-10-11": null,
    "2026-10-23": null
   }
+ },
+ "ice_speed": {
+  "method": "feature tracking between NISAR HH pictures 12 days apart (patches of 1.9 km)",
+  "pairs": 14,
+  "patches_tracked": 3268,
+  "still_pct": 73.3,
+  "slow_ice_pct": 24.0,
+  "lane_patches": 50,
+  "lane_median_mday": 20.6,
+  "lane_range_mday": [
+   15.5,
+   30.0
+  ],
+  "lane_eastward_mday": -16.7,
+  "fjord_patches": 37,
+  "max_trackable_mday": 66.7
  }
 }

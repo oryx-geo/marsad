@@ -370,12 +370,23 @@ function Anywhere({ lang, inPage, coop }) {
   const [rep, setRep] = useState(false)
   const hasHV = res && Object.keys(res.byChannel || {}).some((k) => k.includes('HV'))
 
+  // The server answers at once with {status: "working"}; we ask again every few seconds.
   const run = () => {
     setAna('busy')
-    fetch(`${api}/analyze?lon=${res.lon.toFixed(4)}&lat=${res.lat.toFixed(4)}`, { headers: NGROK })
+    const url = `${api}/analyze?lon=${res.lon.toFixed(4)}&lat=${res.lat.toFixed(4)}`
+    const started = Date.now()
+    const ask = () => fetch(url, { headers: NGROK })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((d) => { setAna(d.found ? d : 'none'); if (d.found) setPol(d.channels.hh ? 'hh' : Object.keys(d.channels)[0]) })
-      .catch((code) => setAna(code === 429 ? 'limit' : 'error'))
+      .then((d) => {
+        if (d.status === 'working') {
+          if (Date.now() - started > 8 * 60 * 1000) return setAna('error')
+          return new Promise((ok) => setTimeout(ok, 5000)).then(ask)
+        }
+        if (d.status === 'failed') return setAna('error')
+        setAna(d.found ? d : 'none')
+        if (d.found) setPol(d.channels.hh ? 'hh' : Object.keys(d.channels)[0])
+      })
+    ask().catch((code) => setAna(code === 429 ? 'limit' : 'error'))
   }
   const shown = ana && typeof ana === 'object' ? ana : null
   const ch = shown && (shown.channels[pol] || Object.values(shown.channels)[0])
@@ -592,7 +603,7 @@ export default function App() {
           <img className="logo-m" src={`${BASE}logos/marsad-m.png`} alt="MARSAD" />
           <span className="logo-rest"><img src={`${BASE}logos/marsad-letters.png`} alt="" /></span>
         </span>
-        <img className="logo-team" src={`${BASE}logos/oryx-geo-small.png`} alt="ORYX GEO" title="ORYX GEO" />
+        <img className="logo-team" src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (AI-generated image)" title="ORYX GEO · AI-generated image" />
       </a>
       <nav className="places" aria-label={t.places}>
         {SITES.map((s) => (

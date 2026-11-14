@@ -29,7 +29,7 @@ export default function Report({ model, t, lang, f, onClose }) {
             <tr><td>
               <div className="rep-head">
                 <img src={`${BASE}logos/marsad-m.png`} alt="MARSAD" />
-                <img src={`${BASE}logos/oryx-geo-small.png`} alt="ORYX GEO" />
+                <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (AI-generated image)" />
                 <span>{t.repTitle} · {model.title}</span>
                 <span className="rep-url" dir="ltr">{t.repSite}</span>
               </div>

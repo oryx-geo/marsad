@@ -427,5 +427,10 @@
    },
    "2026-10-27": null
   }
+ },
+ "version_check": {
+  "stable_cells": 16130,
+  "spread_db": 0.98,
+  "early_vs_late_db": 0.07
  }
 }

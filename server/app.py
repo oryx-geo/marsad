@@ -37,7 +37,7 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
-_cache, _hits, _slots = {}, {}, threading.Semaphore(MAX_AT_ONCE)
+_cache, _hits, _jobs, _lock = {}, {}, set(), threading.Lock()
 
 
 def box_around(lon, lat):
@@ -144,27 +144,41 @@ def health():
 
 @app.get("/analyze")
 def analyze(lon: float, lat: float, request: Request):
+    """Start an analysis, or report on one already started.
+
+    The answer comes back at once: {"status": "working"} while the NISAR files are being read,
+    then the result. The website asks again every few seconds, so no request stays open long
+    (tunnels cut long requests).
+    """
     if not (-180 <= lon <= 180 and -85 <= lat <= 85):
         raise HTTPException(400, "bad coordinates")
     key = (round(lon, 2), round(lat, 2))
-    if key in _cache:
-        return _cache[key]
-    who = (request.headers.get("x-forwarded-for") or (request.client.host if request.client else "?")).split(",")[0].strip()
-    now = time.time()
-    _hits[who] = [t for t in _hits.get(who, []) if now - t < 60]
-    if len(_hits[who]) >= MAX_PER_MINUTE:
-        raise HTTPException(429, "too many requests, wait a minute")
-    _hits[who].append(now)
-    if not _slots.acquire(timeout=5):
-        raise HTTPException(503, "busy, try again in a minute")
+    with _lock:
+        if key in _cache:
+            return _cache[key]
+        if key in _jobs:
+            return {"status": "working"}
+        who = (request.headers.get("x-forwarded-for") or (request.client.host if request.client else "?")).split(",")[0].strip()
+        now = time.time()
+        _hits[who] = [t for t in _hits.get(who, []) if now - t < 60]
+        if len(_hits[who]) >= MAX_PER_MINUTE:
+            raise HTTPException(429, "too many requests, wait a minute")
+        if len(_jobs) >= MAX_AT_ONCE:
+            raise HTTPException(503, "busy, try again in a minute")
+        _hits[who].append(now)
+        _jobs.add(key)
+    threading.Thread(target=_run, args=(key,), daemon=True).start()
+    return {"status": "working"}
+
+
+def _run(key):
     try:
         result = analyse(key[0], key[1])
     except Exception as ex:  # never leak details (they could include a signed URL)
         print("analysis failed:", type(ex).__name__, flush=True)
-        raise HTTPException(502, "could not read NISAR data")
-    finally:
-        _slots.release()
-    if len(_cache) > 200:
-        _cache.clear()
-    _cache[key] = result
-    return result
+        result = {"status": "failed"}
+    with _lock:
+        if len(_cache) > 200:
+            _cache.clear()
+        _cache[key] = result
+        _jobs.discard(key)

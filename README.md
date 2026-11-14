@@ -30,12 +30,12 @@ change over time, and explains in plain words why it changed, or why it did not.
 
 | Place | Story | NISAR track | Dates |
 |---|---|---|---|
-| Sindh, Pakistan | The seasonal pulse of water on the Indus plain | 041 ascending | 16, Nov 2025 to Oct 2026 |
+| Sindh, Pakistan | The seasonal pulse of dark, smooth surfaces on the Indus plain, checked against NASA's optical water map | 041 ascending | 16, Nov 2025 to Oct 2026 |
 | Manah, Oman | A solar field that brightened in the evening pass only; nothing new was built | 150 descending, 128 ascending | 11 + 11, Jun to Nov 2026 |
 | Po valley, Italy | Field-by-field rhythm of crops | 144 ascending | 11, Jun to Nov 2026 |
 | Salalah, Oman | The monsoon green that L-band radar barely sees | 157 ascending | 9, Jun to Oct 2026 |
-| Rondônia, Brazil | Where the forest ends (no new clearing is claimed) | 161 ascending | 9, Jun to Oct 2026 |
-| Jakobshavn, Greenland | Ice that changes between summer and autumn (HH only) | 170 descending | 17, Oct 2025 to Oct 2026 |
+| Rondônia, Brazil | Where the forest ends: about half the window reads as forest (no new clearing is claimed) | 161 ascending | 9, Jun to Oct 2026 |
+| Jakobshavn, Greenland | Ice speed by feature tracking: 15 to 30 m per day in the fast lane (HH only) | 170 descending | 17, Oct 2025 to Oct 2026 |
 
 Every number and picture on the site is computed from real data by the scripts in `processing/`.
 Where the data did not show a clear change, or where we are not sure of the cause, the site says so.
@@ -54,6 +54,8 @@ processing/optical.py   saves the nearest NASA HLS true-colour picture for every
 processing/cband.py     saves the nearest Sentinel-1 C-band picture (NASA OPERA RTC-S1) for every NISAR date
 processing/water_check.py  checks the Sindh "dark surface" measure against NASA OPERA DSWx-HLS
 processing/sun.py       adds the sun elevation at each NISAR pass over Manah
+processing/ice_speed.py measures ice speed at Jakobshavn by feature tracking between passes
+processing/stable_check.py checks that the product versions used for Sindh are comparable
 src/                    the web app (React, MapLibre GL JS, hand-written SVG chart)
 ```
 
@@ -106,6 +108,14 @@ python processing/water_check.py
 
 ```bash
 python processing/sun.py
+```
+
+```bash
+python processing/ice_speed.py
+```
+
+```bash
+python processing/stable_check.py
 ```
 
 ## Live analysis (optional, experimental)
