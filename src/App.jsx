@@ -556,6 +556,11 @@ export default function App() {
   useEffect(() => { document.documentElement.dataset.design = design; try { localStorage.setItem('marsad-design', design) } catch { /* private mode */ } }, [design])
   useEffect(() => { if (!story) window.history.replaceState(null, '', '#' + siteId) }, [siteId, story])
   useEffect(() => {
+    const on = () => { const h = window.location.hash.slice(1); if (h === 'anywhere' || SITES.some((x) => x.id === h)) setSiteId(h) }
+    window.addEventListener('hashchange', on)
+    return () => window.removeEventListener('hashchange', on)
+  }, [])
+  useEffect(() => {
     if (!story) return
     const h = window.location.hash.slice(1)
     if (h) setTimeout(() => document.getElementById(h)?.scrollIntoView(), 300)

@@ -141,11 +141,21 @@ def stats_salalah(grid, layers):
     return {"mountain_hh_db": mean_db(layers["HHHH"], m), "mountain_hv_db": mean_db(layers["HVHV"], m)}
 
 
+def stats_rondonia(grid, layers):
+    """Share of the window that looks like forest: HV above -15.5 dB on ~120 m cells."""
+    hv = smooth(layers["HVHV"], 3)
+    ok = np.isfinite(hv)
+    forest = ok & (db(hv) > -15.5)
+    return {"forest_pct": round(float(forest.sum() / ok.sum() * 100), 1),
+            "forest_km2": round(float(forest.sum() * grid.cell_km2)),
+            "hh_db": mean_db(layers["HHHH"]), "hv_db": mean_db(layers["HVHV"])}
+
+
 def stats_mean(grid, layers):
     return {("hh_db" if p == "HHHH" else "hv_db"): mean_db(v) for p, v in layers.items()}
 
 
-STATS = {"sindh": stats_sindh, "manah": stats_manah, "salalah": stats_salalah}
+STATS = {"sindh": stats_sindh, "manah": stats_manah, "salalah": stats_salalah, "rondonia": stats_rondonia}
 
 
 def changed_pct(first, now):

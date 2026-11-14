@@ -420,20 +420,23 @@ export const SITES = [
     track: '161_A_172',
     pol: 'hv',
     chart: {
-      unit: 'dB', yDomain: [-22, -7],
+      unit: '%', yDomain: [0, 100],
       series: [
-        { key: 'hv_db', color: COLORS.green, label: { en: 'Whole window, HV', ar: 'النافذة كلها، HV' } },
-        { key: 'hh_db', color: COLORS.brown, label: { en: 'Whole window, HH', ar: 'النافذة كلها، HH' } },
+        { key: 'forest_pct', color: COLORS.green, label: { en: 'Share of the window that reads as forest in HV (%)', ar: 'نسبة النافذة التي تظهر كغابة في HV (%)' } },
       ],
     },
-    facts: (rows) => ({ first: rows[0], last: rows[rows.length - 1] }),
+    facts: (rows) => {
+      const v = rows.map((r) => r.forest_pct)
+      const hi = rows.reduce((a, b) => (b.forest_pct > a.forest_pct ? b : a))
+      return { first: rows[0], last: rows[rows.length - 1], lo: Math.min(...v), hi: Math.max(...v), hiRow: hi }
+    },
     text: {
       en: {
         name: 'Amazon', place: 'Rondônia, Brazil', kicker: 'Where the forest ends',
-        lead: () => 'Forest is bright in HV; pasture is dark. NISAR draws the edge between them like a chessboard, through the clouds that hide this region from cameras for much of the year.',
+        lead: (n, f) => `Forest is bright in HV; pasture is dark. NISAR draws the edge between them like a chessboard, through the clouds that hide this region from cameras for much of the year. About half of this window reads as forest: ${f(n.lo)} to ${f(n.hi)}% depending on the date.`,
         why: 'Trunks and branches turn the radar wave, so standing forest sends back a strong HV echo. Cleared land has little volume left and stays dark.',
         whyNot: 'Over these four months the forest edges barely move. Some forest darkened in the dry season and then recovered, which is what drying does, not what clearing does: cleared forest does not come back in weeks.',
-        care: 'We do not claim new deforestation in 2026. Separating real clearing from the dry season needs more than one year of NISAR data.',
+        care: (n, f) => `We do not claim new deforestation in 2026. \"Forest\" here is simply HV above −15.5 dB on cells of about 120 m. That share jumps to ${f(n.hi)}% on ${f.d(n.hiRow.date)}: the forest did not grow in twelve days, wet pasture brightened. A fixed threshold is not a forest map, and separating real clearing from weather needs more than one year of NISAR data.`,
         audience: {
           public: () => 'Look for the large untouched block of forest and the fishbone of clearings around it.',
           decision: () => 'L-band radar maps forest and non-forest in any weather. With a multi-year record it becomes a reliable alarm for new clearing.',
@@ -444,10 +447,10 @@ export const SITES = [
       },
       ar: {
         name: 'الأمازون', place: 'روندونيا، البرازيل', kicker: 'حيث تنتهي الغابة',
-        lead: () => 'الغابة لامعة في HV والمرعى داكن. NISAR يرسم الحد بينهما مثل رقعة شطرنج، ومن خلال الغيوم التي تحجب هذه المنطقة عن الكاميرات أغلب السنة.',
+        lead: (n, f) => `الغابة لامعة في HV والمرعى داكن. NISAR يرسم الحد بينهما مثل رقعة شطرنج، ومن خلال الغيوم التي تحجب هذه المنطقة عن الكاميرات أغلب السنة. نحو نصف هذه النافذة يظهر كغابة: من ${f(n.lo)} إلى ${f(n.hi)}% حسب التاريخ.`,
         why: 'الجذوع والأغصان تدير موجة الرادار، فتعكس الغابة القائمة صدى HV قوياً. الأرض المقطوعة لم يبقَ فيها حجم نباتي فتبقى داكنة.',
         whyNot: 'في هذه الأشهر الأربعة حدود الغابة بالكاد تتحرك. بعض الغابة دكن في موسم الجفاف ثم رجع، وهذا فعل الجفاف لا القطع: الغابة المقطوعة لا ترجع في أسابيع.',
-        care: 'لا ندّعي قطعاً جديداً للغابة في 2026. التفريق بين القطع الحقيقي وموسم الجفاف يحتاج أكثر من سنة من بيانات NISAR.',
+        care: (n, f) => `لا ندّعي قطعاً جديداً للغابة في 2026. «الغابة» هنا هي ببساطة HV فوق ‎−15.5 ديسيبل على خلايا بنحو 120 متراً. هذه النسبة تقفز إلى ${f(n.hi)}% يوم ${f.d(n.hiRow.date)}: الغابة لم تكبر في اثني عشر يوماً، بل المرعى المبتل صار ألمع. العتبة الثابتة ليست خريطة غابات، والتفريق بين القطع الحقيقي والطقس يحتاج أكثر من سنة من بيانات NISAR.`,
         audience: {
           public: () => 'ابحث عن كتلة الغابة الكبيرة التي لم تُمسّ، وعن خطوط القطع حولها التي تشبه هيكل السمكة.',
           decision: () => 'رادار L-band يرسم الغابة وغير الغابة في أي طقس. ومع سجل لعدة سنوات يصير إنذاراً موثوقاً للقطع الجديد.',
