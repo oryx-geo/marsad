@@ -10,12 +10,15 @@
 html, body, #root { height: 100%; }
 body {
   margin: 0; background: var(--space); color: var(--text);
-  font-family: "Segoe UI", "Noto Sans", "Noto Sans Arabic", Tahoma, system-ui, -apple-system, Arial, sans-serif;
+  font-family: "Readex Pro Variable", "Segoe UI", "Noto Sans Arabic", Tahoma, system-ui, -apple-system, Arial, sans-serif;
+  font-weight: 350;
   font-size: 16px; line-height: 1.55;
 }
 [dir="rtl"] body { line-height: 1.8; }
 h1, h2, p, ul { margin: 0; }
 button, select, input { font: inherit; color: inherit; }
+strong, b { font-weight: 650; }
+.maplibregl-map { font-family: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
@@ -350,3 +353,10 @@ html[data-design="c"] body { background: #F2E2CA; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 .dash .places button[aria-pressed="true"] { background: #0F025C; color: #fff; }
+
+.report { font-family: "Readex Pro Variable", "Segoe UI", Tahoma, Arial, sans-serif; font-weight: 350; }
+.rep-aud { display: grid; gap: 8px; }
+.rep-aud div { border-inline-start: 3px solid #924616; padding-inline-start: 10px; break-inside: avoid; }
+.rep-aud h3 { margin: 0; font-size: 10.5pt; color: #924616; }
+.rep-aud p { margin: 0; }
+[dir="rtl"] .site-head h1, [dir="rtl"] .report h1 { line-height: 1.5; }

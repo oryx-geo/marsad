@@ -180,8 +180,8 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
     ],
     chart: { rows: tr.series, series: site.chart.series, bars: site.chart.bars, unit: site.chart.unit, yDomain: site.chart.yDomain, current: b, compare: a },
     point: Array.isArray(series) ? { where: `${point[1].toFixed(4)}°, ${point[0].toFixed(4)}° · NISAR ${usePol.toUpperCase()}`, rows: series, verdict } : null,
+    audiences: AUDIENCES.map((k) => ({ who: `${t.audienceTitle} ${t.audience[k]}`, text: say(txt.audience[k]) })),
     sections: [
-      { h: `${t.repFor}: ${t.audience[audience]}`, p: say(txt.audience[audience]) },
       { h: t.whyTitle, p: say(txt.why) },
       { h: t.whyNotTitle, p: say(txt.whyNot) },
       { h: t.careTitle, p: say(txt.care) },

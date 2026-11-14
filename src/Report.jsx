@@ -97,6 +97,15 @@ export default function Report({ model, t, lang, f, onClose }) {
           </section>
         )}
 
+        {model.audiences && (
+          <section className="rep-block">
+            <h2>{t.repFor}</h2>
+            <div className="rep-aud">
+              {model.audiences.map((x) => <div key={x.who}><h3>{x.who}</h3><p>{x.text}</p></div>)}
+            </div>
+          </section>
+        )}
+
         {model.sections.map((sec) => (
           <section key={sec.h} className="rep-block">
             <h2>{sec.h}</h2>

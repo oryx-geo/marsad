@@ -137,6 +137,7 @@ Background on the Manah solar plants
 Software
 
 - React (MIT), Vite (MIT), MapLibre GL JS (BSD-3-Clause)
+- Font: Readex Pro (SIL Open Font License 1.1), served from the site itself through Fontsource
 - Python: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow, FastAPI, Uvicorn
 - Microsoft Dev Tunnels (tunnel for the optional live analysis)
 
