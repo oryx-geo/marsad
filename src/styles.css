@@ -10,8 +10,8 @@
 html, body, #root { height: 100%; }
 body {
   margin: 0; background: var(--space); color: var(--text);
-  font-family: "Readex Pro Variable", "Segoe UI", "Noto Sans Arabic", Tahoma, system-ui, -apple-system, Arial, sans-serif;
-  font-weight: 350;
+  font-family: var(--font, "Readex Pro Variable"), "Segoe UI", "Noto Sans Arabic", Tahoma, system-ui, -apple-system, Arial, sans-serif;
+  font-weight: var(--fw, 350);
   font-size: 16px; line-height: 1.55;
 }
 [dir="rtl"] body { line-height: 1.8; }
@@ -181,8 +181,11 @@ html[lang="ar"] .intro-tag { font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight:
 .beta { display: inline-block; font-size: .75rem; font-weight: 800; color: #2A1404; background: var(--accent); border-radius: 999px; padding: 2px 10px; margin-bottom: 8px; }
 
 /* temporary: lets the team compare the designs */
-.design-switch { position: fixed; bottom: 10px; left: 10px; z-index: 50; display: flex; align-items: center; gap: 4px; background: #241A10; color: #fff; border-radius: 999px; padding: 4px 6px 4px 12px; font-size: .78rem; box-shadow: 0 2px 10px rgba(0, 0, 0, .4); }
-.design-switch button { background: transparent; border: 0; color: #fff; border-radius: 999px; min-width: 32px; min-height: 28px; font-weight: 800; }
+.design-switch { position: fixed; bottom: 10px; left: 10px; z-index: 50; display: grid; gap: 2px; background: #241A10; color: #fff; border-radius: 16px; padding: 6px 10px; font-size: .78rem; box-shadow: 0 2px 10px rgba(0, 0, 0, .4); font-family: system-ui, sans-serif; }
+.design-switch div { display: flex; align-items: center; gap: 3px; }
+.design-switch span { min-width: 46px; opacity: .8; }
+.design-switch em { font-style: normal; margin-inline-start: 6px; color: #F0A465; white-space: nowrap; }
+.design-switch button { background: transparent; border: 0; color: #fff; border-radius: 999px; min-width: 28px; min-height: 26px; font-weight: 800; }
 .design-switch button[aria-pressed="true"] { background: #F0A465; color: #241A10; }
 
 /* ================= Design B: a story you scroll, on MARSAD's light sand ================= */
@@ -354,7 +357,7 @@ html[data-design="c"] body { background: #F2E2CA; }
 }
 .dash .places button[aria-pressed="true"] { background: #0F025C; color: #fff; }
 
-.report { font-family: "Readex Pro Variable", "Segoe UI", Tahoma, Arial, sans-serif; font-weight: 350; }
+.report { font-family: var(--font, "Readex Pro Variable"), "Segoe UI", Tahoma, Arial, sans-serif; font-weight: var(--fw, 350); }
 .rep-aud { display: grid; gap: 8px; }
 .rep-aud div { border-inline-start: 3px solid #924616; padding-inline-start: 10px; break-inside: avoid; }
 .rep-aud h3 { margin: 0; font-size: 10.5pt; color: #924616; }

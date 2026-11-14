@@ -10,6 +10,16 @@ const BASE = import.meta.env.BASE_URL
 const AUDIENCES = ['public', 'decision', 'resource', 'educator', 'scientist']
 const REPO = 'https://github.com/oryx-geo/marsad'
 
+// Fonts the team can compare (temporary switch). Arabic letters always use Readex Pro.
+const FONTS = [
+  { id: '1', name: 'Readex Pro', css: '"Readex Pro Variable"', weight: 350 },
+  { id: '2', name: 'Inter', css: '"Inter Variable"', weight: 400 },
+  { id: '3', name: 'IBM Plex Sans', css: '"IBM Plex Sans"', weight: 400 },
+  { id: '4', name: 'Space Grotesk', css: '"Space Grotesk Variable"', weight: 400 },
+  { id: '5', name: 'DM Sans', css: '"DM Sans Variable"', weight: 400 },
+  { id: '6', name: 'Lora (serif)', css: '"Lora Variable"', weight: 400 },
+]
+
 function makeFormat(lang) {
   const loc = lang === 'ar' ? 'ar-u-nu-latn' : 'en-GB'
   const f = (v, digits = 0) => new Intl.NumberFormat(loc, { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(v)
@@ -481,6 +491,16 @@ export default function App() {
     const h = window.location.hash.slice(1)
     return h === 'anywhere' || SITES.some((s) => s.id === h) ? h : SITES[0].id
   })
+  const [font, setFont] = useState(() => {
+    const q = new URLSearchParams(window.location.search).get('font')
+    try { return q || localStorage.getItem('marsad-font') || '1' } catch { return q || '1' }
+  })
+  useEffect(() => {
+    const f = FONTS.find((x) => x.id === font) || FONTS[0]
+    document.documentElement.style.setProperty('--font', `${f.css}, "Readex Pro Variable"`)
+    document.documentElement.style.setProperty('--fw', f.weight)
+    try { localStorage.setItem('marsad-font', font) } catch { /* private mode */ }
+  }, [font])
   const [audience, setAudience] = useState('public')
   const [intro, setIntro] = useState(() => {
     try { return !sessionStorage.getItem('marsad-intro') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches } catch { return true }
@@ -547,11 +567,20 @@ export default function App() {
   )
 
   const switcher = (
-    <div className="design-switch" role="group" aria-label={t.designLabel}>
-      <span>{t.designLabel}</span>
-      {['a', 'b', 'c', 'd'].map((d) => (
-        <button key={d} type="button" aria-pressed={design === d} onClick={() => { setDesign(d); window.scrollTo(0, 0) }}>{d.toUpperCase()}</button>
-      ))}
+    <div className="design-switch">
+      <div role="group" aria-label={t.designLabel}>
+        <span>{t.designLabel}</span>
+        {['a', 'b', 'c', 'd'].map((d) => (
+          <button key={d} type="button" aria-pressed={design === d} onClick={() => { setDesign(d); window.scrollTo(0, 0) }}>{d.toUpperCase()}</button>
+        ))}
+      </div>
+      <div role="group" aria-label="Font">
+        <span>Font</span>
+        {FONTS.map((x) => (
+          <button key={x.id} type="button" aria-pressed={font === x.id} title={x.name} onClick={() => setFont(x.id)}>{x.id}</button>
+        ))}
+        <em>{(FONTS.find((x) => x.id === font) || FONTS[0]).name}</em>
+      </div>
     </div>
   )
 
