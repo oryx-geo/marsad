@@ -1,0 +1,97 @@
+import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import Chart from './Chart.jsx'
+
+// A one-click report. It opens as a clean white sheet; the browser's own
+// "Save as PDF" turns it into a file. This keeps Arabic text correct.
+
+const BASE = import.meta.env.BASE_URL
+
+export default function Report({ model, t, lang, f, onClose }) {
+  useEffect(() => {
+    document.body.classList.add('reporting')
+    const esc = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', esc)
+    return () => { document.body.classList.remove('reporting'); window.removeEventListener('keydown', esc) }
+  }, [onClose])
+
+  const today = f.d(new Date().toISOString().slice(0, 10))
+  return createPortal(
+    <div className="report-layer" dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang}>
+      <div className="report-tools">
+        <button type="button" className="rep-print" onClick={() => window.print()}>⬇ {t.repSave}</button>
+        <span>{t.repHow}</span>
+        <button type="button" className="rep-close" onClick={onClose}>✕ {t.repClose}</button>
+      </div>
+      <article className="report">
+        <header className="rep-head">
+          <img src={`${BASE}logos/marsad-icon.png`} alt="MARSAD" />
+          <div>
+            <strong>MARSAD · مرصد</strong>
+            <span>{t.repTitle} · {t.repMade} {today}</span>
+          </div>
+          <span className="rep-url" dir="ltr">{t.repSite}</span>
+        </header>
+
+        <p className="rep-kicker">{model.kicker}</p>
+        <h1>{model.title}</h1>
+        {model.place && <p className="rep-place">{model.place}</p>}
+        {model.lead && <p className="rep-lead">{model.lead}</p>}
+        {model.facts && <ul className="rep-facts">{model.facts.map((x, i) => <li key={i}>{x}</li>)}</ul>}
+
+        {model.pictures?.map((group) => (
+          <section key={group.title} className="rep-block">
+            <h2>{group.title}</h2>
+            <div className="rep-pics">
+              {group.items.map((im) => (
+                <figure key={im.caption}>
+                  <img src={im.src} alt={im.caption} />
+                  <figcaption>{im.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        {model.chart && (
+          <section className="rep-block rep-chart">
+            <h2>{t.repMeasured}</h2>
+            <Chart rows={model.chart.rows} series={model.chart.series} bars={model.chart.bars} unit={model.chart.unit}
+              yDomain={model.chart.yDomain} current={model.chart.current} compare={model.chart.compare} locale={f.locale} onPick={() => {}} />
+            <ul className="key">
+              {model.chart.series.map((s) => <li key={s.key}><span className="swatch" style={{ background: s.color }} />{s.label[lang]}</li>)}
+              {model.chart.bars && <li><span className="swatch bar" style={{ background: model.chart.bars.color }} />{model.chart.bars.label[lang]}</li>}
+            </ul>
+          </section>
+        )}
+
+        {model.point && (
+          <section className="rep-block rep-chart">
+            <h2>{t.repPoint}</h2>
+            <p className="rep-small" dir="ltr">{model.point.where}</p>
+            <Chart rows={model.point.rows} series={[{ key: 'db', color: 'var(--c-probe)', label: '' }]} unit="dB" locale={f.locale} onPick={() => {}} small />
+            {model.point.verdict && <p><strong>{model.point.verdict}</strong></p>}
+            <p className="rep-small">{t.probeNote}</p>
+          </section>
+        )}
+
+        {model.sections.map((sec) => (
+          <section key={sec.h} className="rep-block">
+            <h2>{sec.h}</h2>
+            <p>{sec.p}</p>
+          </section>
+        ))}
+
+        <section className="rep-block rep-foot">
+          <h2>{t.repMethod}</h2>
+          <p>{t.repMethodText}</p>
+          <h2>{t.creditsTitle}</h2>
+          <p>{t.credits}</p>
+          <p><strong>{t.disclaimer}</strong></p>
+          <p>{t.team}</p>
+        </section>
+      </article>
+    </div>,
+    document.body,
+  )
+}

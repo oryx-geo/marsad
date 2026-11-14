@@ -32,7 +32,7 @@ export async function askCatalogue(lon, lat) {
   return { lon, lat, passes, byChannel, tracks: Object.values(tracks).sort((a, b) => b.n - a.n) }
 }
 
-export default function ExploreMap({ onResult, onBusy, inPage }) {
+export default function ExploreMap({ onResult, onBusy, inPage, coop }) {
   const el = useRef(null)
   const cb = useRef({ onResult, onBusy })
   cb.current = { onResult, onBusy }
@@ -48,7 +48,7 @@ export default function ExploreMap({ onResult, onBusy, inPage }) {
       },
       center: [57, 22], zoom: wide ? 2.4 : 1.4, maxZoom: 13,
       padding: wide ? { left: 430, top: 80, right: 0, bottom: 0 } : 0,
-      attributionControl: false, dragRotate: false, cooperativeGestures: !!inPage,
+      attributionControl: false, dragRotate: false, cooperativeGestures: !!coop,
     })
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
     map.addControl(new maplibregl.AttributionControl({ compact: true }), 'top-right')

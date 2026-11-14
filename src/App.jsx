@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import SwipeMap, { BLANK } from './SwipeMap.jsx'
 import ExploreMap from './Explore.jsx'
 import Chart from './Chart.jsx'
+import Report from './Report.jsx'
 import { probe } from './probe.js'
 import { SITES, UI, channelText } from './content.js'
 
@@ -54,7 +55,7 @@ function Audience({ t, audience, setAudience, text }) {
   )
 }
 
-function Site({ site, lang, audience, setAudience, inPage }) {
+function Site({ site, lang, audience, setAudience, inPage, coop }) {
   const t = UI[lang]
   const f = useMemo(() => makeFormat(lang), [lang])
   const [data, setData] = useState(null)
@@ -67,6 +68,7 @@ function Site({ site, lang, audience, setAudience, inPage }) {
   const [tab, setTab] = useState('why')
   const [point, setPoint] = useState(null)
   const [series, setSeries] = useState(null)
+  const [rep, setRep] = useState(false)
 
   useEffect(() => {
     let alive = true
@@ -145,11 +147,31 @@ function Site({ site, lang, audience, setAudience, inPage }) {
     }
   }
 
+  const model = rep && {
+    kicker: txt.kicker, title: txt.name, place: txt.place, lead: say(txt.lead),
+    facts: site.passes ? [site.passes[track][lang]] : null,
+    pictures: [
+      { title: `${t.repPictures} · NISAR ${usePol.toUpperCase()}`, items: [
+        { src: rad(a), caption: `${t.before} · ${f.d(a)}` },
+        { src: rad(b), caption: `${t.after} · ${f.d(b)}` },
+      ] },
+      ...(opt(a) || opt(b) ? [{ title: t.repReal, items: [a, b].filter(opt).map((d) => ({ src: optUrl(d), caption: f.d(opt(d).date) })) }] : []),
+    ],
+    chart: { rows: tr.series, series: site.chart.series, bars: site.chart.bars, unit: site.chart.unit, yDomain: site.chart.yDomain, current: b, compare: a },
+    point: Array.isArray(series) ? { where: `${point[1].toFixed(4)}°, ${point[0].toFixed(4)}° · NISAR ${usePol.toUpperCase()}`, rows: series, verdict } : null,
+    sections: [
+      { h: `${t.repFor}: ${t.audience[audience]}`, p: say(txt.audience[audience]) },
+      { h: t.whyTitle, p: say(txt.why) },
+      { h: t.whyNotTitle, p: say(txt.whyNot) },
+      { h: t.careTitle, p: say(txt.care) },
+    ],
+  }
+
   return (
     <>
       <div className="map-area">
         <SwipeMap key={site.id + track} bbox={data.bbox} urlA={urlA} urlB={urlB} labelA={labelA} labelB={labelB}
-          hint={t.dragHint} onPick={(lon, lat) => setPoint([lon, lat])} marker={point} inPage={inPage} />
+          hint={t.dragHint} onPick={(lon, lat) => setPoint([lon, lat])} marker={point} inPage={inPage} coop={coop} />
       </div>
 
       <aside className="panel">
@@ -238,11 +260,13 @@ function Site({ site, lang, audience, setAudience, inPage }) {
               ))}
             </div>
           )}
+          <button type="button" className="rep-open" onClick={() => setRep(true)}>📄 {t.report}</button>
         </div>
         <p className="dock-note">
           {view === 'radar' ? (pols.length === 1 ? t.hhOnly : channelText(lang, usePol)) : t.realNote}
         </p>
       </div>
+      {model && <Report model={model} t={t} lang={lang} f={f} onClose={() => setRep(false)} />}
     </>
   )
 }
@@ -266,7 +290,7 @@ function useLiveServer() {
   return api
 }
 
-function Anywhere({ lang, inPage }) {
+function Anywhere({ lang, inPage, coop }) {
   const t = UI[lang]
   const f = useMemo(() => makeFormat(lang), [lang])
   const api = useLiveServer()
@@ -274,6 +298,7 @@ function Anywhere({ lang, inPage }) {
   const [busy, setBusy] = useState(false)
   const [ana, setAna] = useState(null)
   const [pol, setPol] = useState('hh')
+  const [rep, setRep] = useState(false)
   const hasHV = res && Object.keys(res.byChannel || {}).some((k) => k.includes('HV'))
 
   const run = () => {
@@ -287,14 +312,33 @@ function Anywhere({ lang, inPage }) {
   const ch = shown && (shown.channels[pol] || Object.values(shown.channels)[0])
   const total = ch ? ch.brighter_pct + ch.darker_pct : 0
 
+  const verdictText = total < 2 ? t.anaLittle : total < 10 ? t.anaSome : t.anaMuch
+  const model = rep && shown && {
+    kicker: t.anaBeta, title: t.anaTitle,
+    place: `${res.lat.toFixed(3)}°, ${res.lon.toFixed(3)}° · 10 km × 10 km`,
+    lead: verdictText,
+    facts: [
+      t.anaPeriod(f.d(shown.dates[0]), f.d(shown.dates[1]), f(shown.passes)),
+      ...Object.entries(shown.channels).flatMap(([k, c]) => [
+        `${k.toUpperCase()}: ${t.anaNumbers(f(c.brighter_pct, 1), f(c.darker_pct, 1))}`,
+        `${k.toUpperCase()}: ${t.anaMean(f(c.before_db, 1), f(c.after_db, 1))}`,
+      ]),
+    ],
+    pictures: Object.entries(shown.channels).map(([k, c]) => ({
+      title: `${t.repPictures} · NISAR ${k.toUpperCase()}`,
+      items: [{ src: c.before, caption: `${t.before} · ${f.d(shown.dates[0])}` }, { src: c.after, caption: `${t.after} · ${f.d(shown.dates[1])}` }],
+    })),
+    sections: [{ h: t.careTitle, p: t.anaCare }],
+  }
+
   return (
     <>
       <div className="map-area">
         {shown ? (
           <SwipeMap key={shown.bbox.join()} bbox={shown.bbox} urlA={ch.before} urlB={ch.after}
-            labelA={`${t.before} · ${f.d(shown.dates[0])}`} labelB={`${t.after} · ${f.d(shown.dates[1])}`} hint={t.dragHint} inPage={inPage} />
+            labelA={`${t.before} · ${f.d(shown.dates[0])}`} labelB={`${t.after} · ${f.d(shown.dates[1])}`} hint={t.dragHint} inPage={inPage} coop={coop} />
         ) : (
-          <ExploreMap onResult={(r) => { setRes(r); setAna(null) }} onBusy={setBusy} inPage={inPage} />
+          <ExploreMap onResult={(r) => { setRes(r); setAna(null) }} onBusy={setBusy} inPage={inPage} coop={coop} />
         )}
       </div>
       <aside className="panel">
@@ -309,7 +353,7 @@ function Anywhere({ lang, inPage }) {
             <p className="beta">{t.anaBeta}</p>
             <h2>{t.anaTitle}</h2>
             <p className="coords" dir="ltr">{res.lat.toFixed(3)}°, {res.lon.toFixed(3)}° · NISAR {Object.keys(shown.channels).map((k) => k.toUpperCase()).join(' + ')}</p>
-            <p className="verdict">{total < 2 ? t.anaLittle : total < 10 ? t.anaSome : t.anaMuch}</p>
+            <p className="verdict">{verdictText}</p>
             <p>{t.anaNumbers(f(ch.brighter_pct, 1), f(ch.darker_pct, 1))}</p>
             <p>{t.anaMean(f(ch.before_db, 1), f(ch.after_db, 1))}</p>
             <p className="hint">{t.anaPeriod(f.d(shown.dates[0]), f.d(shown.dates[1]), f(shown.passes))}</p>
@@ -318,6 +362,7 @@ function Anywhere({ lang, inPage }) {
                 <button key={p} type="button" disabled={!shown.channels[p]} aria-pressed={pol === p} onClick={() => setPol(p)}>{p.toUpperCase()}</button>
               ))}
               <button type="button" onClick={() => setAna(null)}>↩ {t.anaBack}</button>
+              <button type="button" className="rep-open" onClick={() => setRep(true)}>📄 {t.report}</button>
             </div>
             <p className="hint">{Object.keys(shown.channels).length === 1 ? t.hhOnly : channelText(lang, pol)}</p>
             <p className="hint">{t.anaCare}</p>
@@ -359,6 +404,7 @@ function Anywhere({ lang, inPage }) {
           </section>
         )}
       </aside>
+      {model && <Report model={model} t={t} lang={lang} f={f} onClose={() => setRep(false)} />}
     </>
   )
 }
@@ -408,7 +454,7 @@ export default function App() {
   const [lang, setLang] = useState('en')
   const [design, setDesign] = useState(() => {
     const q = new URLSearchParams(window.location.search).get('design')
-    try { return q || localStorage.getItem('marsad-design') || 'b' } catch { return q || 'b' }
+    try { return q || localStorage.getItem('marsad-design') || 'a' } catch { return q || 'a' }
   })
   const [siteId, setSiteId] = useState(() => {
     const h = window.location.hash.slice(1)
@@ -422,6 +468,7 @@ export default function App() {
   const t = UI[lang]
   const site = SITES.find((s) => s.id === siteId)
   const story = design === 'b'
+  const paged = design === 'b' || design === 'd'   // the page itself scrolls
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -438,13 +485,18 @@ export default function App() {
   const endIntro = () => { setIntro(false); try { sessionStorage.setItem('marsad-intro', '1') } catch { /* private mode */ } }
   const go = (id) => {
     setSiteId(id)
-    if (story) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); window.history.replaceState(null, '', '#' + id) }
+    if (story) {
+      const jump = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      jump(); setTimeout(jump, 900)   // chapters load as they come near, so aim twice
+      window.history.replaceState(null, '', '#' + id)
+    }
   }
 
   const bar = (
     <header className="bar">
       <a className="logo" href="#top" onClick={(e) => { e.preventDefault(); story ? window.scrollTo({ top: 0, behavior: 'smooth' }) : go('sindh') }}>
-        <img src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
+        <img src={`${BASE}logos/marsad-icon.png`} alt="" />
+        <span className="logo-name">MARSAD <span lang="ar">مرصد</span></span>
       </a>
       <nav className="places" aria-label={t.places}>
         {SITES.map((s) => (
@@ -455,7 +507,7 @@ export default function App() {
         <button type="button" className="any" aria-pressed={!story && siteId === 'anywhere'} onClick={() => go('anywhere')}>＋ {t.anywhere}</button>
       </nav>
       <div className="bar-end">
-        {!story && <button type="button" className="ghost" onClick={() => setAbout(true)} aria-label={t.creditsTitle}>ⓘ</button>}
+        {!paged && <button type="button" className="ghost" onClick={() => setAbout(true)} aria-label={t.creditsTitle}>ⓘ</button>}
         <button type="button" className="ghost lang" onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}>{t.langButton}</button>
       </div>
     </header>
@@ -464,7 +516,7 @@ export default function App() {
   const switcher = (
     <div className="design-switch" role="group" aria-label={t.designLabel}>
       <span>{t.designLabel}</span>
-      {['a', 'b'].map((d) => (
+      {['a', 'b', 'c', 'd'].map((d) => (
         <button key={d} type="button" aria-pressed={design === d} onClick={() => { setDesign(d); window.scrollTo(0, 0) }}>{d.toUpperCase()}</button>
       ))}
     </div>
@@ -487,11 +539,11 @@ export default function App() {
         </section>
         {SITES.map((s, i) => (
           <Chapter key={s.id} id={s.id} number={String(i + 1).padStart(2, '0')}>
-            <Site site={s} lang={lang} audience={audience} setAudience={setAudience} inPage />
+            <Site site={s} lang={lang} audience={audience} setAudience={setAudience} inPage coop />
           </Chapter>
         ))}
         <Chapter id="anywhere" number="＋">
-          <Anywhere lang={lang} inPage />
+          <Anywhere lang={lang} inPage coop />
         </Chapter>
         <footer className="foot"><About t={t} /></footer>
         {switcher}
@@ -499,22 +551,41 @@ export default function App() {
     )
   }
 
+  const one = site
+    ? <Site key={site.id} site={site} lang={lang} audience={audience} setAudience={setAudience} inPage={design !== 'a'} coop={paged} />
+    : <Anywhere lang={lang} inPage={design !== 'a'} coop={paged} />
+  const dialog = about && (
+    <div className="about" role="dialog" aria-modal="true" aria-label={t.creditsTitle} onClick={() => setAbout(false)}>
+      <div className="about-card" onClick={(e) => e.stopPropagation()}>
+        <button type="button" className="ghost close" onClick={() => setAbout(false)} aria-label="Close">✕</button>
+        <h2>MARSAD · مرصد</h2>
+        <p>{t.intro1}</p>
+        <p><strong>{t.intro2}</strong></p>
+        <About t={t} />
+      </div>
+    </div>
+  )
+
+  if (design === 'd') {
+    return (
+      <div className="app story classic" id="top">
+        {intro && <Intro t={t} onDone={endIntro} />}
+        {bar}
+        <p className="classic-intro">{t.intro1} <strong>{t.intro2}</strong></p>
+        <section className="chapter in" key={siteId}>{one}</section>
+        <footer className="foot"><About t={t} /></footer>
+        {dialog}
+        {switcher}
+      </div>
+    )
+  }
+
   return (
-    <div className="app">
+    <div className={design === 'c' ? 'app story dash' : 'app'}>
       {intro && <Intro t={t} onDone={endIntro} />}
       {bar}
-      {site ? <Site key={site.id} site={site} lang={lang} audience={audience} setAudience={setAudience} /> : <Anywhere lang={lang} />}
-      {about && (
-        <div className="about" role="dialog" aria-modal="true" aria-label={t.creditsTitle} onClick={() => setAbout(false)}>
-          <div className="about-card" onClick={(e) => e.stopPropagation()}>
-            <button type="button" className="ghost close" onClick={() => setAbout(false)} aria-label="Close">✕</button>
-            <h2>MARSAD · مرصد</h2>
-            <p>{t.intro1}</p>
-            <p><strong>{t.intro2}</strong></p>
-            <About t={t} />
-          </div>
-        </div>
-      )}
+      {one}
+      {dialog}
       {switcher}
     </div>
   )

@@ -33,7 +33,7 @@ function padding(inPage) {
   return wide ? { top: 86, bottom: 150, left: 430, right: 24 } : { top: 12, bottom: 12, left: 12, right: 12 }
 }
 
-export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPick, marker, inPage }) {
+export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPick, marker, inPage, coop }) {
   const wrap = useRef(null)
   const elA = useRef(null)
   const elB = useRef(null)
@@ -50,7 +50,7 @@ export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPic
         style: styleFor(bbox, url),
         bounds: [[w, s], [e, n]],
         fitBoundsOptions: { padding: padding(inPage) },
-        cooperativeGestures: !!inPage && interactive,
+        cooperativeGestures: !!coop && interactive,
         attributionControl: false,
         interactive,
         maxZoom: 15,
