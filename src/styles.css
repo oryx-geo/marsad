@@ -323,13 +323,14 @@ html[data-design="c"] body { background: #F2E2CA; }
 .rep-url { margin-inline-start: auto; }
 /* page 1: a brief cover. It sits over the small M strip, so the strip starts on page 2. */
 .rep-cover { position: relative; z-index: 2; background: #fff; margin-top: -62px; padding-top: 4px; break-after: page; text-align: center; display: grid; justify-items: center; gap: 6px; }
-.rep-wordmark { width: 78%; max-width: 150mm; height: auto; margin-bottom: 4mm; }
+.rep-wordmark { width: 62%; max-width: 120mm; height: auto; margin-bottom: 3mm; }
 .rep-cover h1 { font-size: 30pt; }
 .rep-cover .rep-lead { max-width: 150mm; }
 .rep-cover .rep-facts { text-align: start; max-width: 150mm; }
-.rep-cover-pics { width: 100%; margin-top: 5mm; text-align: start; }
-.rep-cover-foot { display: flex; align-items: center; gap: 14px; margin-top: 8mm; text-align: start; font-size: 10pt; color: #5E4D3B; }
-.rep-cover-foot img { width: 44mm; height: auto; }
+.rep-cover-pics { width: 72%; margin-top: 4mm; text-align: start; }
+.rep-cover .rep-facts { font-size: 10.5pt; }
+.rep-cover-foot { display: flex; align-items: center; gap: 14px; margin-top: 5mm; text-align: start; font-size: 10pt; color: #5E4D3B; }
+.rep-cover-foot img { width: 36mm; height: auto; }
 .rep-cover-foot strong { color: #0F025C; font-size: 12pt; }
 .rep-kicker { color: #924616; font-weight: 800; }
 .report h1 { color: #0F025C; font-size: 24pt; line-height: 1.15; }
@@ -368,3 +369,9 @@ html[data-design="c"] body { background: #F2E2CA; }
 .snd[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #2A1404; font-weight: 800; }
 .story .snd { background: #fff; }
 .story .snd[aria-pressed="true"] { background: #924616; border-color: #924616; color: #fff; }
+
+.reading h3 { font-size: .95rem; margin: 12px 0 4px; color: var(--accent); }
+.rd-note { margin: 6px 0; font-weight: 600; }
+.legend { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 3px; font-size: .85rem; }
+.legend li { display: flex; align-items: center; gap: 8px; }
+.legend span { width: 14px; height: 14px; border-radius: 3px; flex: none; border: 1px solid rgba(255, 255, 255, .5); }

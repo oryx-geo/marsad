@@ -15,7 +15,8 @@ export default function Report({ model, t, lang, f, onClose }) {
     return () => { document.body.classList.remove('reporting'); window.removeEventListener('keydown', esc) }
   }, [onClose])
 
-  const today = f.d(new Date().toISOString().slice(0, 10))
+  const now = new Date()   // the visitor's own date, not the UTC one
+  const today = f.d(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`)
   return createPortal(
     <div className="report-layer" dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang}>
       <div className="report-tools">
@@ -109,7 +110,8 @@ export default function Report({ model, t, lang, f, onClose }) {
         {model.sections.map((sec) => (
           <section key={sec.h} className="rep-block">
             <h2>{sec.h}</h2>
-            <p>{sec.p}</p>
+            {sec.p && <p>{sec.p}</p>}
+            {sec.list && <ul className="rep-facts">{sec.list.map((x) => <li key={x}>{x}</li>)}</ul>}
           </section>
         ))}
 

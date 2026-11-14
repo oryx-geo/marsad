@@ -121,7 +121,11 @@ python processing/stable_check.py
 ## Live analysis (optional, experimental)
 
 "Anywhere" can also compare the first and the latest NISAR picture of a 10 km square around any
-point. This needs a small program (`server/app.py`) running on a computer that holds an Earthdata
+point, and read it in plain words: what the square looks like, what changed and where, the likely
+reasons, and what stayed the same. The reading is made by fixed radar rules (thresholds on HH and
+HV, written in `server/app.py`), not by a person and not by an AI. When the whole square changes
+at once, it says that this is water or weather and does not explain the parts. A change map and
+real-colour pictures come with it. This needs a small program (`server/app.py`) running on a computer that holds an Earthdata
 token, reached through a tunnel. Its address is in `public/live.json`. When that computer is off,
 the "Analyse this place" button does not appear and the rest of the site works as usual.
 

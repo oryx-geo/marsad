@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import SwipeMap, { BLANK } from './SwipeMap.jsx'
-import ExploreMap from './Explore.jsx'
+import ExploreMap, { askCatalogue } from './Explore.jsx'
 import Chart from './Chart.jsx'
 import Report from './Report.jsx'
 import { probe } from './probe.js'
@@ -8,6 +8,8 @@ import { SITES, UI, channelText } from './content.js'
 
 const BASE = import.meta.env.BASE_URL
 const AUDIENCES = ['public', 'decision', 'resource', 'educator', 'scientist']
+// the colours of the change map (the same as in server/app.py)
+const KIND_COLOUR = { to_water: '#286EFF', from_water: '#00C8DC', built_up: '#FF3C3C', veg_up: '#46C850', both_up: '#FF78C8', both_down: '#6E6EA0', veg_down: '#BE7828', brighter: '#FFBE28', darker: '#965AC8' }
 const REPO = 'https://github.com/oryx-geo/marsad'
 
 // Fonts the team can compare (temporary switch). Arabic letters always use Readex Pro.
@@ -374,7 +376,15 @@ function Anywhere({ lang, inPage, coop }) {
   const [busy, setBusy] = useState(false)
   const [ana, setAna] = useState(null)
   const [pol, setPol] = useState('hh')
+  const [rv, setRv] = useState('pair')     // which picture pair the map shows: before/after, change map, real colour
   const [rep, setRep] = useState(false)
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search)
+    const lon = parseFloat(q.get('lon')), lat = parseFloat(q.get('lat'))
+    if (!Number.isFinite(lon) || !Number.isFinite(lat) || Math.abs(lon) > 180 || Math.abs(lat) > 85) return
+    setBusy(true)
+    askCatalogue(lon, lat).then(setRes).catch(() => setRes({ error: true, lon, lat })).finally(() => setBusy(false))
+  }, [])
   const hasHV = res && Object.keys(res.byChannel || {}).some((k) => k.includes('HV'))
 
   // The server answers at once with {status: "working"}; we ask again every few seconds.
@@ -399,7 +409,32 @@ function Anywhere({ lang, inPage, coop }) {
   const ch = shown && (shown.channels[pol] || Object.values(shown.channels)[0])
   const total = ch ? ch.brighter_pct + ch.darker_pct : 0
 
-  const verdictText = total < 2 ? t.anaLittle : total < 10 ? t.anaSome : t.anaMuch
+  const baseVerdict = total < 2 ? t.anaLittle : total < 10 ? t.anaSome : t.anaMuch
+
+  // The plain-language reading. The server sends numbers; every sentence is built from them here.
+  const rd = shown?.reading
+  const coverLines = rd ? Object.entries(rd.cover_after).filter(([, v]) => v >= 1).sort((x, y) => y[1] - x[1])
+    .map(([k, v]) => `${f(v)}% ${t.rdCover[k]}`) : []
+  const changeLines = rd ? rd.changes.map((c) => `${t.rdKind[c.kind]}: ${t.rdLine(f(c.pct, 1), f(c.km2, 1))}`) : []
+  const reasonLines = rd ? rd.changes.map((c) => `${t.rdKind[c.kind]}: ${t.rdReason[c.kind]}`) : []
+  const notes = rd ? [
+    rd.changes.length && rd.where && Math.abs(rd.scene_shift_db) < 3 && Math.max(rd.cover_before.water, rd.cover_after.water) < 50 ? t.rdWhere[rd.where] : null,
+    Math.abs(rd.scene_shift_db) >= 1.5 ? t.rdShift(f(Math.abs(rd.scene_shift_db), 1), rd.scene_shift_db > 0) : null,
+    rd.cover_after.water >= 50 ? t.rdWaterMostly : null,
+  ].filter(Boolean) : []
+  // water or weather: the whole square moved together, so the parts cannot be explained one by one
+  const weather = !!rd && (Math.abs(rd.scene_shift_db) >= 3 || Math.max(rd.cover_before.water, rd.cover_after.water) >= 50)
+  const real = shown?.real || [null, null]
+  const hasReal = real.some(Boolean)
+  const verdictText = weather ? t.rdWeather : baseVerdict
+  let mapA = ch?.before, mapB = ch?.after
+  let tagA = shown ? `${t.before} · ${f.d(shown.dates[0])}` : '', tagB = shown ? `${t.after} · ${f.d(shown.dates[1])}` : ''
+  if (shown && rv === 'map' && shown.change_map) { mapA = shown.channels.hh?.after || ch.after; mapB = shown.change_map; tagA = `${t.after} · ${f.d(shown.dates[1])}`; tagB = t.rdViewMap }
+  if (shown && rv === 'real' && hasReal) {
+    mapA = real[0]?.src || BLANK; mapB = real[1]?.src || BLANK
+    tagA = real[0] ? `${t.realTag} · ${f.d(real[0].date)}` : `${t.realTag} · ${t.noReal}`
+    tagB = real[1] ? `${t.realTag} · ${f.d(real[1].date)}` : `${t.realTag} · ${t.noReal}`
+  }
   const model = rep && shown && {
     kicker: t.anaBeta, title: t.anaTitle,
     place: `${res.lat.toFixed(3)}°, ${res.lon.toFixed(3)}° · 10 km × 10 km`,
@@ -411,21 +446,33 @@ function Anywhere({ lang, inPage, coop }) {
         `${k.toUpperCase()}: ${t.anaMean(f(c.before_db, 1), f(c.after_db, 1))}`,
       ]),
     ],
-    pictures: Object.entries(shown.channels).map(([k, c]) => ({
-      title: `${t.repPictures} · NISAR ${k.toUpperCase()}`,
-      items: [{ src: c.before, caption: `${t.before} · ${f.d(shown.dates[0])}` }, { src: c.after, caption: `${t.after} · ${f.d(shown.dates[1])}` }],
-    })),
-    sections: [{ h: t.careTitle, p: t.anaCare }],
+    pictures: [
+      ...Object.entries(shown.channels).map(([k, c]) => ({
+        title: `${t.repPictures} · NISAR ${k.toUpperCase()}`,
+        items: [{ src: c.before, caption: `${t.before} · ${f.d(shown.dates[0])}` }, { src: c.after, caption: `${t.after} · ${f.d(shown.dates[1])}` }],
+      })),
+      ...(shown.change_map ? [{ title: t.rdViewMap, items: [{ src: shown.change_map, caption: t.rdMapNote }] }] : []),
+      ...(hasReal ? [{ title: t.repReal, items: real.filter(Boolean).map((x) => ({ src: x.src, caption: f.d(x.date) })) }] : []),
+    ],
+    sections: [
+      ...(rd ? [
+        { h: `${t.rdTitle}: ${t.rdLooks}`, p: t.rdIntro(f(rd.area_km2)), list: coverLines },
+        { h: weather ? `${t.rdChanged} ${t.rdUnreliable}` : t.rdChanged, p: rd.changes.length ? [weather ? t.rdWeather : null, ...notes].filter(Boolean).join(' ') : t.rdNothing, list: changeLines },
+        ...(rd.changes.length && !weather ? [{ h: t.rdWhy, list: reasonLines }] : []),
+        { h: t.rdSame, p: t.rdStable(f(rd.stable_pct, 1)) },
+      ] : []),
+      { h: t.careTitle, p: t.anaCare },
+    ],
   }
 
   return (
     <>
       <div className="map-area">
         {shown ? (
-          <SwipeMap key={shown.bbox.join()} bbox={shown.bbox} urlA={ch.before} urlB={ch.after}
-            labelA={`${t.before} · ${f.d(shown.dates[0])}`} labelB={`${t.after} · ${f.d(shown.dates[1])}`} hint={t.dragHint} inPage={inPage} coop={coop} />
+          <SwipeMap key={shown.bbox.join()} bbox={shown.bbox} urlA={mapA} urlB={mapB}
+            labelA={tagA} labelB={tagB} hint={t.dragHint} inPage={inPage} coop={coop} />
         ) : (
-          <ExploreMap onResult={(r) => { setRes(r); setAna(null) }} onBusy={setBusy} inPage={inPage} coop={coop} />
+          <ExploreMap onResult={(r) => { setRes(r); setAna(null); setRv('pair') }} onBusy={setBusy} inPage={inPage} coop={coop} />
         )}
       </div>
       <aside className="panel">
@@ -444,6 +491,18 @@ function Anywhere({ lang, inPage, coop }) {
             <p>{t.anaNumbers(f(ch.brighter_pct, 1), f(ch.darker_pct, 1))}</p>
             <p>{t.anaMean(f(ch.before_db, 1), f(ch.after_db, 1))}</p>
             <p className="hint">{t.anaPeriod(f.d(shown.dates[0]), f.d(shown.dates[1]), f(shown.passes))}</p>
+            {rd && (
+              <div className="seg" role="group" aria-label={t.view} style={{ marginTop: 10 }}>
+                {[['pair', t.rdViewPair], ['map', t.rdViewMap], ...(hasReal ? [['real', t.rdViewReal]] : [])].map(([k, label]) => (
+                  <button key={k} type="button" aria-pressed={rv === k} onClick={() => setRv(k)}>{label}</button>
+                ))}
+              </div>
+            )}
+            {rd && rv === 'map' && (
+              <ul className="legend">
+                {rd.changes.map((c) => <li key={c.kind}><span style={{ background: KIND_COLOUR[c.kind] }} />{t.rdKind[c.kind]}</li>)}
+              </ul>
+            )}
             <div className="seg" role="group" aria-label={t.channel} style={{ marginTop: 10 }}>
               {['hh', 'hv'].map((p) => (
                 <button key={p} type="button" disabled={!shown.channels[p]} aria-pressed={pol === p} onClick={() => setPol(p)}>{p.toUpperCase()}</button>
@@ -453,6 +512,27 @@ function Anywhere({ lang, inPage, coop }) {
             </div>
             <p className="hint">{Object.keys(shown.channels).length === 1 ? t.hhOnly : channelText(lang, pol)}</p>
             <p className="hint">{t.anaCare}</p>
+          </section>
+        )}
+
+        {shown && rd && (
+          <section className="block reading">
+            <h2>{t.rdTitle}</h2>
+            <p className="hint">{t.rdIntro(f(rd.area_km2))}</p>
+            <h3>{t.rdLooks}</h3>
+            <ul className="facts">{coverLines.map((x) => <li key={x}>{x}</li>)}</ul>
+            <h3>{t.rdChanged} {weather && <span className="hint">{t.rdUnreliable}</span>}</h3>
+            {weather && <p className="rd-note">{t.rdWeather}</p>}
+            {notes.map((x) => <p key={x} className="rd-note">{x}</p>)}
+            {rd.changes.length ? <ul className="facts">{changeLines.map((x) => <li key={x}>{x}</li>)}</ul> : <p>{t.rdNothing}</p>}
+            {rd.changes.length > 0 && !weather && (
+              <>
+                <h3>{t.rdWhy}</h3>
+                <ul className="facts">{reasonLines.map((x) => <li key={x}>{x}</li>)}</ul>
+              </>
+            )}
+            <h3>{t.rdSame}</h3>
+            <p>{t.rdStable(f(rd.stable_pct, 1))}</p>
           </section>
         )}
 
