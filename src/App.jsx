@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import SwipeMap, { BLANK } from './SwipeMap.jsx'
 import ExploreMap from './Explore.jsx'
 import Chart from './Chart.jsx'
@@ -54,7 +54,7 @@ function Audience({ t, audience, setAudience, text }) {
   )
 }
 
-function Site({ site, lang, audience, setAudience }) {
+function Site({ site, lang, audience, setAudience, inPage }) {
   const t = UI[lang]
   const f = useMemo(() => makeFormat(lang), [lang])
   const [data, setData] = useState(null)
@@ -149,7 +149,7 @@ function Site({ site, lang, audience, setAudience }) {
     <>
       <div className="map-area">
         <SwipeMap key={site.id + track} bbox={data.bbox} urlA={urlA} urlB={urlB} labelA={labelA} labelB={labelB}
-          hint={t.dragHint} onPick={(lon, lat) => setPoint([lon, lat])} marker={point} />
+          hint={t.dragHint} onPick={(lon, lat) => setPoint([lon, lat])} marker={point} inPage={inPage} />
       </div>
 
       <aside className="panel">
@@ -192,7 +192,7 @@ function Site({ site, lang, audience, setAudience }) {
           {Array.isArray(series) && (
             <>
               <p className="coords" dir="ltr">{point[1].toFixed(4)}°, {point[0].toFixed(4)}° · NISAR {usePol.toUpperCase()}</p>
-              <Chart rows={series} series={[{ key: 'db', color: '#FFFFFF', label: '' }]} unit="dB" current={b}
+              <Chart rows={series} series={[{ key: 'db', color: 'var(--c-probe)', label: '' }]} unit="dB" current={b}
                 compare={view === 'both' ? null : a} locale={f.locale} onPick={(d) => { setPlaying(false); setB(d) }} small />
               {verdict && <p className="verdict">{verdict}</p>}
               <p className="hint">{t.probeNote}</p>
@@ -207,14 +207,14 @@ function Site({ site, lang, audience, setAudience }) {
             {playing ? `❚❚ ${t.pause}` : `▶ ${t.play}`}
           </button>
           <div className="time-col">
-            <label htmlFor="time">{t.timeline}: <strong>{f.d(b)}</strong></label>
-            <input id="time" type="range" min={0} max={dates.length - 1} value={dates.indexOf(b)} dir="ltr"
+            <label htmlFor={`time-${site.id}`}>{t.timeline}: <strong>{f.d(b)}</strong></label>
+            <input id={`time-${site.id}`} type="range" min={0} max={dates.length - 1} value={dates.indexOf(b)} dir="ltr"
               onChange={(e) => { setPlaying(false); setB(dates[+e.target.value]) }} />
           </div>
           {view !== 'both' && (
             <div className="cmp">
-              <label htmlFor="cmp">{t.compareWith}</label>
-              <select id="cmp" value={a} onChange={(e) => setA(e.target.value)}>
+              <label htmlFor={`cmp-${site.id}`}>{t.compareWith}</label>
+              <select id={`cmp-${site.id}`} value={a} onChange={(e) => setA(e.target.value)}>
                 {dates.map((d) => <option key={d} value={d}>{f.d(d)}</option>)}
               </select>
             </div>
@@ -266,7 +266,7 @@ function useLiveServer() {
   return api
 }
 
-function Anywhere({ lang }) {
+function Anywhere({ lang, inPage }) {
   const t = UI[lang]
   const f = useMemo(() => makeFormat(lang), [lang])
   const api = useLiveServer()
@@ -292,9 +292,9 @@ function Anywhere({ lang }) {
       <div className="map-area">
         {shown ? (
           <SwipeMap key={shown.bbox.join()} bbox={shown.bbox} urlA={ch.before} urlB={ch.after}
-            labelA={`${t.before} · ${f.d(shown.dates[0])}`} labelB={`${t.after} · ${f.d(shown.dates[1])}`} hint={t.dragHint} />
+            labelA={`${t.before} · ${f.d(shown.dates[0])}`} labelB={`${t.after} · ${f.d(shown.dates[1])}`} hint={t.dragHint} inPage={inPage} />
         ) : (
-          <ExploreMap onResult={(r) => { setRes(r); setAna(null) }} onBusy={setBusy} />
+          <ExploreMap onResult={(r) => { setRes(r); setAna(null) }} onBusy={setBusy} inPage={inPage} />
         )}
       </div>
       <aside className="panel">
@@ -363,8 +363,53 @@ function Anywhere({ lang }) {
   )
 }
 
+// A chapter of the scrolling design. Its maps are created only while it is near the screen,
+// so a phone never has to hold all the maps at once.
+function Chapter({ id, number, children }) {
+  const ref = useRef(null)
+  const [near, setNear] = useState(false)
+  const [seen, setSeen] = useState(false)
+  const [height, setHeight] = useState(900)
+  useEffect(() => {
+    const el = ref.current
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) setHeight(el.offsetHeight)
+      setNear(e.isIntersecting)
+    }, { rootMargin: '900px 0px' })
+    const io2 = new IntersectionObserver(([e]) => { if (e.isIntersecting) setSeen(true) }, { threshold: 0.08 })
+    io.observe(el); io2.observe(el)
+    return () => { io.disconnect(); io2.disconnect() }
+  }, [])
+  return (
+    <section ref={ref} id={id} className={`chapter${seen ? ' in' : ''}`} style={near ? undefined : { minHeight: height }}>
+      <span className="chapter-no" aria-hidden="true">{number}</span>
+      {near && children}
+    </section>
+  )
+}
+
+function About({ t }) {
+  return (
+    <>
+      <h2>{t.futureTitle}</h2>
+      <p>{t.future}</p>
+      <h2>{t.creditsTitle}</h2>
+      <p>{t.credits}</p>
+      <p><strong>{t.disclaimer}</strong></p>
+      <div className="about-team">
+        <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
+        <p>{t.team} <a href={REPO}>{t.source}</a></p>
+      </div>
+    </>
+  )
+}
+
 export default function App() {
   const [lang, setLang] = useState('en')
+  const [design, setDesign] = useState(() => {
+    const q = new URLSearchParams(window.location.search).get('design')
+    try { return q || localStorage.getItem('marsad-design') || 'b' } catch { return q || 'b' }
+  })
   const [siteId, setSiteId] = useState(() => {
     const h = window.location.hash.slice(1)
     return h === 'anywhere' || SITES.some((s) => s.id === h) ? h : SITES[0].id
@@ -376,38 +421,89 @@ export default function App() {
   const [about, setAbout] = useState(false)
   const t = UI[lang]
   const site = SITES.find((s) => s.id === siteId)
+  const story = design === 'b'
 
   useEffect(() => {
     document.documentElement.lang = lang
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
   }, [lang])
-  useEffect(() => { window.history.replaceState(null, '', '#' + siteId) }, [siteId])
+  useEffect(() => { document.documentElement.dataset.design = design; try { localStorage.setItem('marsad-design', design) } catch { /* private mode */ } }, [design])
+  useEffect(() => { if (!story) window.history.replaceState(null, '', '#' + siteId) }, [siteId, story])
+  useEffect(() => {
+    if (!story) return
+    const h = window.location.hash.slice(1)
+    if (h) setTimeout(() => document.getElementById(h)?.scrollIntoView(), 300)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [story])
   const endIntro = () => { setIntro(false); try { sessionStorage.setItem('marsad-intro', '1') } catch { /* private mode */ } }
+  const go = (id) => {
+    setSiteId(id)
+    if (story) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); window.history.replaceState(null, '', '#' + id) }
+  }
+
+  const bar = (
+    <header className="bar">
+      <a className="logo" href="#top" onClick={(e) => { e.preventDefault(); story ? window.scrollTo({ top: 0, behavior: 'smooth' }) : go('sindh') }}>
+        <img src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
+      </a>
+      <nav className="places" aria-label={t.places}>
+        {SITES.map((s) => (
+          <button key={s.id} type="button" aria-pressed={!story && s.id === siteId} onClick={() => go(s.id)} title={s.text[lang].kicker}>
+            {s.text[lang].name}
+          </button>
+        ))}
+        <button type="button" className="any" aria-pressed={!story && siteId === 'anywhere'} onClick={() => go('anywhere')}>＋ {t.anywhere}</button>
+      </nav>
+      <div className="bar-end">
+        {!story && <button type="button" className="ghost" onClick={() => setAbout(true)} aria-label={t.creditsTitle}>ⓘ</button>}
+        <button type="button" className="ghost lang" onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}>{t.langButton}</button>
+      </div>
+    </header>
+  )
+
+  const switcher = (
+    <div className="design-switch" role="group" aria-label={t.designLabel}>
+      <span>{t.designLabel}</span>
+      {['a', 'b'].map((d) => (
+        <button key={d} type="button" aria-pressed={design === d} onClick={() => { setDesign(d); window.scrollTo(0, 0) }}>{d.toUpperCase()}</button>
+      ))}
+    </div>
+  )
+
+  if (story) {
+    return (
+      <div className="app story" id="top">
+        {intro && <Intro t={t} onDone={endIntro} />}
+        {bar}
+        <section className="hero">
+          <img className="hero-mark" src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD · مرصد" />
+          <p className="hero-tag">{t.tagline}</p>
+          <p className="hero-lead">{t.heroLead}</p>
+          <div className="hero-rules">
+            <p>{t.intro1}</p>
+            <p><strong>{t.intro2}</strong></p>
+          </div>
+          <button type="button" className="hero-go" onClick={() => go(SITES[0].id)}>{t.scroll} <span aria-hidden="true">↓</span></button>
+        </section>
+        {SITES.map((s, i) => (
+          <Chapter key={s.id} id={s.id} number={String(i + 1).padStart(2, '0')}>
+            <Site site={s} lang={lang} audience={audience} setAudience={setAudience} inPage />
+          </Chapter>
+        ))}
+        <Chapter id="anywhere" number="＋">
+          <Anywhere lang={lang} inPage />
+        </Chapter>
+        <footer className="foot"><About t={t} /></footer>
+        {switcher}
+      </div>
+    )
+  }
 
   return (
     <div className="app">
       {intro && <Intro t={t} onDone={endIntro} />}
-
-      <header className="bar">
-        <a className="logo" href="#sindh" onClick={() => setSiteId('sindh')}>
-          <img src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
-        </a>
-        <nav className="places" aria-label={t.places}>
-          {SITES.map((s) => (
-            <button key={s.id} type="button" aria-pressed={s.id === siteId} onClick={() => setSiteId(s.id)} title={s.text[lang].kicker}>
-              {s.text[lang].name}
-            </button>
-          ))}
-          <button type="button" className="any" aria-pressed={siteId === 'anywhere'} onClick={() => setSiteId('anywhere')}>＋ {t.anywhere}</button>
-        </nav>
-        <div className="bar-end">
-          <button type="button" className="ghost" onClick={() => setAbout(true)} aria-label={t.creditsTitle}>ⓘ</button>
-          <button type="button" className="ghost lang" onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}>{t.langButton}</button>
-        </div>
-      </header>
-
+      {bar}
       {site ? <Site key={site.id} site={site} lang={lang} audience={audience} setAudience={setAudience} /> : <Anywhere lang={lang} />}
-
       {about && (
         <div className="about" role="dialog" aria-modal="true" aria-label={t.creditsTitle} onClick={() => setAbout(false)}>
           <div className="about-card" onClick={(e) => e.stopPropagation()}>
@@ -415,18 +511,11 @@ export default function App() {
             <h2>MARSAD · مرصد</h2>
             <p>{t.intro1}</p>
             <p><strong>{t.intro2}</strong></p>
-            <h2>{t.futureTitle}</h2>
-            <p>{t.future}</p>
-            <h2>{t.creditsTitle}</h2>
-            <p>{t.credits}</p>
-            <p><strong>{t.disclaimer}</strong></p>
-            <div className="about-team">
-              <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
-              <p>{t.team} <a href={REPO}>{t.source}</a></p>
-            </div>
+            <About t={t} />
           </div>
         </div>
       )}
+      {switcher}
     </div>
   )
 }

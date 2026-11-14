@@ -21,26 +21,26 @@ function styleFor(bbox, url) {
       pic: { type: 'image', url, coordinates: [[w, n], [e, n], [e, s], [w, s]] },
     },
     layers: [
-      { id: 'bg', type: 'background', paint: { 'background-color': '#0B0820' } },
+      { id: 'bg', type: 'background', paint: { 'background-color': '#17122E' } },
       { id: 'osm', type: 'raster', source: 'osm', paint: { 'raster-opacity': 0.5, 'raster-saturation': -0.7, 'raster-brightness-max': 0.55 } },
       { id: 'pic', type: 'raster', source: 'pic', paint: { 'raster-fade-duration': 0, 'raster-resampling': 'linear' } },
     ],
   }
 }
 
-function padding() {
-  const wide = window.innerWidth > 980
+function padding(inPage) {
+  const wide = window.innerWidth > 980 && !inPage
   return wide ? { top: 86, bottom: 150, left: 430, right: 24 } : { top: 12, bottom: 12, left: 12, right: 12 }
 }
 
-export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPick, marker }) {
+export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPick, marker, inPage }) {
   const wrap = useRef(null)
   const elA = useRef(null)
   const elB = useRef(null)
   const maps = useRef(null)
   const pick = useRef(onPick)
   pick.current = onPick
-  const [split, setSplit] = useState(62)
+  const [split, setSplit] = useState(() => (window.innerWidth > 980 && !inPage ? 62 : 50))
 
   useEffect(() => {
     const [w, s, e, n] = bbox
@@ -49,7 +49,8 @@ export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPic
         container: el,
         style: styleFor(bbox, url),
         bounds: [[w, s], [e, n]],
-        fitBoundsOptions: { padding: padding() },
+        fitBoundsOptions: { padding: padding(inPage) },
+        cooperativeGestures: !!inPage && interactive,
         attributionControl: false,
         interactive,
         maxZoom: 15,
@@ -68,7 +69,15 @@ export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPic
     a.on('move', sync)
     a.on('click', (ev) => pick.current && pick.current(ev.lngLat.lng, ev.lngLat.lat))
     maps.current = { a, b, markers: [] }
-    const ro = new ResizeObserver(() => { a.resize(); b.resize(); sync() })
+    // keep the picture framed when the box changes size, until the visitor moves the map
+    let touched = false
+    a.on('dragstart', () => { touched = true })
+    a.on('zoomstart', (ev) => { if (ev.originalEvent) touched = true })
+    const ro = new ResizeObserver(() => {
+      a.resize(); b.resize()
+      if (!touched) a.fitBounds([[w, s], [e, n]], { padding: padding(inPage), duration: 0 })
+      sync()
+    })
     ro.observe(wrap.current)
     return () => { ro.disconnect(); a.remove(); b.remove(); maps.current = null }
     // eslint-disable-next-line react-hooks/exhaustive-deps

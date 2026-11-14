@@ -55,19 +55,19 @@ export default function Chart({ rows, series, bars, unit, current, compare, onPi
       <text x={M.l - 6} y={M.t - 2} textAnchor="end" className="chart-unit">{unit}</text>
       {bars && rows.map((r, i) => {
         const h = ((r[bars.key] || 0) / bmax) * (H - M.t - M.b) * 0.45
-        return <rect key={i} x={x(t[i]) - 5} width={10} y={H - M.b - h} height={h} fill={bars.color} opacity="0.55" rx="2" />
+        return <rect key={i} x={x(t[i]) - 5} width={10} y={H - M.b - h} height={h} style={{ fill: bars.color }} opacity="0.6" rx="2" />
       })}
       {bars && <text x={W - M.r + 6} y={H - M.b} className="chart-unit">{`0`}</text>}
       {bars && <text x={W - M.r + 6} y={H - M.b - (H - M.t - M.b) * 0.45 + 4} className="chart-unit">{Math.round(bmax)}</text>}
       {series.map((s) => (
         <g key={s.key}>
           {segments(rows, t, s.key).map((seg, k) => (
-            <polyline key={k} fill="none" stroke={s.color} strokeWidth="2.5" strokeDasharray={s.dash || undefined}
+            <polyline key={k} fill="none" style={{ stroke: s.color }} strokeWidth="2.5" strokeDasharray={s.dash || undefined}
               strokeLinejoin="round" points={seg.map((i) => `${x(t[i])},${y(rows[i][s.key])}`).join(' ')} />
           ))}
           {rows.map((r, i) => r[s.key] != null && (
             <circle key={i} cx={x(t[i])} cy={y(r[s.key])} r={r.date === current ? 6 : 3.2}
-              fill={r.date === current ? s.color : 'var(--dot)'} stroke={s.color} strokeWidth="2" />
+              style={{ fill: r.date === current ? s.color : 'var(--dot)', stroke: s.color }} strokeWidth="2" />
           ))}
         </g>
       ))}

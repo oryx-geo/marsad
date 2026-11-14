@@ -2,8 +2,8 @@
 // Numbers are never typed here: they come from public/data/*.json (made by processing/build.py)
 // and are passed to the text functions as `n`.
 
-// chart colours, light enough to read on the dark panels
-export const COLORS = { navy: '#9DB4FF', brown: '#F0A465', green: '#A8C99A', sage: '#78906E' }
+// chart colours come from the active design (see styles.css)
+export const COLORS = { navy: 'var(--c-navy)', brown: 'var(--c-brown)', green: 'var(--c-green)', sage: 'var(--c-sage)' }
 
 export const UI = {
   en: {
@@ -77,6 +77,10 @@ export const UI = {
     anaCare: 'Radar shows that something changed, not what changed. Water, wind on the sea, rain on bare soil and crops all change the brightness without anything being built. Check with the real-colour picture or a second date.',
     anaBack: 'Pick another place',
     anaBeta: 'Live analysis · experimental',
+    scroll: 'Scroll to begin',
+    heroLead: 'Six places. One radar satellite. Watch the land keep time, and learn why it changes or stays still.',
+    designLabel: 'Design',
+    zoomHint: 'Hold Ctrl and scroll to zoom the map',
     skip: 'Skip',
   },
   ar: {
@@ -150,6 +154,10 @@ export const UI = {
     anaCare: 'الرادار يقول إن شيئاً تغيّر، ولا يقول ما هو. الماء، والرياح على البحر، والمطر على التربة العارية، والمحاصيل، كلها تغيّر اللمعان بلا أي بناء. تحقق بالصورة الملوّنة أو بتاريخ ثانٍ.',
     anaBack: 'اختر مكاناً آخر',
     anaBeta: 'تحليل مباشر · تجريبي',
+    scroll: 'انزل لتبدأ',
+    heroLead: 'ستة أماكن وقمر رادار واحد. شاهد الأرض تحفظ إيقاعها، واعرف لماذا تتغيّر أو تبقى ساكنة.',
+    designLabel: 'التصميم',
+    zoomHint: 'اضغط Ctrl مع عجلة الفأرة لتكبير الخريطة',
     skip: 'تخطَّ',
   },
 }
