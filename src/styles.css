@@ -29,10 +29,10 @@ button { cursor: pointer; }
 .bar { position: absolute; top: 12px; left: 12px; right: 12px; z-index: 20; display: flex; align-items: center; gap: 10px; pointer-events: none; }
 .bar > * { pointer-events: auto; }
 .logo { background: var(--sand); border-radius: 14px; padding: 6px 14px; display: block; flex: none; box-shadow: 0 4px 18px rgba(0, 0, 0, .35); }
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.logo img { height: 40px; width: auto; display: block; }
-.logo-name { font-weight: 900; letter-spacing: .04em; color: #924616; font-size: 1.1rem; white-space: nowrap; }
-.logo-name span { color: #0F025C; font-weight: 800; margin-inline-start: 4px; }
+.logo img { height: 38px; width: auto; display: block; }
+.logo-m { display: none !important; }
+.scrolled .logo-full { display: none !important; }
+.scrolled .logo-m { display: block !important; height: 42px; }
 .places { display: flex; gap: 6px; overflow-x: auto; flex: 1; padding: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; backdrop-filter: blur(10px); scrollbar-width: none; }
 .places::-webkit-scrollbar { display: none; }
 .places button { background: transparent; border: 0; border-radius: 999px; padding: 8px 16px; min-height: 40px; white-space: nowrap; font-weight: 600; color: var(--muted); }
@@ -288,12 +288,21 @@ html[data-design="c"] body { background: #F2E2CA; }
 .rep-print { background: #F0A465; color: #241A10; }
 .rep-close { background: transparent; color: #F2E2CA; border: 1px solid #F2E2CA !important; }
 .report { background: #fff; color: #241A10; width: min(210mm, 100%); margin: 18px auto 0; padding: 14mm 14mm 16mm; font-size: 11.5pt; line-height: 1.5; box-shadow: 0 10px 40px rgba(0, 0, 0, .4); }
-.rep-head { display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #924616; padding-bottom: 8px; margin-bottom: 14px; }
-.rep-head img { height: 44px; width: auto; }
-.rep-head div { display: grid; line-height: 1.25; }
-.rep-head strong { color: #924616; font-size: 13pt; letter-spacing: .03em; }
-.rep-head span { font-size: 9pt; color: #5E4D3B; }
+.rep-table { width: 100%; border-collapse: collapse; }
+.rep-table td { padding: 0; }
+.rep-head { display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #924616; padding-bottom: 6px; margin-bottom: 12px; font-size: 9pt; color: #5E4D3B; }
+.rep-head img { height: 40px; width: auto; }
 .rep-url { margin-inline-start: auto; }
+/* page 1: a brief cover. It sits over the small M strip, so the strip starts on page 2. */
+.rep-cover { position: relative; z-index: 2; background: #fff; margin-top: -62px; padding-top: 4px; break-after: page; text-align: center; display: grid; justify-items: center; gap: 6px; }
+.rep-wordmark { width: 78%; max-width: 150mm; height: auto; margin-bottom: 4mm; }
+.rep-cover h1 { font-size: 30pt; }
+.rep-cover .rep-lead { max-width: 150mm; }
+.rep-cover .rep-facts { text-align: start; max-width: 150mm; }
+.rep-cover-pics { width: 100%; margin-top: 5mm; text-align: start; }
+.rep-cover-foot { display: flex; align-items: center; gap: 14px; margin-top: 8mm; text-align: start; font-size: 10pt; color: #5E4D3B; }
+.rep-cover-foot img { width: 44mm; height: auto; }
+.rep-cover-foot strong { color: #0F025C; font-size: 12pt; }
 .rep-kicker { color: #924616; font-weight: 800; }
 .report h1 { color: #0F025C; font-size: 24pt; line-height: 1.15; }
 .rep-place { color: #5E4D3B; font-weight: 600; }
@@ -314,9 +323,8 @@ html[data-design="c"] body { background: #F2E2CA; }
   body.reporting { background: #fff !important; }
   .report-layer { position: static; overflow: visible; background: #fff; padding: 0; }
   .report-tools { display: none; }
-  .report { width: auto; margin: 0; padding: 14mm 0 0; box-shadow: none; }
-  /* the M logo strip repeats at the top of every printed page */
-  .rep-head { position: fixed; top: 0; left: 0; right: 0; background: #fff; margin: 0; }
+  .report { width: auto; margin: 0; padding: 0; box-shadow: none; }
+  .rep-table thead { display: table-header-group; }   /* the M strip repeats on every page */
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 .dash .places button[aria-pressed="true"] { background: #0F025C; color: #fff; }

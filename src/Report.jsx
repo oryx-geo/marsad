@@ -24,22 +24,43 @@ export default function Report({ model, t, lang, f, onClose }) {
         <button type="button" className="rep-close" onClick={onClose}>✕ {t.repClose}</button>
       </div>
       <article className="report">
-        <header className="rep-head">
-          <img src={`${BASE}logos/marsad-icon.png`} alt="MARSAD" />
-          <div>
-            <strong>MARSAD · مرصد</strong>
-            <span>{t.repTitle} · {t.repMade} {today}</span>
+        <table className="rep-table">
+          <thead>
+            <tr><td>
+              <div className="rep-head">
+                <img src={`${BASE}logos/marsad-icon.png`} alt="MARSAD" />
+                <span>{t.repTitle} · {model.title}</span>
+                <span className="rep-url" dir="ltr">{t.repSite}</span>
+              </div>
+            </td></tr>
+          </thead>
+          <tbody>
+            <tr><td>
+        <section className="rep-cover">
+          <img className="rep-wordmark" src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
+          <p className="rep-kicker">{model.kicker}</p>
+          <h1>{model.title}</h1>
+          {model.place && <p className="rep-place">{model.place}</p>}
+          {model.lead && <p className="rep-lead">{model.lead}</p>}
+          {model.facts && <ul className="rep-facts">{model.facts.map((x, i) => <li key={i}>{x}</li>)}</ul>}
+          {model.pictures?.[0] && (
+            <div className="rep-pics rep-cover-pics">
+              {model.pictures[0].items.map((im) => (
+                <figure key={im.caption}><img src={im.src} alt={im.caption} /><figcaption>{im.caption}</figcaption></figure>
+              ))}
+            </div>
+          )}
+          <div className="rep-cover-foot">
+            <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
+            <div>
+              <p><strong>ORYX GEO</strong></p>
+              <p>{t.repMade} {today}</p>
+              <p dir="ltr">{t.repSite}</p>
+            </div>
           </div>
-          <span className="rep-url" dir="ltr">{t.repSite}</span>
-        </header>
+        </section>
 
-        <p className="rep-kicker">{model.kicker}</p>
-        <h1>{model.title}</h1>
-        {model.place && <p className="rep-place">{model.place}</p>}
-        {model.lead && <p className="rep-lead">{model.lead}</p>}
-        {model.facts && <ul className="rep-facts">{model.facts.map((x, i) => <li key={i}>{x}</li>)}</ul>}
-
-        {model.pictures?.map((group) => (
+        {model.pictures?.slice(1).map((group) => (
           <section key={group.title} className="rep-block">
             <h2>{group.title}</h2>
             <div className="rep-pics">
@@ -90,6 +111,9 @@ export default function Report({ model, t, lang, f, onClose }) {
           <p><strong>{t.disclaimer}</strong></p>
           <p>{t.team}</p>
         </section>
+            </td></tr>
+          </tbody>
+        </table>
       </article>
     </div>,
     document.body,

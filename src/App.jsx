@@ -482,6 +482,15 @@ export default function App() {
     if (h) setTimeout(() => document.getElementById(h)?.scrollIntoView(), 300)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [story])
+  // on the scrolling designs the full logo gives way to the M icon once the page moves
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    if (!paged) { setScrolled(false); return }
+    const on = () => setScrolled(window.scrollY > 90)
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [paged])
   const endIntro = () => { setIntro(false); try { sessionStorage.setItem('marsad-intro', '1') } catch { /* private mode */ } }
   const go = (id) => {
     setSiteId(id)
@@ -495,8 +504,8 @@ export default function App() {
   const bar = (
     <header className="bar">
       <a className="logo" href="#top" onClick={(e) => { e.preventDefault(); story ? window.scrollTo({ top: 0, behavior: 'smooth' }) : go('sindh') }}>
-        <img src={`${BASE}logos/marsad-icon.png`} alt="" />
-        <span className="logo-name">MARSAD <span lang="ar">مرصد</span></span>
+        <img className="logo-full" src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
+        <img className="logo-m" src={`${BASE}logos/marsad-icon.png`} alt="MARSAD" />
       </a>
       <nav className="places" aria-label={t.places}>
         {SITES.map((s) => (
@@ -524,7 +533,7 @@ export default function App() {
 
   if (story) {
     return (
-      <div className="app story" id="top">
+      <div className={`app story${scrolled ? ' scrolled' : ''}`} id="top">
         {intro && <Intro t={t} onDone={endIntro} />}
         {bar}
         <section className="hero">
@@ -568,7 +577,7 @@ export default function App() {
 
   if (design === 'd') {
     return (
-      <div className="app story classic" id="top">
+      <div className={`app story classic${scrolled ? ' scrolled' : ''}`} id="top">
         {intro && <Intro t={t} onDone={endIntro} />}
         {bar}
         <p className="classic-intro">{t.intro1} <strong>{t.intro2}</strong></p>
