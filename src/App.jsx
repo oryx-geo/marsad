@@ -100,8 +100,19 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
   const [point, setPoint] = useState(null)
   const [series, setSeries] = useState(null)
   const [rep, setRep] = useState(false)
-  const [sound, setSound] = useState(false)
+  // Sound is on unless the visitor turned it off. Browsers only allow sound after a first
+  // click or key press, so the audio engine wakes up on that first touch.
+  const [sound, setSound] = useState(() => { try { return localStorage.getItem('marsad-sound') !== '0' } catch { return true } })
   const audio = useRef(null)
+  useEffect(() => {
+    const wake = () => {
+      if (!audio.current) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) audio.current = new AC() }
+      audio.current?.resume?.()
+    }
+    window.addEventListener('pointerdown', wake)
+    window.addEventListener('keydown', wake)
+    return () => { window.removeEventListener('pointerdown', wake); window.removeEventListener('keydown', wake) }
+  }, [])
 
   useEffect(() => {
     let alive = true
@@ -175,11 +186,7 @@ function Site({ site, lang, audience, setAudience, inPage, coop }) {
     osc.start(now); osc.stop(now + 0.6)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [b, sound, track])
-  const toggleSound = () => {
-    if (!audio.current) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) audio.current = new AC() }
-    audio.current?.resume?.()
-    setSound((v) => !v)
-  }
+  const toggleSound = () => setSound((v) => { try { localStorage.setItem('marsad-sound', v ? '0' : '1') } catch { /* private mode */ } return !v })
 
   if (!data || !a || !b || !dates.includes(a) || !dates.includes(b)) return <p className="loading">{t.loading}</p>
 
