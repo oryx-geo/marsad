@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 
-// Two maps on top of each other. The top one ("after") is clipped at the handle,
-// so dragging the handle wipes between the two NISAR dates.
+// Two maps on top of each other. The top one is clipped at the handle,
+// so dragging the handle wipes between the two pictures.
 
-const BASE = import.meta.env.BASE_URL
+export const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
 function styleFor(bbox, url) {
   const [w, s, e, n] = bbox
@@ -18,28 +18,30 @@ function styleFor(bbox, url) {
         maxzoom: 19,
         attribution: '© OpenStreetMap contributors',
       },
-      nisar: { type: 'image', url, coordinates: [[w, n], [e, n], [e, s], [w, s]] },
+      pic: { type: 'image', url, coordinates: [[w, n], [e, n], [e, s], [w, s]] },
     },
     layers: [
-      { id: 'bg', type: 'background', paint: { 'background-color': '#e9dcc6' } },
-      { id: 'osm', type: 'raster', source: 'osm', paint: { 'raster-opacity': 0.55, 'raster-saturation': -0.6 } },
-      { id: 'nisar', type: 'raster', source: 'nisar', paint: { 'raster-fade-duration': 0, 'raster-resampling': 'linear' } },
+      { id: 'bg', type: 'background', paint: { 'background-color': '#0B0820' } },
+      { id: 'osm', type: 'raster', source: 'osm', paint: { 'raster-opacity': 0.5, 'raster-saturation': -0.7, 'raster-brightness-max': 0.55 } },
+      { id: 'pic', type: 'raster', source: 'pic', paint: { 'raster-fade-duration': 0, 'raster-resampling': 'linear' } },
     ],
   }
 }
 
-export function imageUrl(site, track, date, pol) {
-  return `${BASE}data/${site}/${track}/${date}_${pol}.webp`
+function padding() {
+  const wide = window.innerWidth > 980
+  return wide ? { top: 86, bottom: 150, left: 430, right: 24 } : { top: 12, bottom: 12, left: 12, right: 12 }
 }
 
-export default function SwipeMap({ site, track, bbox, pol, dateA, dateB, labelA, labelB, hint }) {
+export default function SwipeMap({ bbox, urlA, urlB, labelA, labelB, hint, onPick, marker }) {
   const wrap = useRef(null)
   const elA = useRef(null)
   const elB = useRef(null)
   const maps = useRef(null)
-  const [split, setSplit] = useState(50)
+  const pick = useRef(onPick)
+  pick.current = onPick
+  const [split, setSplit] = useState(62)
 
-  // create both maps once per site
   useEffect(() => {
     const [w, s, e, n] = bbox
     const make = (el, url, interactive) =>
@@ -47,7 +49,7 @@ export default function SwipeMap({ site, track, bbox, pol, dateA, dateB, labelA,
         container: el,
         style: styleFor(bbox, url),
         bounds: [[w, s], [e, n]],
-        fitBoundsOptions: { padding: 8 },
+        fitBoundsOptions: { padding: padding() },
         attributionControl: false,
         interactive,
         maxZoom: 15,
@@ -55,42 +57,54 @@ export default function SwipeMap({ site, track, bbox, pol, dateA, dateB, labelA,
         pitchWithRotate: false,
         touchPitch: false,
       })
-    const a = make(elA.current, imageUrl(site, track, dateA, pol), true)
-    const b = make(elB.current, imageUrl(site, track, dateB, pol), false)
-    a.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left')
-    a.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
-    a.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right')
+    const a = make(elA.current, urlA, true)
+    const b = make(elB.current, urlB, false)
+    a.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
+    a.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'top-right')
+    a.addControl(new maplibregl.AttributionControl({ compact: true }), 'top-right')
     a.touchZoomRotate.disableRotation()
+    a.getCanvas().style.cursor = 'crosshair'
     const sync = () => b.jumpTo({ center: a.getCenter(), zoom: a.getZoom(), bearing: 0, pitch: 0 })
     a.on('move', sync)
-    maps.current = { a, b }
+    a.on('click', (ev) => pick.current && pick.current(ev.lngLat.lng, ev.lngLat.lat))
+    maps.current = { a, b, markers: [] }
     const ro = new ResizeObserver(() => { a.resize(); b.resize(); sync() })
     ro.observe(wrap.current)
     return () => { ro.disconnect(); a.remove(); b.remove(); maps.current = null }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [site, track])
+  }, [])
 
-  // swap the pictures when the dates or the polarisation change
   useEffect(() => {
     const m = maps.current
     if (!m) return
     const [w, s, e, n] = bbox
     const coordinates = [[w, n], [e, n], [e, s], [w, s]]
-    const set = (map, date) => {
-      const apply = () => map.getSource('nisar')?.updateImage({ url: imageUrl(site, track, date, pol), coordinates })
+    const set = (map, url) => {
+      const apply = () => map.getSource('pic')?.updateImage({ url, coordinates })
       if (map.isStyleLoaded()) apply(); else map.once('load', apply)
     }
-    set(m.a, dateA)
-    set(m.b, dateB)
+    set(m.a, urlA)
+    set(m.b, urlB)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateA, dateB, pol])
+  }, [urlA, urlB])
+
+  useEffect(() => {
+    const m = maps.current
+    if (!m) return
+    m.markers.forEach((k) => k.remove())
+    m.markers = []
+    if (marker) {
+      for (const map of [m.a, m.b]) {
+        const el = document.createElement('div')
+        el.className = 'probe-pin'
+        m.markers.push(new maplibregl.Marker({ element: el }).setLngLat(marker).addTo(map))
+      }
+    }
+  }, [marker])
 
   const drag = (ev) => {
     const r = wrap.current.getBoundingClientRect()
-    const move = (e) => {
-      const x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left
-      setSplit(Math.max(2, Math.min(98, (x / r.width) * 100)))
-    }
+    const move = (e) => setSplit(Math.max(2, Math.min(98, ((e.clientX - r.left) / r.width) * 100)))
     const stop = () => {
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerup', stop)
@@ -109,8 +123,8 @@ export default function SwipeMap({ site, track, bbox, pol, dateA, dateB, labelA,
     <div className="swipe" ref={wrap} dir="ltr">
       <div className="swipe-map" ref={elA} />
       <div className="swipe-map swipe-top" ref={elB} style={{ clipPath: `inset(0 0 0 ${split}%)` }} />
-      <div className="swipe-tag swipe-tag-a">{labelA}</div>
-      <div className="swipe-tag swipe-tag-b">{labelB}</div>
+      <div className="swipe-tag swipe-tag-a" style={{ right: `calc(${100 - split}% + 30px)` }}>{labelA}</div>
+      <div className="swipe-tag swipe-tag-b" style={{ left: `calc(${split}% + 30px)` }}>{labelB}</div>
       <div
         className="swipe-handle"
         style={{ left: `${split}%` }}

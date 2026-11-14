@@ -2,7 +2,8 @@
 // Numbers are never typed here: they come from public/data/*.json (made by processing/build.py)
 // and are passed to the text functions as `n`.
 
-export const COLORS = { navy: '#0F025C', brown: '#924616', green: '#37542A', sage: '#78906E' }
+// chart colours, light enough to read on the dark panels
+export const COLORS = { navy: '#9DB4FF', brown: '#F0A465', green: '#A8C99A', sage: '#78906E' }
 
 export const UI = {
   en: {
@@ -35,6 +36,32 @@ export const UI = {
     team: 'Made by team ORYX GEO for the 2026 NASA Space Apps Challenge, "Dancing with the SARs".',
     source: 'Source code and full references',
     grey: 'Brighter = stronger radar echo',
+    view: 'Picture',
+    viewRadar: 'Radar', viewReal: 'Real colour', viewBoth: 'Real ↔ radar',
+    realTag: 'Real colour', radarTag: 'Radar',
+    noReal: 'no clear picture near this date',
+    realNote: 'Real-colour pictures are from NASA HLS (Landsat and Sentinel-2), taken within 8 days of the radar pass. Clouds, haze and polar night hide the ground from a camera. The radar is not affected.',
+    probeTitle: 'This point',
+    probeHint: 'Click anywhere on the picture to read the radar brightness of that point over time.',
+    probeSteady: (r) => `Steady: this point moved by only ${r} dB over all dates.`,
+    probeMoved: (r, d1, d2) => `Changed: about ${r} dB between ${d1} and ${d2}.`,
+    probeNote: 'One point is noisy in radar (speckle). Differences under about 3 dB may not be real.',
+    probeOutside: 'That point is outside the study area.',
+    tabStory: 'Story', tabWhy: 'Why it changed', tabWhyNot: 'Why it didn\'t', tabCare: 'Read with care',
+    anywhere: 'Anywhere', anywhereKicker: 'Ask NASA about any place',
+    exTitle: 'Pick any place on Earth',
+    exLead: 'Click the map. MARSAD asks NASA\'s public catalogue what NISAR has recorded over that point, live.',
+    exBusy: 'Asking the NASA catalogue…',
+    exError: 'The NASA catalogue did not answer. Please try again.',
+    exNone: 'NISAR has no released radar pictures over this point yet. Most of the open ocean is not covered.',
+    exCount: (n, d1, d2) => `NISAR has ${n} released passes over this point, from ${d1} to ${d2}.`,
+    exChannels: 'Radar channels recorded',
+    exOnlyHH: 'Only HH was recorded here, so vegetation volume (HV) cannot be shown for this place.',
+    exHasHV: 'Both HH and HV exist here, so surface and vegetation can be told apart.',
+    exTracks: 'Orbits',
+    exAsc: 'ascending', exDesc: 'descending', exPasses: 'passes',
+    exNote: 'This is a live look at what data exists. Turning it into pictures needs the files to be processed, which we did for the six prepared places.',
+    skip: 'Skip',
   },
   ar: {
     tagline: 'إيقاع الأرض كما يراه الرادار',
@@ -66,6 +93,32 @@ export const UI = {
     team: 'من إعداد فريق ORYX GEO لتحدي NASA Space Apps 2026، تحدي "Dancing with the SARs".',
     source: 'الكود المصدري وكل المراجع',
     grey: 'الألمع = صدى رادار أقوى',
+    view: 'الصورة',
+    viewRadar: 'رادار', viewReal: 'ألوان حقيقية', viewBoth: 'حقيقية ↔ رادار',
+    realTag: 'ألوان حقيقية', radarTag: 'رادار',
+    noReal: 'لا توجد صورة واضحة قرب هذا التاريخ',
+    realNote: 'الصور الملوّنة من NASA HLS (لاندسات وسنتينل-2)، ملتقطة خلال 8 أيام من مرور الرادار. الغيوم والضباب والليل القطبي تحجب الأرض عن الكاميرا، والرادار لا يتأثر بها.',
+    probeTitle: 'هذه النقطة',
+    probeHint: 'اضغط على أي مكان في الصورة لتقرأ لمعان الرادار في تلك النقطة عبر الزمن.',
+    probeSteady: (r) => `ثابتة: هذه النقطة تحركت ${r} ديسيبل فقط في كل التواريخ.`,
+    probeMoved: (r, d1, d2) => `تغيّرت: نحو ${r} ديسيبل بين ${d1} و${d2}.`,
+    probeNote: 'النقطة الواحدة فيها تشويش في الرادار (speckle). الفروق الأقل من نحو 3 ديسيبل قد لا تكون حقيقية.',
+    probeOutside: 'هذه النقطة خارج منطقة الدراسة.',
+    tabStory: 'القصة', tabWhy: 'لماذا تغيّر', tabWhyNot: 'لماذا لم يتغيّر', tabCare: 'اقرأ بحذر',
+    anywhere: 'أي مكان', anywhereKicker: 'اسأل ناسا عن أي مكان',
+    exTitle: 'اختر أي مكان على الأرض',
+    exLead: 'اضغط على الخريطة. مرصد يسأل فهرس ناسا المفتوح مباشرةً عمّا سجّله NISAR فوق تلك النقطة.',
+    exBusy: 'جارٍ سؤال فهرس ناسا…',
+    exError: 'فهرس ناسا لم يُجب. حاول مرة أخرى.',
+    exNone: 'لا توجد بعد صور رادار منشورة من NISAR فوق هذه النقطة. أغلب المحيط المفتوح غير مغطّى.',
+    exCount: (n, d1, d2) => `عند NISAR ${n} مروراً منشوراً فوق هذه النقطة، من ${d1} إلى ${d2}.`,
+    exChannels: 'قنوات الرادار المسجّلة',
+    exOnlyHH: 'سُجّلت هنا قناة HH فقط، فلا يمكن عرض كثافة النبات (HV) لهذا المكان.',
+    exHasHV: 'توجد هنا قناتا HH و HV معاً، فيمكن التفريق بين السطح والنبات.',
+    exTracks: 'المدارات',
+    exAsc: 'صاعد', exDesc: 'هابط', exPasses: 'مرور',
+    exNote: 'هذه نظرة مباشرة على البيانات الموجودة. تحويلها إلى صور يحتاج معالجة الملفات، وهذا ما فعلناه للأماكن الستة الجاهزة.',
+    skip: 'تخطَّ',
   },
 }
 

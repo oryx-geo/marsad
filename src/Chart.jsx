@@ -3,7 +3,7 @@ import React from 'react'
 // A small line chart drawn by hand in SVG (no chart library).
 // series: [{ key, label, color, dash }]   bars: optional { key, label, color } on a second axis
 
-const W = 640, H = 260, M = { l: 46, r: 46, t: 14, b: 34 }
+const W = 640, M = { l: 46, r: 46, t: 16, b: 34 }
 
 function ticks(min, max, n = 4) {
   const span = max - min || 1
@@ -26,7 +26,8 @@ function segments(rows, t, key) {
   return out
 }
 
-export default function Chart({ rows, series, bars, unit, current, compare, onPick, locale, yDomain }) {
+export default function Chart({ rows, series, bars, unit, current, compare, onPick, locale, yDomain, small }) {
+  const H = small ? 200 : 280
   const t = rows.map((r) => new Date(r.date + 'T00:00:00Z').getTime())
   const x = (ms) => M.l + ((ms - t[0]) / (t[t.length - 1] - t[0] || 1)) * (W - M.l - M.r)
   const vals = series.flatMap((s) => rows.map((r) => r[s.key])).filter((v) => v != null)
@@ -41,7 +42,7 @@ export default function Chart({ rows, series, bars, unit, current, compare, onPi
   for (; d.getTime() <= t[t.length - 1]; d.setUTCMonth(d.getUTCMonth() + stepM)) months.push(d.getTime())
 
   return (
-    <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={series.map((s) => s.label).join(', ')}>
+    <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={unit}>
       {ticks(lo, hi).map((v) => (
         <g key={v}>
           <line x1={M.l} x2={W - M.r} y1={y(v)} y2={y(v)} className="chart-grid" />
@@ -66,7 +67,7 @@ export default function Chart({ rows, series, bars, unit, current, compare, onPi
           ))}
           {rows.map((r, i) => r[s.key] != null && (
             <circle key={i} cx={x(t[i])} cy={y(r[s.key])} r={r.date === current ? 6 : 3.2}
-              fill={r.date === current ? s.color : '#FBF5EC'} stroke={s.color} strokeWidth="2" />
+              fill={r.date === current ? s.color : 'var(--dot)'} stroke={s.color} strokeWidth="2" />
           ))}
         </g>
       ))}

@@ -12,6 +12,10 @@ change over time, and explains in plain words why it changed, or why it did not.
 ## What you can do on the site
 
 - Compare two NISAR dates with a before/after handle on an interactive map.
+- See the same place in real colour (NASA HLS) next to the radar picture.
+- Click any point to read its radar brightness over time.
+- "Anywhere": click any place on Earth and MARSAD asks NASA's public catalogue, live, what NISAR
+  has recorded there (how many passes, which dates, which radar channels).
 - Play the time series and follow a chart of what the radar measured.
 - Switch between the HH and HV radar channels, with one plain sentence on what each shows.
 - Read "Why did it change?" and "Why didn't it?" for every place.
@@ -43,6 +47,7 @@ processing/sites.py     the places (bounding boxes, tracks)
 processing/fetch.py     finds NISAR granules in NASA CMR and reads only the needed window over HTTPS
 processing/build.py     averages, re-projects, writes the images and all numbers
 processing/rain.py      adds NASA POWER rainfall to the Sindh series
+processing/optical.py   saves the nearest NASA HLS true-colour picture for every NISAR date
 src/                    the web app (React, MapLibre GL JS, hand-written SVG chart)
 ```
 
@@ -81,6 +86,10 @@ python processing/build.py
 python processing/rain.py
 ```
 
+```bash
+python processing/optical.py
+```
+
 ## Use of AI
 
 Idea, study area, design, data choices and verification by the team. Code written with the help of
@@ -98,7 +107,8 @@ Data
   https://search.asf.alaska.edu/
 - NASA Common Metadata Repository (CMR) search API. https://cmr.earthdata.nasa.gov/
 - NASA POWER daily precipitation (PRECTOTCORR). https://power.larc.nasa.gov/
-- NASA Harmonized Landsat Sentinel-2 (HLS) imagery through NASA GIBS, used to check the Manah site.
+- NASA Harmonized Landsat Sentinel-2 (HLS) true-colour imagery through NASA GIBS, shown next to the
+  radar pictures.
   Contains modified Copernicus Sentinel data (ESA). https://gibs.earthdata.nasa.gov/
 - Base map tiles: © OpenStreetMap contributors. https://www.openstreetmap.org/copyright
 
