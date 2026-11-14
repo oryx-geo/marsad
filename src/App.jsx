@@ -247,47 +247,116 @@ function Site({ site, lang, audience, setAudience }) {
   )
 }
 
+// The live analysis server is optional. Its address is in public/live.json.
+// If it does not answer, the "Analyse this place" button simply does not appear.
+const NGROK = { 'ngrok-skip-browser-warning': '1' }
+function useLiveServer() {
+  const [api, setApi] = useState(null)
+  useEffect(() => {
+    let alive = true
+    const ctl = new AbortController()
+    const timer = setTimeout(() => ctl.abort(), 6000)
+    fetch(`${BASE}live.json`, { cache: 'no-store' }).then((r) => r.json()).then((cfg) => {
+      if (!cfg.api) return null
+      return fetch(`${cfg.api}/health`, { headers: NGROK, signal: ctl.signal }).then((r) => r.json()).then((h) => (h.ok ? cfg.api : null))
+    }).then((url) => { if (alive && url) setApi(url) }).catch(() => {}).finally(() => clearTimeout(timer))
+    return () => { alive = false }
+  }, [])
+  return api
+}
+
 function Anywhere({ lang }) {
   const t = UI[lang]
   const f = useMemo(() => makeFormat(lang), [lang])
+  const api = useLiveServer()
   const [res, setRes] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [ana, setAna] = useState(null)
+  const [pol, setPol] = useState('hh')
   const hasHV = res && Object.keys(res.byChannel || {}).some((k) => k.includes('HV'))
+
+  const run = () => {
+    setAna('busy')
+    fetch(`${api}/analyze?lon=${res.lon.toFixed(4)}&lat=${res.lat.toFixed(4)}`, { headers: NGROK })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((d) => { setAna(d.found ? d : 'none'); if (d.found) setPol(d.channels.hh ? 'hh' : Object.keys(d.channels)[0]) })
+      .catch((code) => setAna(code === 429 ? 'limit' : 'error'))
+  }
+  const shown = ana && typeof ana === 'object' ? ana : null
+  const ch = shown && (shown.channels[pol] || Object.values(shown.channels)[0])
+  const total = ch ? ch.brighter_pct + ch.darker_pct : 0
+
   return (
     <>
-      <div className="map-area"><ExploreMap onResult={setRes} onBusy={setBusy} /></div>
+      <div className="map-area">
+        {shown ? (
+          <SwipeMap key={shown.bbox.join()} bbox={shown.bbox} urlA={ch.before} urlB={ch.after}
+            labelA={`${t.before} · ${f.d(shown.dates[0])}`} labelB={`${t.after} · ${f.d(shown.dates[1])}`} hint={t.dragHint} />
+        ) : (
+          <ExploreMap onResult={(r) => { setRes(r); setAna(null) }} onBusy={setBusy} />
+        )}
+      </div>
       <aside className="panel">
         <header className="site-head">
           <p className="kicker">{t.anywhereKicker}</p>
           <h1>{t.exTitle}</h1>
           <p className="lead">{t.exLead}</p>
         </header>
-        <section className="block" aria-live="polite">
-          {busy && <p className="hint">{t.exBusy}</p>}
-          {!busy && res?.error && <p className="verdict">{t.exError}</p>}
-          {!busy && res && !res.error && (
-            <>
-              <p className="coords" dir="ltr">{res.lat.toFixed(3)}°, {res.lon.toFixed(3)}°</p>
-              {res.passes.length === 0 ? <p className="verdict">{t.exNone}</p> : (
-                <>
-                  <p className="verdict">{t.exCount(f(res.passes.length), f.d(res.passes[0].date), f.d(res.passes[res.passes.length - 1].date))}</p>
-                  <h2>{t.exChannels}</h2>
-                  <ul className="facts">
-                    {Object.entries(res.byChannel).map(([k, v]) => <li key={k}><strong dir="ltr">{k}</strong> · {f(v)} {t.exPasses}</li>)}
-                  </ul>
-                  <p>{hasHV ? t.exHasHV : t.exOnlyHH}</p>
-                  <h2>{t.exTracks}</h2>
-                  <ul className="facts">
-                    {res.tracks.map((k) => (
-                      <li key={k.track + k.dir}><strong dir="ltr">{k.track}</strong> · {k.dir === 'A' ? t.exAsc : t.exDesc} · {f(k.n)} {t.exPasses} · {f.d(k.first)} → {f.d(k.last)}</li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </>
-          )}
-          <p className="hint">{t.exNote}</p>
-        </section>
+
+        {shown && (
+          <section className="who">
+            <p className="beta">{t.anaBeta}</p>
+            <h2>{t.anaTitle}</h2>
+            <p className="coords" dir="ltr">{res.lat.toFixed(3)}°, {res.lon.toFixed(3)}° · NISAR {Object.keys(shown.channels).map((k) => k.toUpperCase()).join(' + ')}</p>
+            <p className="verdict">{total < 2 ? t.anaLittle : total < 10 ? t.anaSome : t.anaMuch}</p>
+            <p>{t.anaNumbers(f(ch.brighter_pct, 1), f(ch.darker_pct, 1))}</p>
+            <p>{t.anaMean(f(ch.before_db, 1), f(ch.after_db, 1))}</p>
+            <p className="hint">{t.anaPeriod(f.d(shown.dates[0]), f.d(shown.dates[1]), f(shown.passes))}</p>
+            <div className="seg" role="group" aria-label={t.channel} style={{ marginTop: 10 }}>
+              {['hh', 'hv'].map((p) => (
+                <button key={p} type="button" disabled={!shown.channels[p]} aria-pressed={pol === p} onClick={() => setPol(p)}>{p.toUpperCase()}</button>
+              ))}
+              <button type="button" onClick={() => setAna(null)}>↩ {t.anaBack}</button>
+            </div>
+            <p className="hint">{Object.keys(shown.channels).length === 1 ? t.hhOnly : channelText(lang, pol)}</p>
+            <p className="hint">{t.anaCare}</p>
+          </section>
+        )}
+
+        {!shown && (
+          <section className="block" aria-live="polite">
+            {busy && <p className="hint">{t.exBusy}</p>}
+            {!busy && res?.error && <p className="verdict">{t.exError}</p>}
+            {!busy && res && !res.error && (
+              <>
+                <p className="coords" dir="ltr">{res.lat.toFixed(3)}°, {res.lon.toFixed(3)}°</p>
+                {res.passes.length === 0 ? <p className="verdict">{t.exNone}</p> : (
+                  <>
+                    <p className="verdict">{t.exCount(f(res.passes.length), f.d(res.passes[0].date), f.d(res.passes[res.passes.length - 1].date))}</p>
+                    {api && (
+                      <div className="ana">
+                        <button type="button" className="play" onClick={run} disabled={ana === 'busy'}>{ana === 'busy' ? '…' : `▶ ${t.anaButton}`}</button>
+                        <p className="hint">{ana === 'busy' ? t.anaBusy : ana === 'error' ? t.anaError : ana === 'limit' ? t.anaLimit : ana === 'none' ? t.anaNone : t.anaTime}</p>
+                      </div>
+                    )}
+                    <h2>{t.exChannels}</h2>
+                    <ul className="facts">
+                      {Object.entries(res.byChannel).map(([k, v]) => <li key={k}><strong dir="ltr">{k}</strong> · {f(v)} {t.exPasses}</li>)}
+                    </ul>
+                    <p>{hasHV ? t.exHasHV : t.exOnlyHH}</p>
+                    <h2>{t.exTracks}</h2>
+                    <ul className="facts">
+                      {res.tracks.map((k) => (
+                        <li key={k.track + k.dir}><strong dir="ltr">{k.track}</strong> · {k.dir === 'A' ? t.exAsc : t.exDesc} · {f(k.n)} {t.exPasses} · {f.d(k.first)} → {f.d(k.last)}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </>
+            )}
+            {!api && <p className="hint">{t.exNote}</p>}
+          </section>
+        )}
       </aside>
     </>
   )

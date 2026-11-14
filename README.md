@@ -90,6 +90,20 @@ python processing/rain.py
 python processing/optical.py
 ```
 
+## Live analysis (optional, experimental)
+
+"Anywhere" can also compare the first and the latest NISAR picture of a 10 km square around any
+point. This needs a small program (`server/app.py`) running on a computer that holds an Earthdata
+token, reached through a tunnel. Its address is in `public/live.json`. When that computer is off,
+the "Analyse this place" button does not appear and the rest of the site works as usual.
+
+```bash
+pip install -r server/requirements.txt
+```
+
+On Windows, double-click `server/start-server.bat` (it needs the environment variable
+`EARTHDATA_TOKEN` and a file `server/tunnel-domain.txt` with the tunnel address; neither is committed).
+
 ## Use of AI
 
 Idea, study area, design, data choices and verification by the team. Code written with the help of
@@ -122,7 +136,8 @@ Background on the Manah solar plants
 Software
 
 - React (MIT), Vite (MIT), MapLibre GL JS (BSD-3-Clause)
-- Python: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow
+- Python: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow, FastAPI, Uvicorn
+- ngrok (tunnel for the optional live analysis)
 
 Design
 
