@@ -1,0 +1,218 @@
+{
+ "id": "sindh",
+ "bbox": [
+  67.8,
+  26.8,
+  68.4,
+  27.3
+ ],
+ "size": [
+  1487,
+  1392
+ ],
+ "cell_m": 40,
+ "stretch_db": {
+  "hh": [
+   -22.0,
+   -2.0
+  ],
+  "hv": [
+   -30.0,
+   -10.0
+  ]
+ },
+ "tracks": {
+  "041_A_015": {
+   "pols": [
+    "hh",
+    "hv"
+   ],
+   "dates": [
+    "2025-11-25",
+    "2025-12-07",
+    "2025-12-19",
+    "2025-12-31",
+    "2026-01-12",
+    "2026-06-17",
+    "2026-06-29",
+    "2026-07-11",
+    "2026-07-23",
+    "2026-08-16",
+    "2026-08-28",
+    "2026-09-09",
+    "2026-09-21",
+    "2026-10-03",
+    "2026-10-15",
+    "2026-10-27"
+   ],
+   "series": [
+    {
+     "date": "2025-11-25",
+     "dark_pct": 3.84,
+     "dark_km2": 127.1,
+     "hh_db": -9.56,
+     "hv_db": -18.31,
+     "changed_hh_pct": 0.0,
+     "changed_hv_pct": 0.0,
+     "rain_mm": 0.0
+    },
+    {
+     "date": "2025-12-07",
+     "dark_pct": 4.14,
+     "dark_km2": 137.1,
+     "hh_db": -9.65,
+     "hv_db": -18.28,
+     "changed_hh_pct": 1.4,
+     "changed_hv_pct": 0.89,
+     "rain_mm": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "dark_pct": 3.59,
+     "dark_km2": 118.8,
+     "hh_db": -9.54,
+     "hv_db": -18.28,
+     "changed_hh_pct": 3.05,
+     "changed_hv_pct": 2.54,
+     "rain_mm": 0.0
+    },
+    {
+     "date": "2025-12-31",
+     "dark_pct": 1.75,
+     "dark_km2": 58.0,
+     "hh_db": -8.82,
+     "hv_db": -17.76,
+     "changed_hh_pct": 7.05,
+     "changed_hv_pct": 5.42,
+     "rain_mm": 15.4
+    },
+    {
+     "date": "2026-01-12",
+     "dark_pct": 2.72,
+     "dark_km2": 90.1,
+     "hh_db": -9.17,
+     "hv_db": -18.09,
+     "changed_hh_pct": 6.14,
+     "changed_hv_pct": 6.27,
+     "rain_mm": 0.3
+    },
+    {
+     "date": "2026-06-17",
+     "dark_pct": 4.95,
+     "dark_km2": 164.0,
+     "hh_db": -9.74,
+     "hv_db": -18.13,
+     "changed_hh_pct": 12.3,
+     "changed_hv_pct": 9.12,
+     "rain_mm": 0.1
+    },
+    {
+     "date": "2026-06-29",
+     "dark_pct": 5.47,
+     "dark_km2": 181.2,
+     "hh_db": -9.82,
+     "hv_db": -17.92,
+     "changed_hh_pct": 13.21,
+     "changed_hv_pct": 11.17,
+     "rain_mm": 1.1
+    },
+    {
+     "date": "2026-07-11",
+     "dark_pct": 6.52,
+     "dark_km2": 215.8,
+     "hh_db": -9.87,
+     "hv_db": -18.07,
+     "changed_hh_pct": 16.62,
+     "changed_hv_pct": 14.5,
+     "rain_mm": 0.2
+    },
+    {
+     "date": "2026-07-23",
+     "dark_pct": 8.61,
+     "dark_km2": 285.1,
+     "hh_db": -9.82,
+     "hv_db": -17.84,
+     "changed_hh_pct": 21.59,
+     "changed_hv_pct": 20.92,
+     "rain_mm": 1.0
+    },
+    {
+     "date": "2026-08-16",
+     "dark_pct": 9.32,
+     "dark_km2": 308.7,
+     "hh_db": -9.59,
+     "hv_db": -17.6,
+     "changed_hh_pct": 23.45,
+     "changed_hv_pct": 23.84,
+     "rain_mm": 0.9
+    },
+    {
+     "date": "2026-08-28",
+     "dark_pct": 7.24,
+     "dark_km2": 239.8,
+     "hh_db": -9.14,
+     "hv_db": -17.49,
+     "changed_hh_pct": 22.2,
+     "changed_hv_pct": 23.05,
+     "rain_mm": 0.0
+    },
+    {
+     "date": "2026-09-09",
+     "dark_pct": 4.89,
+     "dark_km2": 161.8,
+     "hh_db": -8.42,
+     "hv_db": -17.43,
+     "changed_hh_pct": 23.41,
+     "changed_hv_pct": 20.73,
+     "rain_mm": 0.0
+    },
+    {
+     "date": "2026-09-21",
+     "dark_pct": 3.45,
+     "dark_km2": 114.1,
+     "hh_db": -7.57,
+     "hv_db": -17.16,
+     "changed_hh_pct": 29.15,
+     "changed_hv_pct": 19.82,
+     "rain_mm": 0.1
+    },
+    {
+     "date": "2026-10-03",
+     "dark_pct": 2.8,
+     "dark_km2": 92.7,
+     "hh_db": -7.32,
+     "hv_db": -16.87,
+     "changed_hh_pct": 31.01,
+     "changed_hv_pct": 21.43,
+     "rain_mm": 0.0
+    },
+    {
+     "date": "2026-10-15",
+     "dark_pct": 2.73,
+     "dark_km2": 90.3,
+     "hh_db": -7.57,
+     "hv_db": -16.55,
+     "changed_hh_pct": 27.97,
+     "changed_hv_pct": 24.14,
+     "rain_mm": 1.2
+    },
+    {
+     "date": "2026-10-27",
+     "dark_pct": 3.58,
+     "dark_km2": 118.5,
+     "hh_db": -8.64,
+     "hv_db": -16.83,
+     "changed_hh_pct": 17.02,
+     "changed_hv_pct": 17.3,
+     "rain_mm": 0.0
+    }
+   ]
+  }
+ },
+ "rain_source": {
+  "name": "NASA POWER (PRECTOTCORR)",
+  "lat": 27.05,
+  "lon": 68.1,
+  "window_days": 12
+ }
+}

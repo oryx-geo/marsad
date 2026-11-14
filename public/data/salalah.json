@@ -1,0 +1,108 @@
+{
+ "id": "salalah",
+ "bbox": [
+  53.95,
+  16.95,
+  54.45,
+  17.35
+ ],
+ "size": [
+  1773,
+  1484
+ ],
+ "cell_m": 30,
+ "stretch_db": {
+  "hh": [
+   -22.0,
+   -2.0
+  ],
+  "hv": [
+   -30.0,
+   -10.0
+  ]
+ },
+ "tracks": {
+  "157_A_010": {
+   "pols": [
+    "hh",
+    "hv"
+   ],
+   "dates": [
+    "2026-06-25",
+    "2026-07-07",
+    "2026-07-19",
+    "2026-08-12",
+    "2026-08-24",
+    "2026-09-05",
+    "2026-09-17",
+    "2026-09-29",
+    "2026-10-11"
+   ],
+   "series": [
+    {
+     "date": "2026-06-25",
+     "mountain_hh_db": -5.52,
+     "mountain_hv_db": -12.0,
+     "changed_hh_pct": 0.0,
+     "changed_hv_pct": 0.0
+    },
+    {
+     "date": "2026-07-07",
+     "mountain_hh_db": -6.11,
+     "mountain_hv_db": -12.59,
+     "changed_hh_pct": 0.32,
+     "changed_hv_pct": 0.11
+    },
+    {
+     "date": "2026-07-19",
+     "mountain_hh_db": -6.14,
+     "mountain_hv_db": -12.68,
+     "changed_hh_pct": 0.4,
+     "changed_hv_pct": 0.13
+    },
+    {
+     "date": "2026-08-12",
+     "mountain_hh_db": -5.57,
+     "mountain_hv_db": -12.15,
+     "changed_hh_pct": 0.57,
+     "changed_hv_pct": 0.16
+    },
+    {
+     "date": "2026-08-24",
+     "mountain_hh_db": -5.9,
+     "mountain_hv_db": -12.33,
+     "changed_hh_pct": 0.85,
+     "changed_hv_pct": 0.2
+    },
+    {
+     "date": "2026-09-05",
+     "mountain_hh_db": -5.77,
+     "mountain_hv_db": -12.38,
+     "changed_hh_pct": 0.97,
+     "changed_hv_pct": 0.21
+    },
+    {
+     "date": "2026-09-17",
+     "mountain_hh_db": -6.58,
+     "mountain_hv_db": -13.05,
+     "changed_hh_pct": 0.67,
+     "changed_hv_pct": 0.21
+    },
+    {
+     "date": "2026-09-29",
+     "mountain_hh_db": -6.94,
+     "mountain_hv_db": -13.31,
+     "changed_hh_pct": 1.89,
+     "changed_hv_pct": 0.51
+    },
+    {
+     "date": "2026-10-11",
+     "mountain_hh_db": -6.86,
+     "mountain_hv_db": -13.19,
+     "changed_hh_pct": 2.15,
+     "changed_hv_pct": 0.62
+    }
+   ]
+  }
+ }
+}

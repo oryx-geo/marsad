@@ -1,0 +1,368 @@
+// All words shown on the site, in English and Arabic.
+// Numbers are never typed here: they come from public/data/*.json (made by processing/build.py)
+// and are passed to the text functions as `n`.
+
+export const COLORS = { navy: '#0F025C', brown: '#924616', green: '#37542A', sage: '#78906E' }
+
+export const UI = {
+  en: {
+    tagline: 'The rhythm of the land, seen by radar',
+    langButton: 'عربي',
+    intro1: 'The NISAR satellite sends radar pulses to the ground and measures how much comes back, every 12 days, day or night, through clouds.',
+    intro2: 'Two rules explain most of what you will see: rough surfaces shine, and wet surfaces shine. Smooth water stays dark.',
+    intro3: 'Pick a place. Drag the handle to compare two dates. Then ask: why did it change, or why not?',
+    places: 'Places',
+    before: 'Before', after: 'After',
+    dragHint: 'Drag to compare the two dates',
+    timeline: 'Time', play: 'Play', pause: 'Pause',
+    compareWith: 'Compare with',
+    channel: 'Radar channel',
+    pass: 'Satellite pass',
+    chartTitle: 'What the radar measured',
+    chartHint: 'Click a point to jump to that date.',
+    whyTitle: 'Why did it change?',
+    whyNotTitle: 'Why didn\'t it?',
+    audienceTitle: 'I am…',
+    audience: { public: 'curious', decision: 'a decision-maker', resource: 'a resource manager', educator: 'an educator', scientist: 'a scientist' },
+    careTitle: 'Read with care',
+    hhOnly: 'NISAR recorded only the HH channel here, so there is no HV picture for this place.',
+    loading: 'Loading radar data…',
+    futureTitle: 'The future of NISAR',
+    future: 'NISAR has been observing for only about a year. Every 12 days adds one more beat to each place\'s rhythm. With more years, the same pictures will separate a normal season from an unusual one: a flood above the usual pulse, a field left dry, a forest edge that moved.',
+    creditsTitle: 'Data and credits',
+    credits: 'Radar: NISAR L2 GCOV (NASA and ISRO), distributed by the Alaska Satellite Facility. Rainfall: NASA POWER. Optical check: NASA Harmonized Landsat Sentinel-2 (contains modified Copernicus Sentinel data, ESA). Base map: © OpenStreetMap contributors.',
+    disclaimer: 'NASA does not endorse this project. Agency names are used only to credit the data.',
+    team: 'Made by team ORYX GEO for the 2026 NASA Space Apps Challenge, "Dancing with the SARs".',
+    source: 'Source code and full references',
+    grey: 'Brighter = stronger radar echo',
+  },
+  ar: {
+    tagline: 'إيقاع الأرض كما يراه الرادار',
+    langButton: 'English',
+    intro1: 'القمر الصناعي NISAR يرسل نبضات رادار إلى الأرض ويقيس ما يرجع منها، كل 12 يوماً، ليلاً ونهاراً، ومن خلال الغيوم.',
+    intro2: 'قاعدتان تفسّران أغلب ما ستراه: السطح الخشن يلمع، والسطح الرطب يلمع. أما الماء الهادئ فيبقى داكناً.',
+    intro3: 'اختر مكاناً، واسحب المقبض لتقارن بين تاريخين، ثم اسأل: لماذا تغيّر؟ أو لماذا لم يتغيّر؟',
+    places: 'الأماكن',
+    before: 'قبل', after: 'بعد',
+    dragHint: 'اسحب للمقارنة بين التاريخين',
+    timeline: 'الزمن', play: 'تشغيل', pause: 'إيقاف',
+    compareWith: 'قارن مع',
+    channel: 'قناة الرادار',
+    pass: 'مرور القمر',
+    chartTitle: 'ماذا قاس الرادار',
+    chartHint: 'اضغط على أي نقطة للانتقال إلى تاريخها.',
+    whyTitle: 'لماذا تغيّر؟',
+    whyNotTitle: 'لماذا لم يتغيّر؟',
+    audienceTitle: 'أنا…',
+    audience: { public: 'فضولي', decision: 'صاحب قرار', resource: 'مدير موارد', educator: 'معلّم', scientist: 'باحث' },
+    careTitle: 'اقرأ بحذر',
+    hhOnly: 'سجّل NISAR هنا قناة HH فقط، فلا توجد صورة HV لهذا المكان.',
+    loading: 'جارٍ تحميل بيانات الرادار…',
+    futureTitle: 'مستقبل NISAR',
+    future: 'NISAR يرصد منذ نحو سنة فقط. كل 12 يوماً تضاف نبضة جديدة إلى إيقاع كل مكان. ومع السنوات ستفرّق الصور نفسها بين الموسم العادي وغير العادي: فيضان فوق النبض المعتاد، حقل بقي جافاً، حدّ غابة تحرّك.',
+    creditsTitle: 'البيانات والمصادر',
+    credits: 'الرادار: NISAR L2 GCOV (ناسا و ISRO)، توزيع Alaska Satellite Facility. المطر: NASA POWER. التحقق البصري: NASA Harmonized Landsat Sentinel-2 (يحتوي بيانات Copernicus Sentinel معدّلة، ESA). الخريطة: © مساهمو OpenStreetMap.',
+    disclaimer: 'ناسا لا تدعم هذا المشروع ولا تتبنّاه. أسماء الوكالات مذكورة لنسبة البيانات فقط.',
+    team: 'من إعداد فريق ORYX GEO لتحدي NASA Space Apps 2026، تحدي "Dancing with the SARs".',
+    source: 'الكود المصدري وكل المراجع',
+    grey: 'الألمع = صدى رادار أقوى',
+  },
+}
+
+const CH = {
+  en: {
+    hh: 'HH: the radar sends and receives horizontal waves. It is strongest on bare ground, buildings and flooded plants, and darkest on calm water.',
+    hv: 'HV: the wave comes back turned. That happens inside plants and trees, so HV mostly shows vegetation volume.',
+  },
+  ar: {
+    hh: 'HH: الرادار يرسل موجة أفقية ويستقبلها أفقية. تكون أقوى على الأرض العارية والمباني والنبات المغمور، وأضعف على الماء الهادئ.',
+    hv: 'HV: الموجة ترجع وقد دارت. هذا يحدث داخل النبات والشجر، فقناة HV تُظهر كثافة الغطاء النباتي.',
+  },
+}
+export const channelText = (lang, pol) => CH[lang][pol]
+
+export const SITES = [
+  {
+    id: 'sindh',
+    track: '041_A_015',
+    pol: 'hh',
+    from: '2026-06-17',
+    to: '2026-08-16',
+    chart: {
+      unit: 'km²',
+      series: [{ key: 'dark_km2', color: COLORS.navy, label: { en: 'Dark, water-like surface (km²)', ar: 'سطح داكن يشبه الماء (كم²)' } }],
+      bars: { key: 'rain_mm', color: COLORS.sage, label: { en: 'Rain in the 12 days before (mm)', ar: 'مطر الـ12 يوماً السابقة (ملم)' } },
+    },
+    facts: (rows) => {
+      const y26 = rows.filter((r) => r.date >= '2026-06-01')
+      const start = y26[0]
+      const peak = y26.reduce((a, b) => (b.dark_km2 > a.dark_km2 ? b : a))
+      const low = y26.filter((r) => r.date > peak.date).reduce((a, b) => (b.dark_km2 < a.dark_km2 ? b : a))
+      return { start, peak, low, rise: peak.dark_km2 - start.dark_km2 }
+    },
+    text: {
+      en: {
+        name: 'Sindh', place: 'Indus plain, Pakistan', kicker: 'The pulse of water',
+        lead: (n, f) => `Each summer, water spreads over the fields beside the Indus river, then drains away. NISAR saw the dark, water-like area grow from ${f(n.start.dark_km2)} km² (${f.d(n.start.date)}) to ${f(n.peak.dark_km2)} km² (${f.d(n.peak.date)}), then shrink to ${f(n.low.dark_km2)} km² (${f.d(n.low.date)}).`,
+        why: 'Calm water is a mirror for radar: the pulse bounces away and almost nothing returns, so flooded fields turn dark. When the crop grows through the water, stems and water together send a strong echo back and the same fields turn bright. That is why the dark area falls again in September even before the land is dry.',
+        whyNot: 'Towns, roads and the dry land east of the river keep the same brightness all year. Their roughness and shape do not change with the season, so the radar sees no beat there.',
+        care: 'This is the normal seasonal pulse of irrigation and river level, not a flood disaster. "Dark" means HH below −16 dB on cells of about 120 m; very smooth dry ground can also look dark. The area is a known rice belt, but we did not identify crops field by field.',
+        audience: {
+          public: () => 'Slide from June to August: the river plain fills with dark patches. That is water arriving on the fields. Keep sliding to October and watch it leave.',
+          decision: (n, f) => `About ${f(n.rise)} km² more water-like surface appeared between ${f.d(n.start.date)} and ${f.d(n.peak.date)}. The same measurement repeats every 12 days, in any weather, with no field visit. Knowing the normal pulse is what makes an abnormal one visible early.`,
+          resource: (n, f) => `Water on the fields peaked around ${f.d(n.peak.date)} and was below the June level by ${f.d(n.low.date)}. Compare the curve with the rain bars: the surface water follows irrigation and river level more than local rain.`,
+          educator: () => 'A clear classroom example of "smooth water is dark, wet plants are bright". Ask students to predict what a field looks like before planting, when flooded, and when the crop is tall, then check with the slider.',
+          scientist: (n, f) => `L-band GCOV gamma-0, HH and HV, track 041 ascending, 16 dates from BETA, provisional and V1 products. Threshold HH < −16 dB after 3×3 smoothing of 40 m cells. Peak ${f(n.peak.dark_pct)}% of the window. Products from different processing versions are mixed, so small offsets are possible.`,
+        },
+      },
+      ar: {
+        name: 'السند', place: 'سهل نهر السند، باكستان', kicker: 'نبض الماء',
+        lead: (n, f) => `في كل صيف ينتشر الماء على الحقول بجانب نهر السند ثم ينحسر. رأى NISAR المساحة الداكنة التي تشبه الماء تكبر من ${f(n.start.dark_km2)} كم² (${f.d(n.start.date)}) إلى ${f(n.peak.dark_km2)} كم² (${f.d(n.peak.date)})، ثم تصغر إلى ${f(n.low.dark_km2)} كم² (${f.d(n.low.date)}).`,
+        why: 'الماء الهادئ مرآة للرادار: النبضة ترتد بعيداً ولا يرجع منها شيء تقريباً، فتظهر الحقول المغمورة داكنة. وحين ينمو المحصول فوق الماء، تعكس السيقان والماء معاً صدى قوياً فتصير الحقول نفسها لامعة. لذلك تنقص المساحة الداكنة في سبتمبر حتى قبل أن تجف الأرض.',
+        whyNot: 'المدن والطرق والأرض الجافة شرق النهر تحتفظ بلمعانها طول السنة. خشونتها وشكلها لا يتغيّران مع الموسم، فلا يرى الرادار فيها نبضاً.',
+        care: 'هذا هو النبض الموسمي العادي للري ومستوى النهر، وليس كارثة فيضان. «داكن» تعني أن HH أقل من ‎−16 ديسيبل على خلايا بنحو 120 متراً، والأرض الجافة الملساء جداً قد تبدو داكنة أيضاً. المنطقة معروفة بزراعة الأرز، لكننا لم نحدّد المحاصيل حقلاً حقلاً.',
+        audience: {
+          public: () => 'اسحب من يونيو إلى أغسطس: سهل النهر يمتلئ ببقع داكنة. هذا هو الماء يصل إلى الحقول. أكمل إلى أكتوبر وشاهده ينحسر.',
+          decision: (n, f) => `ظهر نحو ${f(n.rise)} كم² إضافية من السطح الشبيه بالماء بين ${f.d(n.start.date)} و${f.d(n.peak.date)}. القياس نفسه يتكرر كل 12 يوماً، في أي طقس، وبلا زيارة ميدانية. ومعرفة النبض العادي هي التي تُظهر النبض غير العادي مبكراً.`,
+          resource: (n, f) => `بلغ الماء على الحقول ذروته حول ${f.d(n.peak.date)} ونزل تحت مستوى يونيو في ${f.d(n.low.date)}. قارن المنحنى بأعمدة المطر: الماء السطحي يتبع الري ومستوى النهر أكثر مما يتبع المطر المحلي.`,
+          educator: () => 'مثال واضح للصف على قاعدة «الماء الهادئ داكن والنبات الرطب لامع». اطلب من الطلاب أن يتوقعوا شكل الحقل قبل الزراعة، ثم وهو مغمور، ثم والمحصول طويل، وتحققوا بالشريط.',
+          scientist: (n, f) => `بيانات L-band GCOV (gamma-0)، قناتا HH و HV، المسار 041 الصاعد، 16 تاريخاً من نسخ BETA والمؤقتة و V1. العتبة HH أقل من ‎−16 ديسيبل بعد تنعيم 3×3 لخلايا 40 متراً. الذروة ${f(n.peak.dark_pct)}% من النافذة. النسخ مختلفة المعالجة، فقد توجد فروق صغيرة بينها.`,
+        },
+      },
+    },
+  },
+  {
+    id: 'manah',
+    track: '150_D_077',
+    pol: 'hh',
+    from: '2026-09-04',
+    to: '2026-09-16',
+    passes: {
+      '150_D_077': { en: 'Evening pass (18:48 local)', ar: 'مرور المساء (6:48 مساءً)' },
+      '128_A_013': { en: 'Dawn pass (05:34 local)', ar: 'مرور الفجر (5:34 فجراً)' },
+    },
+    chart: {
+      unit: 'dB', yDomain: [-19, -4],
+      series: [
+        { key: 'west_hh_db', color: COLORS.brown, label: { en: 'West solar field', ar: 'الحقل الشمسي الغربي' } },
+        { key: 'east_hh_db', color: COLORS.navy, label: { en: 'East solar field', ar: 'الحقل الشمسي الشرقي' } },
+        { key: 'desert_hh_db', color: COLORS.green, dash: '5 4', label: { en: 'Open desert', ar: 'الصحراء المفتوحة' } },
+      ],
+    },
+    facts: (rows, all) => {
+      const ev = all['150_D_077'].series, dawn = all['128_A_013'].series
+      const a = ev.find((r) => r.date === '2026-09-04'), b = ev.find((r) => r.date === '2026-09-16')
+      const dv = dawn.map((r) => r.west_hh_db)
+      const jump = b.west_hh_db - a.west_hh_db
+      return { a, b, jump, times: Math.pow(10, jump / 10), dawnSpread: Math.max(...dv) - Math.min(...dv),
+        eastMove: Math.abs(b.east_hh_db - a.east_hh_db) }
+    },
+    text: {
+      en: {
+        name: 'Manah', place: 'Ad Dakhiliyah, Oman', kicker: 'The panels that danced',
+        lead: (n, f) => `Between ${f.d(n.a.date)} and ${f.d(n.b.date)}, one of Oman's largest solar fields became ${f(n.times, 1)} times brighter in NISAR's evening pass (${f(n.a.west_hh_db, 1)} to ${f(n.b.west_hh_db, 1)} dB). Nothing new was built.`,
+        why: 'Radar is very sensitive to the angle of flat metal and glass. Manah 1 uses panels that turn to follow the sun. The most likely cause is that the panels of the west field stood at a different angle at pass time from mid-September on. We have not confirmed this with the plant operator.',
+        whyNot: (n, f) => `Switch to the dawn pass: the same field stays flat (it moves by only ${f(n.dawnSpread, 1)} dB in five months). The east field and the desert next to it also stay flat in both passes. And optical images from June and November show the same field. The ground did not change.`,
+        care: 'At first we read this bright rectangle as a newly built solar field. It was not. Radar shows that something changed, not what changed: brightness depends on roughness, moisture and angle. A radar change map should be checked against a second source before drawing conclusions.',
+        audience: {
+          public: () => 'Drag the handle across the big rectangle: on the left it is grey, on the right it glows. Now choose "Dawn pass" and try again. Same place, same dates, no change.',
+          decision: () => 'A change map from one radar pass can look like new construction when nothing was built. Before acting on a detected change, ask for a second pass direction or an optical image. Here both were free and took minutes.',
+          resource: () => 'For large solar sites, radar brightness tracks how the panels stand, not only whether they exist. That could become a way to watch tracker behaviour across a whole plant from space.',
+          educator: () => 'A good puzzle for a class: three clues (evening pass, dawn pass, optical photo) and one question, "what really changed?". It shows how scientists test an idea and admit a wrong first guess.',
+          scientist: (n, f) => `HH and HV both step up by about ${f(n.jump, 1)} dB on track 150 descending (left-looking) between two consecutive cycles, while track 128 ascending shows no change and the adjacent plant moves ${f(n.eastMove, 1)} dB. Consistent with a viewing-geometry effect on tracker-mounted modules; cause not established.`,
+        },
+      },
+      ar: {
+        name: 'منح', place: 'محافظة الداخلية، عُمان', kicker: 'الألواح التي رقصت',
+        lead: (n, f) => `بين ${f.d(n.a.date)} و${f.d(n.b.date)} صار أحد أكبر الحقول الشمسية في عُمان ألمع بـ ${f(n.times, 1)} مرات في مرور NISAR المسائي (من ${f(n.a.west_hh_db, 1)} إلى ${f(n.b.west_hh_db, 1)} ديسيبل). ولم يُبنَ شيء جديد.`,
+        why: 'الرادار حسّاس جداً لزاوية الأسطح المعدنية والزجاجية المستوية. ألواح محطة منح 1 تدور لتتبع الشمس. السبب الأرجح أن ألواح الحقل الغربي صارت تقف بزاوية مختلفة وقت المرور منذ منتصف سبتمبر. ولم نتأكد من ذلك من مشغّل المحطة.',
+        whyNot: (n, f) => `بدّل إلى مرور الفجر: الحقل نفسه يبقى ثابتاً (يتحرك ${f(n.dawnSpread, 1)} ديسيبل فقط في خمسة أشهر). والحقل الشرقي والصحراء بجانبه ثابتان في المرورين. والصور البصرية في يونيو ونوفمبر تُظهر الحقل نفسه. الأرض لم تتغيّر.`,
+        care: 'في البداية قرأنا هذا المستطيل اللامع على أنه حقل شمسي جديد، ولم يكن كذلك. الرادار يقول إن شيئاً تغيّر، ولا يقول ما هو: اللمعان يعتمد على الخشونة والرطوبة والزاوية. لذلك يجب التحقق من خريطة التغيّر الرادارية بمصدر ثانٍ قبل الحكم.',
+        audience: {
+          public: () => 'اسحب المقبض فوق المستطيل الكبير: على اليسار رمادي وعلى اليمين يتوهّج. الآن اختر «مرور الفجر» وجرّب ثانية. المكان نفسه والتواريخ نفسها، ولا تغيّر.',
+          decision: () => 'خريطة تغيّر من مرور واحد قد تبدو بناءً جديداً ولم يُبنَ شيء. قبل اتخاذ قرار بناءً على تغيّر مرصود، اطلب مروراً من اتجاه ثانٍ أو صورة بصرية. هنا كان الاثنان مجاناً وأخذا دقائق.',
+          resource: () => 'في المحطات الشمسية الكبيرة، لمعان الرادار يتبع وضعية الألواح، وليس وجودها فقط. قد يصير هذا طريقة لمتابعة حركة الألواح في محطة كاملة من الفضاء.',
+          educator: () => 'لغز جيد للصف: ثلاثة أدلة (مرور المساء، مرور الفجر، صورة بصرية) وسؤال واحد: «ما الذي تغيّر فعلاً؟». يُظهر كيف يختبر العلماء فكرة ويعترفون بأن تخمينهم الأول كان خطأ.',
+          scientist: (n, f) => `قناتا HH و HV ترتفعان معاً بنحو ${f(n.jump, 1)} ديسيبل على المسار 150 الهابط (النظر يساراً) بين دورتين متتاليتين، والمسار 128 الصاعد لا يُظهر تغيّراً، والمحطة المجاورة تتحرك ${f(n.eastMove, 1)} ديسيبل. هذا يتفق مع أثر هندسة الرصد على ألواح متحركة، والسبب غير مثبت.`,
+        },
+      },
+    },
+  },
+  {
+    id: 'po',
+    track: '144_A_025',
+    pol: 'hv',
+    chart: {
+      unit: '%',
+      series: [
+        { key: 'changed_hv_pct', color: COLORS.green, label: { en: 'Area changed in HV since the first date (%)', ar: 'المساحة التي تغيّرت في HV منذ أول تاريخ (%)' } },
+        { key: 'changed_hh_pct', color: COLORS.brown, label: { en: 'Area changed in HH (%)', ar: 'المساحة التي تغيّرت في HH (%)' } },
+      ],
+    },
+    facts: (rows) => {
+      const peak = rows.reduce((a, b) => (b.changed_hv_pct > a.changed_hv_pct ? b : a))
+      return { first: rows[0], last: rows[rows.length - 1], peak }
+    },
+    text: {
+      en: {
+        name: 'Po valley', place: 'Piedmont and Lombardy, Italy', kicker: 'The rhythm of the fields',
+        lead: (n, f) => `Every field here keeps its own time. Compared with ${f.d(n.first.date)}, up to ${f(n.peak.changed_hv_pct)}% of the area changed its radar brightness by more than 3 dB (${f.d(n.peak.date)}). The towns in between did not move.`,
+        why: 'Crops change the surface week by week: they grow, thicken, dry and are cut. A growing crop sends back more HV echo; a harvested field becomes smooth soil and darkens. Flooded fields with plants standing in water are among the brightest things L-band radar sees.',
+        whyNot: 'Towns and villages stay the same white patches on every date. Walls and streets act like corner mirrors, and they do not grow or get harvested.',
+        care: 'This plain is known for rice, but we did not identify which crop is in which field. The percentage counts any change above 3 dB on cells of about 60 m; rain just before a pass can also brighten bare soil.',
+        audience: {
+          public: () => 'Play the timeline in HV: the fields blink on and off like a patchwork. Each farmer plants and harvests on a slightly different day.',
+          decision: (n, f) => `Radar can report how much farmland is active, and when, across a whole region every 12 days: here ${f(n.peak.changed_hv_pct)}% of the area had changed by ${f.d(n.peak.date)}.`,
+          resource: () => 'Field-by-field timing of growth and harvest is visible without any ground report. That supports water scheduling and harvest logistics.',
+          educator: () => 'Use it to connect the calendar with the land: ask which month the fields are brightest in HV, and why.',
+          scientist: (n, f) => `Track 144 ascending, 10 m GCOV averaged to 20 m. Change defined as |Δγ⁰| > 3 dB against the first acquisition after 3×3 smoothing. No crop map was used.`,
+        },
+      },
+      ar: {
+        name: 'وادي بو', place: 'بيدمونت ولومبارديا، إيطاليا', kicker: 'إيقاع الحقول',
+        lead: (n, f) => `كل حقل هنا له توقيته. مقارنةً بيوم ${f.d(n.first.date)}، تغيّر لمعان الرادار بأكثر من 3 ديسيبل في ${f(n.peak.changed_hv_pct)}% من المساحة (${f.d(n.peak.date)}). والبلدات بين الحقول لم تتحرك.`,
+        why: 'المحاصيل تغيّر السطح أسبوعاً بعد أسبوع: تنمو وتتكاثف وتجف ثم تُحصد. المحصول النامي يعكس صدى HV أكثر، والحقل المحصود يصير تربة ملساء فيدكن. والحقول المغمورة التي يقف نباتها في الماء من ألمع ما يراه رادار L-band.',
+        whyNot: 'البلدات والقرى تبقى البقع البيضاء نفسها في كل التواريخ. الجدران والشوارع تعمل كمرايا زاوية، وهي لا تنمو ولا تُحصد.',
+        care: 'هذا السهل معروف بزراعة الأرز، لكننا لم نحدّد أي محصول في أي حقل. النسبة تحسب أي تغيّر فوق 3 ديسيبل على خلايا بنحو 60 متراً، والمطر قبل المرور مباشرة قد يزيد لمعان التربة العارية أيضاً.',
+        audience: {
+          public: () => 'شغّل الشريط الزمني على HV: الحقول تضيء وتنطفئ مثل لحاف مرقّع. كل مزارع يزرع ويحصد في يوم مختلف قليلاً.',
+          decision: (n, f) => `الرادار يخبر كم من الأرض الزراعية نشِط ومتى، على منطقة كاملة كل 12 يوماً: هنا تغيّر ${f(n.peak.changed_hv_pct)}% من المساحة حتى ${f.d(n.peak.date)}.`,
+          resource: () => 'توقيت النمو والحصاد يظهر حقلاً حقلاً بلا أي تقرير ميداني، وهذا يفيد في جدولة الماء وترتيب الحصاد.',
+          educator: () => 'استخدمه لربط التقويم بالأرض: اسأل في أي شهر تكون الحقول ألمع في HV، ولماذا.',
+          scientist: () => 'المسار 144 الصاعد، بيانات GCOV بدقة 10 أمتار مجمّعة إلى 20 متراً. التغيّر معرّف بـ |Δγ⁰| أكبر من 3 ديسيبل مقارنةً بأول صورة بعد تنعيم 3×3. لم تُستخدم خريطة محاصيل.',
+        },
+      },
+    },
+  },
+  {
+    id: 'salalah',
+    track: '157_A_010',
+    pol: 'hv',
+    chart: {
+      unit: 'dB', yDomain: [-19, -4],
+      series: [
+        { key: 'mountain_hh_db', color: COLORS.brown, label: { en: 'Mountain belt, HH', ar: 'حزام الجبال، HH' } },
+        { key: 'mountain_hv_db', color: COLORS.green, label: { en: 'Mountain belt, HV', ar: 'حزام الجبال، HV' } },
+      ],
+    },
+    facts: (rows) => {
+      const hv = rows.map((r) => r.mountain_hv_db), hh = rows.map((r) => r.mountain_hh_db)
+      return { first: rows[0], last: rows[rows.length - 1], hvSpread: Math.max(...hv) - Math.min(...hv), hhSpread: Math.max(...hh) - Math.min(...hh) }
+    },
+    text: {
+      en: {
+        name: 'Salalah', place: 'Dhofar, Oman', kicker: 'The green the radar cannot see',
+        lead: (n, f) => `Every summer the khareef monsoon turns the Dhofar mountains green, and every Omani knows it. Yet from ${f.d(n.first.date)} to ${f.d(n.last.date)} the mountains' radar brightness moved by only ${f(n.hvSpread, 1)} dB in HV and ${f(n.hhSpread, 1)} dB in HH.`,
+        why: 'The small drift that exists follows moisture: the slopes are slightly brighter when wet in the monsoon months and slightly darker as they dry in October.',
+        whyNot: 'NISAR\'s L-band wave is about 24 cm long. Grass and thin leaves are much smaller than that, so the wave passes through them and reflects from rock, soil and tree trunks, which are the same in June and in September. The khareef is mostly grass. A camera sees the colour; this radar sees the structure.',
+        care: 'The first NISAR image is from 25 June, when the monsoon had already begun, so a fully dry "before" is missing. The chart uses the same scale as Manah on purpose, to show how flat the line is.',
+        audience: {
+          public: () => 'Slide through the whole season. The coast, the city and the mountain ridges stay almost the same. The green you would see with your eyes is invisible here.',
+          decision: () => 'Radar is not one tool. Long-wave L-band is the right choice for forests, water and ground; for grass and pasture a shorter wave or an optical sensor is needed.',
+          resource: () => 'To follow pasture during the khareef, pair NISAR with optical greenness. NISAR adds what optical cannot give in the fog: soil moisture trends and where the trees are.',
+          educator: () => 'A perfect "why don\'t we see it?" case. Compare 24 cm with the height and thickness of a blade of grass, then with a tree trunk.',
+          scientist: (n, f) => `Track 157 ascending, mean γ⁰ over 17.09–17.25°N. Range ${f(n.hhSpread, 1)} dB (HH) and ${f(n.hvSpread, 1)} dB (HV) over nine acquisitions. A C-band comparison would test the wavelength explanation; it is not included yet.`,
+        },
+      },
+      ar: {
+        name: 'صلالة', place: 'ظفار، عُمان', kicker: 'الخُضرة التي لا يراها الرادار',
+        lead: (n, f) => `في كل صيف يكسو الخريف جبال ظفار بالخضرة، وكل عُماني يعرف ذلك. لكن من ${f.d(n.first.date)} إلى ${f.d(n.last.date)} تحرّك لمعان الجبال في الرادار ${f(n.hvSpread, 1)} ديسيبل فقط في HV و${f(n.hhSpread, 1)} ديسيبل في HH.`,
+        why: 'التغيّر الصغير الموجود يتبع الرطوبة: السفوح ألمع قليلاً وهي مبتلّة في أشهر الخريف، وأدكن قليلاً حين تجف في أكتوبر.',
+        whyNot: 'موجة NISAR من نوع L طولها نحو 24 سنتيمتراً. العشب والأوراق الرقيقة أصغر منها بكثير، فتمرّ الموجة من خلالها وتنعكس عن الصخر والتربة وجذوع الشجر، وهذه لا تتغيّر بين يونيو وسبتمبر. والخريف أغلبه عشب. الكاميرا ترى اللون، وهذا الرادار يرى البنية.',
+        care: 'أول صورة من NISAR هنا بتاريخ 25 يونيو والخريف قد بدأ، فلا توجد عندنا صورة «قبل» جافة تماماً. الرسم يستخدم مقياس منح نفسه عمداً، ليظهر كم الخط مستوٍ.',
+        audience: {
+          public: () => 'مرّ على الموسم كله. الساحل والمدينة وحواف الجبال تبقى كما هي تقريباً. الخضرة التي تراها بعينك لا تظهر هنا.',
+          decision: () => 'الرادار ليس أداة واحدة. موجة L الطويلة مناسبة للغابات والماء والأرض، أما العشب والمراعي فتحتاج موجة أقصر أو مستشعراً بصرياً.',
+          resource: () => 'لمتابعة المراعي في الخريف، استخدم NISAR مع مؤشر الخضرة البصري. NISAR يضيف ما لا تعطيه الصور البصرية في الضباب: اتجاه رطوبة التربة ومواقع الأشجار.',
+          educator: () => 'حالة ممتازة لسؤال «لماذا لا نراه؟». قارن 24 سنتيمتراً بطول ورقة العشب وسُمكها، ثم بجذع شجرة.',
+          scientist: (n, f) => `المسار 157 الصاعد، متوسط γ⁰ بين 17.09 و17.25 شمالاً. المدى ${f(n.hhSpread, 1)} ديسيبل (HH) و${f(n.hvSpread, 1)} ديسيبل (HV) على تسع صور. مقارنة مع C-band تختبر تفسير طول الموجة، وهي غير مضافة بعد.`,
+        },
+      },
+    },
+  },
+  {
+    id: 'rondonia',
+    track: '161_A_172',
+    pol: 'hv',
+    chart: {
+      unit: 'dB', yDomain: [-22, -7],
+      series: [
+        { key: 'hv_db', color: COLORS.green, label: { en: 'Whole window, HV', ar: 'النافذة كلها، HV' } },
+        { key: 'hh_db', color: COLORS.brown, label: { en: 'Whole window, HH', ar: 'النافذة كلها، HH' } },
+      ],
+    },
+    facts: (rows) => ({ first: rows[0], last: rows[rows.length - 1] }),
+    text: {
+      en: {
+        name: 'Amazon', place: 'Rondônia, Brazil', kicker: 'Where the forest ends',
+        lead: () => 'Forest is bright in HV; pasture is dark. NISAR draws the edge between them like a chessboard, through the clouds that hide this region from cameras for much of the year.',
+        why: 'Trunks and branches turn the radar wave, so standing forest sends back a strong HV echo. Cleared land has little volume left and stays dark.',
+        whyNot: 'Over these four months the forest edges barely move. Some forest darkened in the dry season and then recovered, which is what drying does, not what clearing does: cleared forest does not come back in weeks.',
+        care: 'We do not claim new deforestation in 2026. Separating real clearing from the dry season needs more than one year of NISAR data.',
+        audience: {
+          public: () => 'Look for the large untouched block of forest and the fishbone of clearings around it.',
+          decision: () => 'L-band radar maps forest and non-forest in any weather. With a multi-year record it becomes a reliable alarm for new clearing.',
+          resource: () => 'The same HV picture that separates forest from pasture also relates to how much wood is standing.',
+          educator: () => 'Ask why the forest is brighter in HV than in HH, then look at a tree: lots of surfaces in every direction.',
+          scientist: () => 'Track 161 ascending, nine acquisitions, 20 m GCOV averaged to 40 m. HV decreases over forest were not monotonic across the dry season, so no change detection is reported.',
+        },
+      },
+      ar: {
+        name: 'الأمازون', place: 'روندونيا، البرازيل', kicker: 'حيث تنتهي الغابة',
+        lead: () => 'الغابة لامعة في HV والمرعى داكن. NISAR يرسم الحد بينهما مثل رقعة شطرنج، ومن خلال الغيوم التي تحجب هذه المنطقة عن الكاميرات أغلب السنة.',
+        why: 'الجذوع والأغصان تدير موجة الرادار، فتعكس الغابة القائمة صدى HV قوياً. الأرض المقطوعة لم يبقَ فيها حجم نباتي فتبقى داكنة.',
+        whyNot: 'في هذه الأشهر الأربعة حدود الغابة بالكاد تتحرك. بعض الغابة دكن في موسم الجفاف ثم رجع، وهذا فعل الجفاف لا القطع: الغابة المقطوعة لا ترجع في أسابيع.',
+        care: 'لا ندّعي قطعاً جديداً للغابة في 2026. التفريق بين القطع الحقيقي وموسم الجفاف يحتاج أكثر من سنة من بيانات NISAR.',
+        audience: {
+          public: () => 'ابحث عن كتلة الغابة الكبيرة التي لم تُمسّ، وعن خطوط القطع حولها التي تشبه هيكل السمكة.',
+          decision: () => 'رادار L-band يرسم الغابة وغير الغابة في أي طقس. ومع سجل لعدة سنوات يصير إنذاراً موثوقاً للقطع الجديد.',
+          resource: () => 'صورة HV نفسها التي تفصل الغابة عن المرعى ترتبط أيضاً بكمية الخشب القائم.',
+          educator: () => 'اسأل لماذا الغابة ألمع في HV منها في HH، ثم انظر إلى شجرة: أسطح كثيرة في كل الاتجاهات.',
+          scientist: () => 'المسار 161 الصاعد، تسع صور، بيانات GCOV بدقة 20 متراً مجمّعة إلى 40 متراً. انخفاض HV فوق الغابة لم يكن مطّرداً خلال موسم الجفاف، فلا نعلن كشف تغيّر.',
+        },
+      },
+    },
+  },
+  {
+    id: 'jakobshavn',
+    track: '170_D_053',
+    pol: 'hh',
+    from: '2026-06-25',
+    to: '2026-10-23',
+    chart: {
+      unit: 'dB', yDomain: [-19, -4],
+      series: [{ key: 'hh_db', color: COLORS.navy, label: { en: 'Whole window, HH', ar: 'النافذة كلها، HH' } }],
+    },
+    facts: (rows) => ({ first: rows[0], last: rows[rows.length - 1] }),
+    text: {
+      en: {
+        name: 'Greenland', place: 'Jakobshavn glacier (Sermeq Kujalleq)', kicker: 'Ice that never stands still',
+        lead: () => 'One of the fastest glaciers on Earth pushes ice into this fjord. Compare June with October: the floating ice in the fjord and the ice stream brighten, and the icebergs are in different places.',
+        why: 'In summer the surface melts. Wet snow and meltwater absorb and scatter the radar away, so the ice looks darker. When it refreezes, the pulse enters the dry snow and ice, bounces inside, and returns strongly.',
+        whyNot: 'The bare rock on both sides of the fjord keeps the same brightness: rock does not melt.',
+        care: 'NISAR recorded only HH here. We compare pictures; we did not measure the speed of the ice, which needs a different method.',
+        audience: {
+          public: () => 'Drag between June and October and follow one iceberg. It will not be where you left it.',
+          decision: () => 'Regular radar views of glacier fronts, in polar night and cloud, feed the sea-level estimates that coastal planning depends on.',
+          resource: () => 'Melt timing shows up as a seasonal darkening and brightening of the ice surface.',
+          educator: () => 'Ask why ice is darker in summer on radar while it looks white to our eyes all year.',
+          scientist: () => 'Track 170 descending, HH only, 17 acquisitions with a gap from January to June. No offset tracking or interferometry was done.',
+        },
+      },
+      ar: {
+        name: 'غرينلاند', place: 'نهر ياكوبسهافن الجليدي', kicker: 'جليد لا يقف',
+        lead: () => 'أحد أسرع الأنهار الجليدية على الأرض يدفع الجليد إلى هذا المضيق. قارن يونيو بأكتوبر: الجليد العائم في المضيق ومجرى الجليد يصيران ألمع، والجبال الجليدية في أماكن مختلفة.',
+        why: 'في الصيف يذوب السطح. الثلج المبتل وماء الذوبان يمتصان الرادار ويبعثرانه بعيداً، فيبدو الجليد أدكن. وحين يتجمد من جديد تدخل النبضة في الثلج الجاف والجليد وترتد داخله وترجع قوية.',
+        whyNot: 'الصخر العاري على جانبي المضيق يحتفظ بلمعانه: الصخر لا يذوب.',
+        care: 'سجّل NISAR هنا قناة HH فقط. نحن نقارن الصور، ولم نقس سرعة الجليد، فهذا يحتاج طريقة أخرى.',
+        audience: {
+          public: () => 'اسحب بين يونيو وأكتوبر وتابع جبلاً جليدياً واحداً. لن تجده حيث تركته.',
+          decision: () => 'رصد الرادار المنتظم لجبهات الأنهار الجليدية، في الليل القطبي وتحت الغيم، يغذّي تقديرات ارتفاع البحر التي يعتمد عليها تخطيط السواحل.',
+          resource: () => 'توقيت الذوبان يظهر كدكنة ولمعان موسميين على سطح الجليد.',
+          educator: () => 'اسأل لماذا يبدو الجليد أدكن في الصيف على الرادار وهو أبيض أمام أعيننا طول السنة.',
+          scientist: () => 'المسار 170 الهابط، قناة HH فقط، 17 صورة مع فجوة من يناير إلى يونيو. لم نُجرِ تتبّع إزاحة ولا قياس تداخل.',
+        },
+      },
+    },
+  },
+]

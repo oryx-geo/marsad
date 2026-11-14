@@ -1,0 +1,310 @@
+{
+ "id": "manah",
+ "bbox": [
+  57.62,
+  22.58,
+  57.72,
+  22.64
+ ],
+ "size": [
+  1028,
+  668
+ ],
+ "cell_m": 10,
+ "stretch_db": {
+  "hh": [
+   -22.0,
+   -2.0
+  ],
+  "hv": [
+   -30.0,
+   -10.0
+  ]
+ },
+ "tracks": {
+  "150_D_077": {
+   "pols": [
+    "hh",
+    "hv"
+   ],
+   "dates": [
+    "2026-06-24",
+    "2026-07-06",
+    "2026-07-18",
+    "2026-08-11",
+    "2026-08-23",
+    "2026-09-04",
+    "2026-09-16",
+    "2026-09-28",
+    "2026-10-10",
+    "2026-10-22",
+    "2026-11-03"
+   ],
+   "series": [
+    {
+     "date": "2026-06-24",
+     "west_hh_db": -11.82,
+     "west_hv_db": -21.43,
+     "east_hh_db": -13.8,
+     "east_hv_db": -22.13,
+     "desert_hh_db": -16.89,
+     "desert_hv_db": -22.58,
+     "changed_hh_pct": 0.0,
+     "changed_hv_pct": 0.0
+    },
+    {
+     "date": "2026-07-06",
+     "west_hh_db": -12.27,
+     "west_hv_db": -21.46,
+     "east_hh_db": -13.98,
+     "east_hv_db": -22.13,
+     "desert_hh_db": -17.02,
+     "desert_hv_db": -22.49,
+     "changed_hh_pct": 0.28,
+     "changed_hv_pct": 0.49
+    },
+    {
+     "date": "2026-07-18",
+     "west_hh_db": -11.89,
+     "west_hv_db": -21.47,
+     "east_hh_db": -13.75,
+     "east_hv_db": -22.16,
+     "desert_hh_db": -17.0,
+     "desert_hv_db": -22.62,
+     "changed_hh_pct": 0.29,
+     "changed_hv_pct": 0.52
+    },
+    {
+     "date": "2026-08-11",
+     "west_hh_db": -11.66,
+     "west_hv_db": -21.44,
+     "east_hh_db": -13.46,
+     "east_hv_db": -22.19,
+     "desert_hh_db": -16.81,
+     "desert_hv_db": -22.69,
+     "changed_hh_pct": 0.52,
+     "changed_hv_pct": 0.65
+    },
+    {
+     "date": "2026-08-23",
+     "west_hh_db": -11.74,
+     "west_hv_db": -20.93,
+     "east_hh_db": -13.81,
+     "east_hv_db": -21.59,
+     "desert_hh_db": -16.91,
+     "desert_hv_db": -21.95,
+     "changed_hh_pct": 0.55,
+     "changed_hv_pct": 1.53
+    },
+    {
+     "date": "2026-09-04",
+     "west_hh_db": -11.48,
+     "west_hv_db": -21.37,
+     "east_hh_db": -13.51,
+     "east_hv_db": -22.1,
+     "desert_hh_db": -16.76,
+     "desert_hv_db": -22.53,
+     "changed_hh_pct": 0.63,
+     "changed_hv_pct": 0.63
+    },
+    {
+     "date": "2026-09-16",
+     "west_hh_db": -5.96,
+     "west_hv_db": -16.08,
+     "east_hh_db": -13.46,
+     "east_hv_db": -21.85,
+     "desert_hh_db": -16.67,
+     "desert_hv_db": -22.31,
+     "changed_hh_pct": 9.96,
+     "changed_hv_pct": 9.69
+    },
+    {
+     "date": "2026-09-28",
+     "west_hh_db": -6.14,
+     "west_hv_db": -16.15,
+     "east_hh_db": -13.65,
+     "east_hv_db": -22.16,
+     "desert_hh_db": -16.61,
+     "desert_hv_db": -22.53,
+     "changed_hh_pct": 12.12,
+     "changed_hv_pct": 10.44
+    },
+    {
+     "date": "2026-10-10",
+     "west_hh_db": -6.11,
+     "west_hv_db": -16.16,
+     "east_hh_db": -13.56,
+     "east_hv_db": -22.12,
+     "desert_hh_db": -16.64,
+     "desert_hv_db": -22.56,
+     "changed_hh_pct": 10.33,
+     "changed_hv_pct": 9.69
+    },
+    {
+     "date": "2026-10-22",
+     "west_hh_db": -6.86,
+     "west_hv_db": -16.61,
+     "east_hh_db": -14.26,
+     "east_hv_db": -22.43,
+     "desert_hh_db": -17.25,
+     "desert_hv_db": -22.74,
+     "changed_hh_pct": 10.26,
+     "changed_hv_pct": 9.48
+    },
+    {
+     "date": "2026-11-03",
+     "west_hh_db": -6.88,
+     "west_hv_db": -16.7,
+     "east_hh_db": -14.25,
+     "east_hv_db": -22.43,
+     "desert_hh_db": -17.21,
+     "desert_hv_db": -22.73,
+     "changed_hh_pct": 10.61,
+     "changed_hv_pct": 9.57
+    }
+   ]
+  },
+  "128_A_013": {
+   "pols": [
+    "hh",
+    "hv"
+   ],
+   "dates": [
+    "2026-06-23",
+    "2026-07-05",
+    "2026-07-17",
+    "2026-08-10",
+    "2026-08-22",
+    "2026-09-03",
+    "2026-09-15",
+    "2026-09-27",
+    "2026-10-09",
+    "2026-10-21",
+    "2026-11-02"
+   ],
+   "series": [
+    {
+     "date": "2026-06-23",
+     "west_hh_db": -12.39,
+     "west_hv_db": -21.79,
+     "east_hh_db": -13.5,
+     "east_hv_db": -22.21,
+     "desert_hh_db": -16.88,
+     "desert_hv_db": -23.54,
+     "changed_hh_pct": 0.0,
+     "changed_hv_pct": 0.0
+    },
+    {
+     "date": "2026-07-05",
+     "west_hh_db": -12.63,
+     "west_hv_db": -21.93,
+     "east_hh_db": -13.7,
+     "east_hv_db": -22.36,
+     "desert_hh_db": -16.96,
+     "desert_hv_db": -23.71,
+     "changed_hh_pct": 0.46,
+     "changed_hv_pct": 0.66
+    },
+    {
+     "date": "2026-07-17",
+     "west_hh_db": -12.39,
+     "west_hv_db": -21.96,
+     "east_hh_db": -13.61,
+     "east_hv_db": -22.36,
+     "desert_hh_db": -16.95,
+     "desert_hv_db": -23.71,
+     "changed_hh_pct": 0.46,
+     "changed_hv_pct": 0.61
+    },
+    {
+     "date": "2026-08-10",
+     "west_hh_db": -12.0,
+     "west_hv_db": -21.56,
+     "east_hh_db": -13.31,
+     "east_hv_db": -22.04,
+     "desert_hh_db": -16.39,
+     "desert_hv_db": -23.21,
+     "changed_hh_pct": 0.61,
+     "changed_hv_pct": 0.77
+    },
+    {
+     "date": "2026-08-22",
+     "west_hh_db": -12.44,
+     "west_hv_db": -21.73,
+     "east_hh_db": -13.53,
+     "east_hv_db": -22.13,
+     "desert_hh_db": -16.75,
+     "desert_hv_db": -23.37,
+     "changed_hh_pct": 0.56,
+     "changed_hv_pct": 0.75
+    },
+    {
+     "date": "2026-09-03",
+     "west_hh_db": -12.14,
+     "west_hv_db": -21.66,
+     "east_hh_db": -13.36,
+     "east_hv_db": -22.1,
+     "desert_hh_db": -16.53,
+     "desert_hv_db": -23.31,
+     "changed_hh_pct": 0.55,
+     "changed_hv_pct": 0.73
+    },
+    {
+     "date": "2026-09-15",
+     "west_hh_db": -12.19,
+     "west_hv_db": -21.69,
+     "east_hh_db": -13.36,
+     "east_hv_db": -22.09,
+     "desert_hh_db": -16.67,
+     "desert_hv_db": -23.39,
+     "changed_hh_pct": 0.63,
+     "changed_hv_pct": 0.79
+    },
+    {
+     "date": "2026-09-27",
+     "west_hh_db": -12.39,
+     "west_hv_db": -21.79,
+     "east_hh_db": -13.57,
+     "east_hv_db": -22.21,
+     "desert_hh_db": -16.63,
+     "desert_hv_db": -23.34,
+     "changed_hh_pct": 0.72,
+     "changed_hv_pct": 0.85
+    },
+    {
+     "date": "2026-10-09",
+     "west_hh_db": -12.24,
+     "west_hv_db": -21.47,
+     "east_hh_db": -13.39,
+     "east_hv_db": -21.88,
+     "desert_hh_db": -16.62,
+     "desert_hv_db": -23.05,
+     "changed_hh_pct": 0.96,
+     "changed_hv_pct": 1.47
+    },
+    {
+     "date": "2026-10-21",
+     "west_hh_db": -12.5,
+     "west_hv_db": -21.76,
+     "east_hh_db": -13.6,
+     "east_hv_db": -22.17,
+     "desert_hh_db": -16.55,
+     "desert_hv_db": -23.22,
+     "changed_hh_pct": 0.97,
+     "changed_hv_pct": 1.16
+    },
+    {
+     "date": "2026-11-02",
+     "west_hh_db": -13.03,
+     "west_hv_db": -21.93,
+     "east_hh_db": -14.17,
+     "east_hv_db": -22.42,
+     "desert_hh_db": -17.01,
+     "desert_hv_db": -23.42,
+     "changed_hh_pct": 0.8,
+     "changed_hv_pct": 0.98
+    }
+   ]
+  }
+ }
+}

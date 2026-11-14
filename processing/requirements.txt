@@ -1,0 +1,7 @@
+numpy
+h5py
+fsspec
+aiohttp
+requests
+pyproj
+pillow
