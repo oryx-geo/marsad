@@ -21,19 +21,32 @@ function makeFormat(lang) {
 
 const radarUrl = (site, track, date, pol) => `${BASE}data/${site}/${track}/${date}_${pol}.webp`
 
+// Opening: the MARSAD logo assembles itself. The three strokes of the M land one after
+// another like beats, the leaves sprout, the rest of the word slides out, a radar pulse
+// goes out, and the team signs it. The pieces are cut from the team's own logo file.
 function Intro({ t, onDone }) {
   useEffect(() => {
-    const id = setTimeout(onDone, 4300)
+    const id = setTimeout(onDone, 5600)
     return () => clearTimeout(id)
   }, [onDone])
+  const part = (name) => `${BASE}logos/parts/${name}.png`
   return (
     <div className="intro" onClick={onDone} role="presentation">
-      <div className="intro-stage">
-        <img className="intro-team" src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (AI-generated image)" />
-        <div className="intro-beam" aria-hidden="true" />
-        <div className="intro-mark">
-          <img src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
-          <p>{t.tagline}</p>
+      <div className="intro-box" dir="ltr">
+        <div className="intro-logo" role="img" aria-label="MARSAD">
+          <span className="intro-ring r1" aria-hidden="true" />
+          <span className="intro-ring r2" aria-hidden="true" />
+          <span className="intro-ring r3" aria-hidden="true" />
+          <img className="ip navy" src={part('navy')} alt="" />
+          <img className="ip brown" src={part('brown')} alt="" />
+          <img className="ip green" src={part('green')} alt="" />
+          <img className="ip leaves" src={part('leaves')} alt="" />
+          <img className="ip letters" src={part('letters')} alt="" />
+        </div>
+        <p className="intro-tag">{t.tagline}</p>
+        <div className="intro-by">
+          <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
+          <span>ORYX GEO</span>
         </div>
       </div>
       <button type="button" className="intro-skip" onClick={onDone}>{t.skip}</button>
@@ -504,8 +517,11 @@ export default function App() {
   const bar = (
     <header className="bar">
       <a className="logo" href="#top" onClick={(e) => { e.preventDefault(); story ? window.scrollTo({ top: 0, behavior: 'smooth' }) : go('sindh') }}>
-        <img className="logo-full" src={`${BASE}logos/marsad-wordmark.png`} alt="MARSAD" />
-        <img className="logo-m" src={`${BASE}logos/marsad-icon.png`} alt="MARSAD" />
+        <span className="logo-mark" dir="ltr">
+          <img className="logo-m" src={`${BASE}logos/marsad-m.png`} alt="MARSAD" />
+          <span className="logo-rest"><img src={`${BASE}logos/marsad-letters.png`} alt="" /></span>
+        </span>
+        <img className="logo-team" src={`${BASE}logos/oryx-geo-small.png`} alt="ORYX GEO" title="ORYX GEO" />
       </a>
       <nav className="places" aria-label={t.places}>
         {SITES.map((s) => (
