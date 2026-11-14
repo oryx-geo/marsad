@@ -249,7 +249,8 @@ function Site({ site, lang, audience, setAudience }) {
 
 // The live analysis server is optional. Its address is in public/live.json.
 // If it does not answer, the "Analyse this place" button simply does not appear.
-const NGROK = { 'ngrok-skip-browser-warning': '1' }
+// This header tells the tunnel to skip its "you are about to visit" page for our requests.
+const NGROK = { 'X-Tunnel-Skip-AntiPhishing-Page': 'true' }
 function useLiveServer() {
   const [api, setApi] = useState(null)
   useEffect(() => {

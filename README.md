@@ -102,7 +102,8 @@ pip install -r server/requirements.txt
 ```
 
 On Windows, double-click `server/start-server.bat` (it needs the environment variable
-`EARTHDATA_TOKEN` and a file `server/tunnel-domain.txt` with the tunnel address; neither is committed).
+`EARTHDATA_TOKEN` and a Microsoft Dev Tunnel created once with `devtunnel create -a` and
+`devtunnel port create -p 8000`).
 
 ## Use of AI
 
@@ -137,7 +138,7 @@ Software
 
 - React (MIT), Vite (MIT), MapLibre GL JS (BSD-3-Clause)
 - Python: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow, FastAPI, Uvicorn
-- ngrok (tunnel for the optional live analysis)
+- Microsoft Dev Tunnels (tunnel for the optional live analysis)
 
 Design
 
