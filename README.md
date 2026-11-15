@@ -142,8 +142,8 @@ On Windows, double-click `server/start-server.bat` (it needs the environment var
 Idea, study area, design, data choices and verification by the team. Code written with the help of
 an AI coding assistant, reviewed and tested by the team.
 
-The ORYX GEO team logo is an AI-generated image. Large versions carry the caption "AI-generated
-image"; small versions carry an "AI" tag.
+The ORYX GEO team logo is an AI-generated image and carries the caption "AI-generated image"
+(readable where the logo is shown large).
 The MARSAD logos were designed by the team in Canva.
 
 ## References

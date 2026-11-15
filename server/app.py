@@ -255,11 +255,7 @@ def analyse(lon, lat):
     out["reading"], kinds = read_square(a_hh, b_hh, a_hv, b_hv, grid.cell_km2)
     out["change_map"] = change_picture(after_power, kinds)
     out["thresholds_db"] = {"water_hh": WATER_HH, "built_hh": BUILT_HH, "trees_hv": TREES_HV, "lowveg_hv": LOWVEG_HV, "change": CHANGE_DB}
-    try:   # real-colour pictures are a bonus: never let them break the analysis
-        out["real"] = [real_colour(bbox, out["size"], d) for d in out["dates"]]
-    except Exception as ex:
-        print("real colour failed:", type(ex).__name__, flush=True)
-        out["real"] = [None, None]
+    # real-colour pictures are fetched separately (GET /real), so the radar reading is not kept waiting
     return out
 
 
@@ -308,3 +304,28 @@ def _run(key):
             _cache.clear()
         _cache[key] = result
         _jobs.discard(key)
+
+
+_real = {}
+
+
+@app.get("/real")
+def real(lon: float, lat: float, date: str):
+    """Nearest clear real-colour picture (NASA HLS) of the same 10 km square, asked for after the analysis."""
+    import datetime as dt
+    if not (-180 <= lon <= 180 and -85 <= lat <= 85):
+        raise HTTPException(400, "bad coordinates")
+    try:
+        dt.date.fromisoformat(date)
+    except ValueError:
+        raise HTTPException(400, "bad date")
+    key = (round(lon, 2), round(lat, 2), date)
+    if key not in _real:
+        bbox = box_around(key[0], key[1])
+        size = [build.Grid(bbox, CELL_M).W, build.Grid(bbox, CELL_M).H]
+        try:
+            _real[key] = {"picture": real_colour(bbox, size, date)}
+        except Exception as ex:
+            print("real colour failed:", type(ex).__name__, flush=True)
+            return {"picture": None}
+    return _real[key]

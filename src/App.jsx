@@ -376,7 +376,8 @@ function Anywhere({ lang, inPage, coop }) {
   const [busy, setBusy] = useState(false)
   const [ana, setAna] = useState(null)
   const [pol, setPol] = useState('hh')
-  const [rv, setRv] = useState('pair')     // which picture pair the map shows: before/after, change map, real colour
+  const [rv, setRv] = useState('pair')
+  const [realPics, setRealPics] = useState(null)   // real-colour pictures, asked for after the radar result     // which picture pair the map shows: before/after, change map, real colour
   const [rep, setRep] = useState(false)
   useEffect(() => {
     const q = new URLSearchParams(window.location.search)
@@ -385,6 +386,16 @@ function Anywhere({ lang, inPage, coop }) {
     setBusy(true)
     askCatalogue(lon, lat).then(setRes).catch(() => setRes({ error: true, lon, lat })).finally(() => setBusy(false))
   }, [])
+  useEffect(() => {
+    setRealPics(null)
+    if (!ana || typeof ana !== 'object' || ana.real || !api) return
+    let alive = true
+    Promise.all(ana.dates.map((d) => fetch(`${api}/real?lon=${res.lon.toFixed(4)}&lat=${res.lat.toFixed(4)}&date=${d}`, { headers: NGROK })
+      .then((r) => (r.ok ? r.json() : { picture: null })).then((j) => j.picture).catch(() => null)))
+      .then((pics) => { if (alive) setRealPics(pics) })
+    return () => { alive = false }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ana])
   const hasHV = res && Object.keys(res.byChannel || {}).some((k) => k.includes('HV'))
 
   // The server answers at once with {status: "working"}; we ask again every few seconds.
@@ -424,7 +435,7 @@ function Anywhere({ lang, inPage, coop }) {
   ].filter(Boolean) : []
   // water or weather: the whole square moved together, so the parts cannot be explained one by one
   const weather = !!rd && (Math.abs(rd.scene_shift_db) >= 3 || Math.max(rd.cover_before.water, rd.cover_after.water) >= 50)
-  const real = shown?.real || [null, null]
+  const real = shown?.real || realPics || [null, null]
   const hasReal = real.some(Boolean)
   const verdictText = weather ? t.rdWeather : baseVerdict
   let mapA = ch?.before, mapB = ch?.after
