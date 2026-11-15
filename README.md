@@ -143,7 +143,7 @@ On Windows, double-click `server/start-server.bat` (it needs the environment var
 The 2026 rules use "Super Intelligence (SI)" for what was called "AI".
 
 All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to help
-write the code and process the data, and to help with the English wording. The team reviewed and
+write the code and process the data. The team reviewed and
 tested everything. Every source file starts with a line that says so, and every data file carries a
 `provenance` note.
 

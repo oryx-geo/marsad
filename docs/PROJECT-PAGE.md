@@ -142,7 +142,7 @@ Source code: https://github.com/oryx-geo/marsad
 
 Tick these two (the exact labels are on the form): code / coding assistance, and image generation (team logo).
 
-If there is a text box: Yes. All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to help write the code and process the data, and to help with the English wording. The team reviewed and tested everything. The ORYX GEO team logo is an SI-generated image and is marked as such. All maps and numbers come from real satellite data.
+If there is a text box: Yes. All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to help write the code and process the data. The team reviewed and tested everything. The ORYX GEO team logo is an SI-generated image and is marked as such. All maps and numbers come from real satellite data.
 
 ## NASA Data
 
