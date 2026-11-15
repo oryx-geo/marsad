@@ -196,8 +196,7 @@ stand at night. So the site presents the cause of the Manah signal as likely, no
 Software
 
 - React and React DOM (MIT), Vite and @vitejs/plugin-react (MIT), MapLibre GL JS (BSD-3-Clause)
-- Fonts (all SIL Open Font License 1.1, served from the site itself through Fontsource): Readex Pro,
-  Inter, IBM Plex Sans, Space Grotesk, DM Sans, Lora
+- Font: Readex Pro (SIL Open Font License 1.1), served from the site itself through Fontsource
 - Python: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow, FastAPI, Uvicorn
 - Microsoft Dev Tunnels (tunnel for the optional live analysis)
 

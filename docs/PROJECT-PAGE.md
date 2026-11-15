@@ -169,7 +169,7 @@ If there is a text box: Yes. All ideas and decisions are the team's. We used an 
 | React | https://react.dev/ |
 | Vite | https://vite.dev/ |
 | MapLibre GL JS | https://maplibre.org/ |
-| Fontsource (Readex Pro and other open fonts) | https://fontsource.org/ |
+| Readex Pro font (via Fontsource) | https://fontsource.org/ |
 | NumPy | https://numpy.org/ |
 | h5py | https://www.h5py.org/ |
 | fsspec | https://filesystem-spec.readthedocs.io/ |
