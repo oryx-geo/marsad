@@ -20,9 +20,9 @@ to read; MARSAD makes it readable, and honest about what radar can and cannot te
 
 ## Project Demonstration
 
-(the public link of the 29-second video)
+https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing
 
-If the team uses the slides as the demo instead: https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing
+(Main demo: the 7 slides. The 29-second video is a second, optional link: add it under "Space Agency Partner & Other Data" or in Project Details.)
 
 ## Project
 
