@@ -122,13 +122,13 @@ for ground motion, calibrated C-band numbers, tracking of the fastest ice, and a
 
 (This field is not shown to the judges, but the same text is in the README, which they can read.)
 
-Yes. The team chose the challenge, the concept of MARSAD (a radar story for five audiences, with
-"why did it change, and why not" for every place), the design and theme, and took every decision on
-places and wording. We used an SI coding assistant (Claude, by Anthropic) to write most of the code
-of the site, the processing scripts and the live-analysis server, to run the data processing, to scan
-candidate places in NISAR data (the Manah and Salalah sites came out of this scan and were then
-chosen by the team), to draft text for the site, slides and this page, and to check the rules. The
-team reviewed and tested everything. Every source file in the repository starts with a line saying
+Yes, as a coding assistant only. All ideas are the team's: the challenge choice, the concept of
+MARSAD and its features, the places, the design and every decision. We used an SI coding assistant
+(Claude, by Anthropic) to write most of the code of the site, the processing scripts and the
+live-analysis server following our instructions, to run the data processing and the place scans we
+asked for, and to draft the English wording of the site, slides and this page from our ideas, which we reviewed
+and edited. The team
+reviewed and tested everything. Every source file in the repository starts with a line saying
 it was written with SI help, and every data file carries a provenance note. The ORYX GEO team logo is
 an SI-generated image and carries the caption "SI-generated image". No radar or optical picture and
 no number on the site is SI-generated: all come from real satellite data. The plain-language reading

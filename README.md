@@ -141,15 +141,14 @@ On Windows, double-click `server/start-server.bat` (it needs the environment var
 
 The 2026 rules use "Super Intelligence (SI)" for what was called "AI". This is how we used it.
 
-- **The team:** chose the challenge, the concept of MARSAD (a radar story for five audiences, with
-  "why did it change, and why not" for every place), the design and the theme, took every decision on
-  places and wording, and reviewed and tested the result.
-- **SI coding assistant (Claude, by Anthropic):** wrote most of the code of the site, the processing
-  scripts and the live-analysis server; ran the data processing; scanned candidate places in NISAR
-  data and proposed some of them (the Manah and Salalah sites came out of this scan and were then
-  chosen by the team); drafted text for the site, the slides and the project page; helped check the
-  rules. Every source file starts with a line that says so, and every data file carries a
-  `provenance` note.
+- **The team:** all ideas. The team chose the challenge, created the concept of MARSAD and its
+  features, chose the places, the design and the theme, took every decision, and reviewed and tested
+  the result.
+- **SI coding assistant (Claude, by Anthropic):** used as a coding assistant. It wrote most of the code
+  of the site, the processing scripts and the live-analysis server following the team's instructions;
+  ran the data processing and the place scans the team asked for; and drafted the English wording of the
+  site, the slides and the project page from the team's ideas, which the team reviewed and edited. Every source file starts with a line that
+  says so, and every data file carries a `provenance` note.
 - **SI image generation:** the ORYX GEO team logo is an SI-generated image and carries the caption
   "SI-generated image" (readable where the logo is shown large). The MARSAD logos were designed by
   the team in Canva.
