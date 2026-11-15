@@ -115,8 +115,8 @@ as described in the SI field and in the README.
   built from our logo, a radar echo that turns into a landscape, and a sound mode where each date plays
   a note so the rhythm can be heard.
 - It treats "what the radar does not see" as a result, not a failure: Salalah's green monsoon that L-band
-  barely notices, and Manah, where a change we first read as new construction turned out to be the
-  solar panels themselves.
+  barely notices, and Manah, where a change we first read as new construction turned out to be an
+  existing solar field, most likely its panels turning.
 - Every place can be seen three ways (radar, real colour, C-band), and the explanation rewrites itself
   for five kinds of reader.
 
@@ -127,7 +127,7 @@ as described in the SI field and in the README.
   second orbit for Manah, rock that must not move for the Greenland ice speed, unchanging buildings
   for the mix of NISAR product versions).
 - Access: a static site with no login, readable on a phone, and a report that can be saved as a PDF.
-- What NISAR could give in its first months: dates from mid-2025 to November 2026, so we chose places
+- What NISAR could give in its first months: dates from late 2025 to November 2026, so we chose places
   where change happens within a season.
 - Rules: no NASA branding, SI use disclosed, no person under 18 in any material.
 
