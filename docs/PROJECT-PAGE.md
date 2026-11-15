@@ -11,7 +11,7 @@ MARSAD
 MARSAD ("observatory" in Arabic) turns NISAR radar into a story anyone can read. Pick a place, drag a
 handle between two radar dates, play the time series and hear it, then read why the land changed or
 why it did not. Six prepared places on four continents show different rhythms: the seasonal pulse of
-water on the Indus plain, a solar park in Oman whose panels the radar saw move, rice fields in Italy,
+water on the Indus plain, a solar park in Oman that changed with nothing new built, crop fields in Italy,
 a green monsoon the radar barely sees, the edge of the Amazon forest and a Greenland glacier. Every
 place can be seen in radar, in real colour and next to Sentinel-1 C-band. Visitors can also click any
 spot on Earth to ask NASA's catalogue what NISAR recorded there and run a live comparison. The
