@@ -631,10 +631,8 @@ function About({ t }) {
 
 export default function App() {
   const [lang, setLang] = useState('en')
-  const [design, setDesign] = useState(() => {
-    const q = new URLSearchParams(window.location.search).get('design')
-    try { return q || localStorage.getItem('marsad-design') || 'a' } catch { return q || 'a' }
-  })
+  // The team chose design B (the scrolling story). The other layouts stay in the code but are not offered.
+  const design = 'b'
   const [siteId, setSiteId] = useState(() => {
     const h = window.location.hash.slice(1)
     return h === 'anywhere' || SITES.some((s) => s.id === h) ? h : SITES[0].id
@@ -673,7 +671,7 @@ export default function App() {
   useEffect(() => {
     if (!story) return
     const h = window.location.hash.slice(1)
-    if (h) setTimeout(() => document.getElementById(h)?.scrollIntoView(), 300)
+    if (h) aim(h, false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [story])
   // on the scrolling designs the full logo gives way to the M icon once the page moves
@@ -685,12 +683,22 @@ export default function App() {
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
   }, [paged])
+  // Chapters above the target load as the page moves and change height, so keep aiming until it settles.
+  const aim = (id, smooth) => {
+    let stop = false
+    const cancel = () => { stop = true }
+    window.addEventListener('wheel', cancel, { once: true, passive: true })
+    window.addEventListener('touchstart', cancel, { once: true, passive: true })
+    ;[0, 400, 1000, 1800, 2800, 4000].forEach((ms, i) => setTimeout(() => {
+      if (stop && i > 0) return
+      document.getElementById(id)?.scrollIntoView({ behavior: smooth && i === 0 ? 'smooth' : 'auto' })
+    }, ms))
+  }
   const endIntro = () => { setIntro(false); try { sessionStorage.setItem('marsad-intro', '1') } catch { /* private mode */ } }
   const go = (id) => {
     setSiteId(id)
     if (story) {
-      const jump = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-      jump(); setTimeout(jump, 900)   // chapters load as they come near, so aim twice
+      aim(id, true)
       window.history.replaceState(null, '', '#' + id)
     }
   }
@@ -721,12 +729,6 @@ export default function App() {
 
   const switcher = (
     <div className="design-switch">
-      <div role="group" aria-label={t.designLabel}>
-        <span>{t.designLabel}</span>
-        {['a', 'b', 'c', 'd'].map((d) => (
-          <button key={d} type="button" aria-pressed={design === d} onClick={() => { setDesign(d); window.scrollTo(0, 0) }}>{d.toUpperCase()}</button>
-        ))}
-      </div>
       <div role="group" aria-label="Font">
         <span>Font</span>
         {FONTS.map((x) => (
