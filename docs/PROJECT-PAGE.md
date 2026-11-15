@@ -24,7 +24,9 @@ to read; MARSAD makes it readable, and honest about what radar can and cannot te
 
 ## Link to Project Demo
 
-(paste the public link of the 29-second video here, or of the 7 slides if the team uses the slides as the demo)
+(paste the public link of the 29-second video here)
+
+Slides (7): https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing
 
 ## Link to Final Project
 

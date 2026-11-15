@@ -6,6 +6,7 @@ MARSAD is an open, interactive web app that shows how the NISAR radar satellite 
 change over time, and explains in plain words why it changed, or why it did not.
 
 - Live site: https://oryx-geo.github.io/marsad/
+- Slides (7): https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing
 - Team: **ORYX GEO**
 - Event: 2026 NASA Space Apps Challenge, challenge "Dancing with the SARs"
 
