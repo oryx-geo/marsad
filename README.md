@@ -139,22 +139,17 @@ On Windows, double-click `server/start-server.bat` (it needs the environment var
 
 ## Use of Super Intelligence (SI)
 
-The 2026 rules use "Super Intelligence (SI)" for what was called "AI". This is how we used it.
+The 2026 rules use "Super Intelligence (SI)" for what was called "AI".
 
-- **The team:** all ideas. The team chose the challenge, created the concept of MARSAD and its
-  features, chose the places, the design and the theme, took every decision, and reviewed and tested
-  the result.
-- **SI coding assistant (Claude, by Anthropic):** used as a coding assistant. It wrote most of the code
-  of the site, the processing scripts and the live-analysis server following the team's instructions;
-  ran the data processing and the place scans the team asked for; and drafted the English wording of the
-  site, the slides and the project page from the team's ideas, which the team reviewed and edited. Every source file starts with a line that
-  says so, and every data file carries a `provenance` note.
-- **SI image generation:** the ORYX GEO team logo is an SI-generated image and carries the caption
-  "SI-generated image" (readable where the logo is shown large). The MARSAD logos were designed by
-  the team in Canva.
-- **What is not SI-generated:** every radar and optical picture and every number on the site comes
-  from real satellite data, computed by the scripts in this repository. The plain-language reading
-  in the live analysis is made by fixed radar rules in `server/app.py`, not by an SI model.
+All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to help
+write the code and process the data, and to help with the English wording. The team reviewed and
+tested everything. Every source file starts with a line that says so, and every data file carries a
+`provenance` note.
+
+The ORYX GEO team logo is an SI-generated image and carries the caption "SI-generated image". The
+MARSAD logos were designed by the team in Canva. Every radar and optical picture and every number on
+the site comes from real satellite data; the plain-language reading in the live analysis is made by
+fixed radar rules in `server/app.py`, not by an SI model.
 
 ## References
 

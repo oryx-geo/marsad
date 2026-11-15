@@ -120,19 +120,10 @@ for ground motion, calibrated C-band numbers, tracking of the fastest ice, and a
 
 ## Use of Super Intelligence (SI)
 
-(This field is not shown to the judges, but the same text is in the README, which they can read.)
-
-Yes, as a coding assistant only. All ideas are the team's: the challenge choice, the concept of
-MARSAD and its features, the places, the design and every decision. We used an SI coding assistant
-(Claude, by Anthropic) to write most of the code of the site, the processing scripts and the
-live-analysis server following our instructions, to run the data processing and the place scans we
-asked for, and to draft the English wording of the site, slides and this page from our ideas, which we reviewed
-and edited. The team
-reviewed and tested everything. Every source file in the repository starts with a line saying
-it was written with SI help, and every data file carries a provenance note. The ORYX GEO team logo is
-an SI-generated image and carries the caption "SI-generated image". No radar or optical picture and
-no number on the site is SI-generated: all come from real satellite data. The plain-language reading
-in the live analysis is made by fixed radar rules, not by an SI model. No NASA branding was used.
+Yes. All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to
+help write the code and process the data, and to help with the English wording. The team reviewed
+and tested everything. The ORYX GEO team logo is an SI-generated image and is marked as such. All maps
+and numbers come from real satellite data.
 
 ## NASA Data
 
