@@ -1,16 +1,12 @@
 # MARSAD — text for the Space Apps project page
 
-Copy each block into the field with the same name on the project page (field names as in the
-2026 Project Submission Guide).
-Everything here is in English, as the rules ask. Numbers come from the live site.
-
----
+Field names exactly as on the 2026 project form.
 
 ## Project Name
 
 MARSAD
 
-## High-Level Project Summary
+## Summary
 
 MARSAD ("observatory" in Arabic) turns NISAR radar into a story anyone can read. Pick a place, drag a
 handle between two radar dates, play the time series and hear it, then read why the land changed or
@@ -22,19 +18,17 @@ spot on Earth to ask NASA's catalogue what NISAR recorded there and run a live c
 explanation adapts to five audiences, and one report gathers them all. Radar data is free but hard
 to read; MARSAD makes it readable, and honest about what radar can and cannot tell.
 
-## Link to Project Demo
+## Project Demonstration
 
-(paste the public link of the 29-second video here)
+(the public link of the 29-second video)
 
-Slides (7): https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing
+If the team uses the slides as the demo instead: https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing
 
-## Link to Final Project
+## Project
 
 https://oryx-geo.github.io/marsad/
 
-Source code: https://github.com/oryx-geo/marsad
-
-## Detailed Project Description
+## Project Details
 
 **What it does**
 
@@ -115,69 +109,88 @@ FastAPI) for processing and the live analysis; GitHub and GitHub Pages for code 
 Dev Tunnels for the live-analysis server; Canva for the MARSAD logos. An SI coding assistant was used,
 as described in the SI field and in the README.
 
+**How is it creative?**
+
+- The challenge's own image, the dance and rhythm of the land, runs through the whole site: an opening
+  built from our logo, a radar echo that turns into a landscape, and a sound mode where each date plays
+  a note so the rhythm can be heard.
+- It treats "what the radar does not see" as a result, not a failure: Salalah's green monsoon that L-band
+  barely notices, and Manah, where a change we first read as new construction turned out to be the
+  solar panels themselves.
+- Every place can be seen three ways (radar, real colour, C-band), and the explanation rewrites itself
+  for five kinds of reader.
+
+**What factors did the team consider?**
+
+- Honesty: every number is computed from the data, each place has a "read with care" card, and we
+  checked ourselves against second sources (NASA's optical water map for Sindh, optical pictures and a
+  second orbit for Manah, rock that must not move for the Greenland ice speed, unchanging buildings
+  for the mix of NISAR product versions).
+- Access: a static site with no login, readable on a phone, and a report that can be saved as a PDF.
+- What NISAR could give in its first months: dates from mid-2025 to November 2026, so we chose places
+  where change happens within a season.
+- Rules: no NASA branding, SI use disclosed, no person under 18 in any material.
+
 **What is next (what we hope to achieve)**
 
 More years of NISAR will separate a normal season from an unusual one. Next steps: interferometry
 for ground motion, calibrated C-band numbers, tracking of the fastest ice, and alerts when a place leaves its usual rhythm.
 
+Source code: https://github.com/oryx-geo/marsad
+
 ## Use of Super Intelligence (SI)
 
-Yes. All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to
-help write the code and process the data, and to help with the English wording. The team reviewed
-and tested everything. The ORYX GEO team logo is an SI-generated image and is marked as such. All maps
-and numbers come from real satellite data.
+Tick the options that match (the exact labels are on the form): code / coding assistance; text or writing assistance; image generation (team logo). Do not tick audio or video.
+
+If there is a text box: Yes. All ideas and decisions are the team's. We used an SI coding assistant (Claude, by Anthropic) to help write the code and process the data, and to help with the English wording. The team reviewed and tested everything. The ORYX GEO team logo is an SI-generated image and is marked as such. All maps and numbers come from real satellite data.
 
 ## NASA Data
 
-- NISAR L2 Geocoded Polarimetric Covariance (GCOV), L-band, HH and HV (NASA and ISRO), from the
-  Alaska Satellite Facility DAAC
-- NASA Common Metadata Repository (CMR) search API
-- NASA OPERA RTC-S1 (Sentinel-1 C-band backscatter) through NASA GIBS
-- NASA Harmonized Landsat Sentinel-2 (HLS) true-colour imagery through NASA GIBS
-- NASA OPERA DSWx-HLS (surface water extent) through NASA GIBS
-- NASA POWER daily precipitation
+| Link Text | Link Url |
+|---|---|
+| NISAR L2 GCOV (NASA-ISRO), Alaska Satellite Facility DAAC | https://search.asf.alaska.edu/ |
+| NISAR mission (NASA) | https://science.nasa.gov/mission/nisar/ |
+| NASA Earthdata Login | https://urs.earthdata.nasa.gov/ |
+| NASA Common Metadata Repository (CMR) search API | https://cmr.earthdata.nasa.gov/search/ |
+| NASA GIBS (imagery service used for HLS, OPERA RTC-S1 and OPERA DSWx-HLS) | https://gibs.earthdata.nasa.gov/ |
+| NASA Harmonized Landsat Sentinel-2 (HLS) | https://hls.gsfc.nasa.gov/ |
+| NASA OPERA products (RTC-S1, DSWx-HLS) | https://www.jpl.nasa.gov/go/opera |
+| NASA POWER rainfall | https://power.larc.nasa.gov/ |
 
-## Space Agency Partner Data and Other References
+## Space Agency Partner & Other Data
 
-Space agency partners
-
-- ISRO (Indian Space Research Organisation): NISAR is a joint NASA and ISRO mission.
-- ESA (European Space Agency) / Copernicus: Sentinel-1 data inside NASA OPERA RTC-S1, and
-  Sentinel-2 data inside NASA HLS and OPERA DSWx-HLS.
-
-Data and services
-
-- NISAR L2 GCOV, ASF DAAC: https://search.asf.alaska.edu/
-- NASA CMR: https://cmr.earthdata.nasa.gov/
-- NASA GIBS: https://gibs.earthdata.nasa.gov/
-- NASA POWER: https://power.larc.nasa.gov/
-- OpenStreetMap base map (© OpenStreetMap contributors): https://www.openstreetmap.org/copyright
-
-Code and libraries (all open source)
-
-- Site: React, React DOM, Vite, @vitejs/plugin-react, MapLibre GL JS
-- Fonts (SIL Open Font License, via Fontsource): Readex Pro, Inter, IBM Plex Sans, Space Grotesk,
-  DM Sans, Lora
-- Processing and server: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow, FastAPI, Uvicorn
-- Slides and checks: python-pptx, python-docx, qrcode, scipy, PyMuPDF, opencv-python, Playwright,
-  LibreOffice
-- Hosting and tools: GitHub, GitHub Pages, Microsoft Dev Tunnels, Canva (MARSAD logos),
-  Claude by Anthropic (SI coding assistant)
-
-Text sources on the Manah solar plants
-
-- Arctech press release (Manah I trackers), 2024:
-  https://prnewswire.com/news-releases/arctech-scores-new-spring-win---awarded-500mw-manah-i-pv-plant-in-oman-302103257.html
-- NS Energy, Manah-1 project page:
-  https://www.nsenergybusiness.com/projects/manah-1-solar-pv-independent-power-plant-oman/
-- Oman Observer, inauguration of Manah 1 and 2 (2025): https://www.omanobserver.om/ampArticle/1165105
-- Power Technology, Manah I: https://www.power-technology.com/projects/manah-i-solar-power-plant-oman/
-- PV Magazine, Manah II (2024):
-  https://www.pv-magazine.com/2024/12/31/sembcorp-utilities-activates-588-mw-of-solar-in-oman/
-
-Images: all pictures in MARSAD are real satellite data or screenshots of the site. The MARSAD logos
-are the team's own (Canva); the ORYX GEO logo is SI-generated and marked.
-
-Full list with licences: https://github.com/oryx-geo/marsad#references
+| Link Text | Link Url |
+|---|---|
+| ISRO, NISAR partner agency | https://www.isro.gov.in/ |
+| ESA Copernicus Sentinel-1 (inside NASA OPERA RTC-S1) | https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-1 |
+| ESA Copernicus Sentinel-2 (inside NASA HLS) | https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-2 |
+| OpenStreetMap base map (© OpenStreetMap contributors) | https://www.openstreetmap.org/copyright |
+| MARSAD source code (MIT licence) | https://github.com/oryx-geo/marsad |
+| React | https://react.dev/ |
+| Vite | https://vite.dev/ |
+| MapLibre GL JS | https://maplibre.org/ |
+| Fontsource (Readex Pro and other open fonts) | https://fontsource.org/ |
+| NumPy | https://numpy.org/ |
+| h5py | https://www.h5py.org/ |
+| fsspec | https://filesystem-spec.readthedocs.io/ |
+| pyproj | https://pyproj4.github.io/pyproj/ |
+| Pillow | https://python-pillow.org/ |
+| requests | https://requests.readthedocs.io/ |
+| aiohttp | https://docs.aiohttp.org/ |
+| FastAPI | https://fastapi.tiangolo.com/ |
+| Uvicorn | https://www.uvicorn.org/ |
+| GitHub Pages (hosting) | https://pages.github.com/ |
+| Microsoft Dev Tunnels (live analysis) | https://learn.microsoft.com/azure/developer/dev-tunnels/ |
+| Canva (MARSAD logos, made by the team) | https://www.canva.com/ |
+| Claude by Anthropic (SI coding assistant) | https://www.anthropic.com/claude |
+| python-pptx (slides) | https://python-pptx.readthedocs.io/ |
+| Playwright (testing) | https://playwright.dev/ |
+| LibreOffice (slide previews) | https://www.libreoffice.org/ |
+| Manah I trackers, Arctech press release (2024) | https://prnewswire.com/news-releases/arctech-scores-new-spring-win---awarded-500mw-manah-i-pv-plant-in-oman-302103257.html |
+| Manah-1 project, NS Energy | https://www.nsenergybusiness.com/projects/manah-1-solar-pv-independent-power-plant-oman/ |
+| Manah 1 and 2 inauguration, Oman Observer (2025) | https://www.omanobserver.om/ampArticle/1165105 |
+| Manah I, Power Technology | https://www.power-technology.com/projects/manah-i-solar-power-plant-oman/ |
+| Manah II, PV Magazine (2024) | https://www.pv-magazine.com/2024/12/31/sembcorp-utilities-activates-588-mw-of-solar-in-oman/ |
+| Slides (7), Google Slides | https://docs.google.com/presentation/d/1ZQ8yjToQ1ZMPq8kE-T51_U9uwEO5Q9uI/edit?usp=sharing |
 
 NASA does not endorse this project.
