@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Sentinel-1 C-band pictures (NASA OPERA RTC-S1, through NASA GIBS) next to every NISAR date.
 
 GIBS serves OPERA RTC-S1 as a colour picture: red and blue carry the VV channel, green carries VH.

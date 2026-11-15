@@ -123,7 +123,7 @@ python processing/stable_check.py
 "Anywhere" can also compare the first and the latest NISAR picture of a 10 km square around any
 point, and read it in plain words: what the square looks like, what changed and where, the likely
 reasons, and what stayed the same. The reading is made by fixed radar rules (thresholds on HH and
-HV, written in `server/app.py`), not by a person and not by an AI. When the whole square changes
+HV, written in `server/app.py`), not by a person and not by an SI/AI model. When the whole square changes
 at once, it says that this is water or weather and does not explain the parts. A change map and
 real-colour pictures come with it. This needs a small program (`server/app.py`) running on a computer that holds an Earthdata
 token, reached through a tunnel. Its address is in `public/live.json`. When that computer is off,
@@ -137,14 +137,25 @@ On Windows, double-click `server/start-server.bat` (it needs the environment var
 `EARTHDATA_TOKEN` and a Microsoft Dev Tunnel created once with `devtunnel create -a` and
 `devtunnel port create -p 8000`).
 
-## Use of AI
+## Use of Super Intelligence (SI)
 
-Idea, study area, design, data choices and verification by the team. Code written with the help of
-an AI coding assistant, reviewed and tested by the team.
+The 2026 rules use "Super Intelligence (SI)" for what was called "AI". This is how we used it.
 
-The ORYX GEO team logo is an AI-generated image and carries the caption "AI-generated image"
-(readable where the logo is shown large).
-The MARSAD logos were designed by the team in Canva.
+- **The team:** chose the challenge, the concept of MARSAD (a radar story for five audiences, with
+  "why did it change, and why not" for every place), the design and the theme, took every decision on
+  places and wording, and reviewed and tested the result.
+- **SI coding assistant (Claude, by Anthropic):** wrote most of the code of the site, the processing
+  scripts and the live-analysis server; ran the data processing; scanned candidate places in NISAR
+  data and proposed some of them (the Manah and Salalah sites came out of this scan and were then
+  chosen by the team); drafted text for the site, the slides and the project page; helped check the
+  rules. Every source file starts with a line that says so, and every data file carries a
+  `provenance` note.
+- **SI image generation:** the ORYX GEO team logo is an SI-generated image and carries the caption
+  "SI-generated image" (readable where the logo is shown large). The MARSAD logos were designed by
+  the team in Canva.
+- **What is not SI-generated:** every radar and optical picture and every number on the site comes
+  from real satellite data, computed by the scripts in this repository. The plain-language reading
+  in the live analysis is made by fixed radar rules in `server/app.py`, not by an SI model.
 
 ## References
 
@@ -189,7 +200,7 @@ stand at night. So the site presents the cause of the Manah signal as likely, no
 
 Software
 
-- React (MIT), Vite (MIT), MapLibre GL JS (BSD-3-Clause)
+- React and React DOM (MIT), Vite and @vitejs/plugin-react (MIT), MapLibre GL JS (BSD-3-Clause)
 - Fonts (all SIL Open Font License 1.1, served from the site itself through Fontsource): Readex Pro,
   Inter, IBM Plex Sans, Space Grotesk, DM Sans, Lora
 - Python: NumPy, h5py, fsspec, aiohttp, requests, pyproj, Pillow, FastAPI, Uvicorn
@@ -198,7 +209,14 @@ Software
 Design
 
 - MARSAD wordmark and icon: made by the team in Canva.
-- ORYX GEO logo: AI-generated image.
+- ORYX GEO logo: SI-generated image.
+
+Tools used to build and test
+
+- Claude (Anthropic): SI coding assistant, see "Use of Super Intelligence (SI)"
+- Canva: MARSAD logos
+- Python libraries for the slides and checks: python-pptx, python-docx, qrcode, scipy, PyMuPDF,
+  opencv-python; Playwright and Chromium for testing; LibreOffice to preview the slides
 
 NASA does not endorse this project. Names of NASA, ISRO and ESA are used only to credit the data.
 

@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """True-colour pictures from NASA HLS (Harmonized Landsat Sentinel-2), through NASA GIBS.
 
 For every NISAR date of every site, pick the HLS picture closest in time (within 8 days) that

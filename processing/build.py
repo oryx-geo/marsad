@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Turn the cached NISAR windows into the small files the website shows.
 
 Usage:  python build.py            (all sites)   |   python build.py sindh

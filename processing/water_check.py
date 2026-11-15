@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Check MARSAD's "dark, water-like" radar measure in Sindh against an independent water map.
 
 The independent map is NASA OPERA DSWx-HLS (surface water seen by Landsat and Sentinel-2), read

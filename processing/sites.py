@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Study sites for MARSAD. bbox = [west, south, east, north] in degrees."""
 
 # NISAR L2 GCOV collections at the Alaska Satellite Facility (NASA CMR concept ids)

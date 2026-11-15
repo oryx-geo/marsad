@@ -1,3 +1,4 @@
+// MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Chart from './Chart.jsx'
@@ -30,7 +31,7 @@ export default function Report({ model, t, lang, f, onClose }) {
             <tr><td>
               <div className="rep-head">
                 <img src={`${BASE}logos/marsad-m.png`} alt="MARSAD" />
-                <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (AI-generated image)" />
+                <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (SI-generated image)" />
                 <span>{t.repTitle} · {model.title}</span>
                 <span className="rep-url" dir="ltr">{t.repSite}</span>
               </div>
@@ -53,7 +54,7 @@ export default function Report({ model, t, lang, f, onClose }) {
             </div>
           )}
           <div className="rep-cover-foot">
-            <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
+            <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (SI-generated image)" />
             <div>
               <p><strong>ORYX GEO</strong></p>
               <p>{t.repMade} {today}</p>

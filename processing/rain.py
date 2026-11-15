@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Daily rainfall at the Sindh site from NASA POWER, summed over the days before each NISAR pass.
 
 Usage: python rain.py     (needs public/data/sindh.json; adds "rain_mm" to each date)

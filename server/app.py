@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """MARSAD live analysis server ("analyse any place").
 
 It runs on a computer that holds a NASA Earthdata token in the environment variable

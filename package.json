@@ -23,5 +23,6 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "vite": "^6.0.7"
-  }
+  },
+  "description": "MARSAD: NISAR radar change viewer by team ORYX GEO. Code written with the help of an SI (Super Intelligence) coding assistant, reviewed and tested by the team."
 }

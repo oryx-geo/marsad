@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Find NISAR GCOV granules in NASA CMR and save the window over each site.
 
 Usage:  python fetch.py sindh manah        (no arguments = all sites)

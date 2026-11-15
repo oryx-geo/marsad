@@ -1,3 +1,4 @@
+// MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 // All words shown on the site, in English and Arabic.
 // Numbers are never typed here: they come from public/data/*.json (made by processing/build.py)
 // and are passed to the text functions as `n`.
@@ -31,7 +32,7 @@ export const UI = {
     futureTitle: 'The future of NISAR',
     future: 'NISAR has been observing for only about a year. Every 12 days adds one more beat to each place\'s rhythm. With more years, the same pictures will separate a normal season from an unusual one: a flood above the usual pulse, a field left dry, a forest edge that moved.',
     creditsTitle: 'Data and credits',
-    credits: 'Radar: NISAR L2 GCOV (NASA and ISRO), distributed by the Alaska Satellite Facility. Rainfall: NASA POWER. Optical pictures: NASA Harmonized Landsat Sentinel-2. Water map: NASA OPERA DSWx-HLS. C-band pictures: NASA OPERA RTC-S1. These contain modified Copernicus Sentinel data (ESA). Base map: © OpenStreetMap contributors. The ORYX GEO team logo is an AI-generated image.',
+    credits: 'Radar: NISAR L2 GCOV (NASA and ISRO), distributed by the Alaska Satellite Facility. Rainfall: NASA POWER. Optical pictures: NASA Harmonized Landsat Sentinel-2. Water map: NASA OPERA DSWx-HLS. C-band pictures: NASA OPERA RTC-S1. These contain modified Copernicus Sentinel data (ESA). Base map: © OpenStreetMap contributors. The ORYX GEO team logo is an SI-generated image (Super Intelligence, formerly called AI). The code of this site was written with the help of an SI coding assistant and reviewed and tested by the team.',
     disclaimer: 'NASA does not endorse this project. Agency names are used only to credit the data.',
     team: 'Made by team ORYX GEO for the 2026 NASA Space Apps Challenge, "Dancing with the SARs".',
     source: 'Source code and full references',
@@ -99,7 +100,7 @@ export const UI = {
     repPoint: 'Point read by the visitor',
     repSite: 'oryx-geo.github.io/marsad',
     rdTitle: 'Reading this square',
-    rdIntro: (km) => `A square of about ${km} km², read by simple radar rules (not by a person, and not by an AI).`,
+    rdIntro: (km) => `A square of about ${km} km², read by simple radar rules (not by a person, and not by an SI/AI model).`,
     rdLooks: 'What it looks like',
     rdChanged: 'What changed',
     rdWhy: 'Why, most likely',
@@ -155,7 +156,7 @@ export const UI = {
     futureTitle: 'مستقبل NISAR',
     future: 'NISAR يرصد منذ نحو سنة فقط. كل 12 يوماً تضاف نبضة جديدة إلى إيقاع كل مكان. ومع السنوات ستفرّق الصور نفسها بين الموسم العادي وغير العادي: فيضان فوق النبض المعتاد، حقل بقي جافاً، حدّ غابة تحرّك.',
     creditsTitle: 'البيانات والمصادر',
-    credits: 'الرادار: NISAR L2 GCOV (ناسا و ISRO)، توزيع Alaska Satellite Facility. المطر: NASA POWER. الصور الملوّنة: NASA Harmonized Landsat Sentinel-2. خريطة الماء: NASA OPERA DSWx-HLS. صور C-band: ‏NASA OPERA RTC-S1. وهذه تحتوي بيانات Copernicus Sentinel معدّلة (ESA). الخريطة: © مساهمو OpenStreetMap. شعار فريق ORYX GEO صورة مولّدة بالذكاء الاصطناعي.',
+    credits: 'الرادار: NISAR L2 GCOV (ناسا و ISRO)، توزيع Alaska Satellite Facility. المطر: NASA POWER. الصور الملوّنة: NASA Harmonized Landsat Sentinel-2. خريطة الماء: NASA OPERA DSWx-HLS. صور C-band: ‏NASA OPERA RTC-S1. وهذه تحتوي بيانات Copernicus Sentinel معدّلة (ESA). الخريطة: © مساهمو OpenStreetMap. شعار فريق ORYX GEO صورة مولّدة بأدوات SI (الذكاء الاصطناعي). وكُتب كود الموقع بمساعدة أداة SI للبرمجة، وراجعه الفريق واختبره.',
     disclaimer: 'ناسا لا تدعم هذا المشروع ولا تتبنّاه. أسماء الوكالات مذكورة لنسبة البيانات فقط.',
     team: 'من إعداد فريق ORYX GEO لتحدي NASA Space Apps 2026، تحدي "Dancing with the SARs".',
     source: 'الكود المصدري وكل المراجع',

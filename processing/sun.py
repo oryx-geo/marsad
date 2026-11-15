@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Sun elevation at Manah at the moment of every NISAR pass (NOAA solar position formulas).
 
 Why: the brightness of the west solar field jumps only in the evening pass. Knowing how far below

@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Are the NISAR product versions used for Sindh comparable?
 
 The Sindh series mixes BETA (2025), provisional and V1 products. Buildings do not change with the

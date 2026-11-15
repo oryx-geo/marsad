@@ -1,3 +1,4 @@
+// MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import SwipeMap, { BLANK } from './SwipeMap.jsx'
 import ExploreMap, { askCatalogue } from './Explore.jsx'
@@ -59,7 +60,7 @@ function Intro({ t, onDone }) {
         </svg>
         <p className="intro-tag">{t.tagline}</p>
         <div className="intro-by">
-          <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
+          <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (SI-generated image)" />
           <span>ORYX GEO</span>
         </div>
       </div>
@@ -621,7 +622,7 @@ function About({ t }) {
       <p>{t.credits}</p>
       <p><strong>{t.disclaimer}</strong></p>
       <div className="about-team">
-        <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (AI-generated image)" />
+        <img src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO team logo (SI-generated image)" />
         <p>{t.team} <a href={REPO}>{t.source}</a></p>
       </div>
     </>
@@ -701,7 +702,7 @@ export default function App() {
           <img className="logo-m" src={`${BASE}logos/marsad-m.png`} alt="MARSAD" />
           <span className="logo-rest"><img src={`${BASE}logos/marsad-letters.png`} alt="" /></span>
         </span>
-        <img className="logo-team" src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (AI-generated image)" title="ORYX GEO · AI-generated image" />
+        <img className="logo-team" src={`${BASE}logos/oryx-geo-ai.png`} alt="ORYX GEO (SI-generated image)" title="ORYX GEO · SI-generated image" />
       </a>
       <nav className="places" aria-label={t.places}>
         {SITES.map((s) => (

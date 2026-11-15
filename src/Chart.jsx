@@ -1,3 +1,4 @@
+// MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 import React from 'react'
 
 // A small line chart drawn by hand in SVG (no chart library).

@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Open a NISAR GCOV HDF5 file over HTTPS and read only the window we need.
 
 Authentication: set the environment variable EARTHDATA_TOKEN to a NASA Earthdata

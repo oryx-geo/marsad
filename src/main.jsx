@@ -1,3 +1,4 @@
+// MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/readex-pro/wght.css'

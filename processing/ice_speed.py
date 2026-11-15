@@ -1,3 +1,4 @@
+# MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 """Ice speed at Jakobshavn from NISAR, by feature tracking.
 
 For two NISAR pictures 12 days apart, cut both into patches, and for each patch find the shift

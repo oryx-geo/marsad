@@ -1,3 +1,4 @@
+// MARSAD · written with the help of an SI (Super Intelligence) coding assistant; reviewed and tested by team ORYX GEO.
 // Read the radar brightness of one point from the pictures already on the site.
 // Each picture stores decibels as grey levels 1..255 (0 = no data), see processing/build.py.
 
